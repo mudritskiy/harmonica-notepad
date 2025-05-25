@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FE5732CF2DE30B37000F2B8E /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5732CE2DE30B35000F2B8E /* NoteView.swift */; };
+		FE5732D22DE36A33000F2B8E /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5732D12DE36A2F000F2B8E /* Models.swift */; };
+		FE5732D52DE36AB3000F2B8E /* MusicTheory in Frameworks */ = {isa = PBXBuildFile; productRef = FE5732D42DE36AB3000F2B8E /* MusicTheory */; };
 		FEAF08302C4055840014DA01 /* HarmonicaNotepadApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAF082F2C4055840014DA01 /* HarmonicaNotepadApp.swift */; };
 		FEAF08322C4055840014DA01 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAF08312C4055840014DA01 /* ContentView.swift */; };
 		FEAF08342C4055850014DA01 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEAF08332C4055850014DA01 /* Assets.xcassets */; };
@@ -36,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FE5732CE2DE30B35000F2B8E /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
+		FE5732D12DE36A2F000F2B8E /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		FEAF082C2C4055840014DA01 /* HarmonicaNotepad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HarmonicaNotepad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEAF082F2C4055840014DA01 /* HarmonicaNotepadApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HarmonicaNotepadApp.swift; sourceTree = "<group>"; };
 		FEAF08312C4055840014DA01 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -55,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE5732D52DE36AB3000F2B8E /* MusicTheory in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,6 +101,7 @@
 		FE5732C92DE308DE000F2B8E /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				FE5732D12DE36A2F000F2B8E /* Models.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -102,8 +109,16 @@
 		FE5732CA2DE308E6000F2B8E /* Notes */ = {
 			isa = PBXGroup;
 			children = (
+				FE5732CE2DE30B35000F2B8E /* NoteView.swift */,
 			);
 			path = Notes;
+			sourceTree = "<group>";
+		};
+		FE5732D32DE36AB3000F2B8E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		FEAF08232C4055840014DA01 = {
@@ -112,6 +127,7 @@
 				FEAF082E2C4055840014DA01 /* HarmonicaNotepad */,
 				FEAF08442C4055850014DA01 /* HarmonicaNotepadTests */,
 				FEAF084E2C4055850014DA01 /* HarmonicaNotepadUITests */,
+				FE5732D32DE36AB3000F2B8E /* Frameworks */,
 				FEAF082D2C4055840014DA01 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -253,6 +269,9 @@
 				Base,
 			);
 			mainGroup = FEAF08232C4055840014DA01;
+			packageReferences = (
+				FE5732D02DE35836000F2B8E /* XCRemoteSwiftPackageReference "MusicTheory" */,
+			);
 			productRefGroup = FEAF082D2C4055840014DA01 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -298,7 +317,9 @@
 				FEAF08392C4055850014DA01 /* Persistence.swift in Sources */,
 				FEAF08322C4055840014DA01 /* ContentView.swift in Sources */,
 				FEAF083C2C4055850014DA01 /* HarmonicaNotepad.xcdatamodeld in Sources */,
+				FE5732D22DE36A33000F2B8E /* Models.swift in Sources */,
 				FEAF08302C4055840014DA01 /* HarmonicaNotepadApp.swift in Sources */,
+				FE5732CF2DE30B37000F2B8E /* NoteView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -628,6 +649,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FE5732D02DE35836000F2B8E /* XCRemoteSwiftPackageReference "MusicTheory" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/cemolcay/MusicTheory";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FE5732D42DE36AB3000F2B8E /* MusicTheory */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FE5732D02DE35836000F2B8E /* XCRemoteSwiftPackageReference "MusicTheory" */;
+			productName = MusicTheory;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		FEAF083A2C4055850014DA01 /* HarmonicaNotepad.xcdatamodeld */ = {
