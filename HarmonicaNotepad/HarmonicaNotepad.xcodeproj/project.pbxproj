@@ -1,0 +1,646 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FEAF08302C4055840014DA01 /* HarmonicaNotepadApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAF082F2C4055840014DA01 /* HarmonicaNotepadApp.swift */; };
+		FEAF08322C4055840014DA01 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAF08312C4055840014DA01 /* ContentView.swift */; };
+		FEAF08342C4055850014DA01 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEAF08332C4055850014DA01 /* Assets.xcassets */; };
+		FEAF08372C4055850014DA01 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEAF08362C4055850014DA01 /* Preview Assets.xcassets */; };
+		FEAF08392C4055850014DA01 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAF08382C4055850014DA01 /* Persistence.swift */; };
+		FEAF083C2C4055850014DA01 /* HarmonicaNotepad.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FEAF083A2C4055850014DA01 /* HarmonicaNotepad.xcdatamodeld */; };
+		FEAF08462C4055850014DA01 /* HarmonicaNotepadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAF08452C4055850014DA01 /* HarmonicaNotepadTests.swift */; };
+		FEAF08502C4055850014DA01 /* HarmonicaNotepadUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAF084F2C4055850014DA01 /* HarmonicaNotepadUITests.swift */; };
+		FEAF08522C4055850014DA01 /* HarmonicaNotepadUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAF08512C4055850014DA01 /* HarmonicaNotepadUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		FEAF08422C4055850014DA01 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FEAF08242C4055840014DA01 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FEAF082B2C4055840014DA01;
+			remoteInfo = HarmonicaNotepad;
+		};
+		FEAF084C2C4055850014DA01 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FEAF08242C4055840014DA01 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FEAF082B2C4055840014DA01;
+			remoteInfo = HarmonicaNotepad;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		FEAF082C2C4055840014DA01 /* HarmonicaNotepad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HarmonicaNotepad.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FEAF082F2C4055840014DA01 /* HarmonicaNotepadApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HarmonicaNotepadApp.swift; sourceTree = "<group>"; };
+		FEAF08312C4055840014DA01 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		FEAF08332C4055850014DA01 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FEAF08362C4055850014DA01 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		FEAF08382C4055850014DA01 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		FEAF083B2C4055850014DA01 /* HarmonicaNotepad.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HarmonicaNotepad.xcdatamodel; sourceTree = "<group>"; };
+		FEAF08412C4055850014DA01 /* HarmonicaNotepadTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HarmonicaNotepadTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FEAF08452C4055850014DA01 /* HarmonicaNotepadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HarmonicaNotepadTests.swift; sourceTree = "<group>"; };
+		FEAF084B2C4055850014DA01 /* HarmonicaNotepadUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HarmonicaNotepadUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FEAF084F2C4055850014DA01 /* HarmonicaNotepadUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HarmonicaNotepadUITests.swift; sourceTree = "<group>"; };
+		FEAF08512C4055850014DA01 /* HarmonicaNotepadUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HarmonicaNotepadUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FEAF08292C4055840014DA01 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEAF083E2C4055850014DA01 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEAF08482C4055850014DA01 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FE5732C72DE308AF000F2B8E /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				FE5732C92DE308DE000F2B8E /* Common */,
+				FE5732C82DE308BC000F2B8E /* Modules */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		FE5732C82DE308BC000F2B8E /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				FE5732CA2DE308E6000F2B8E /* Notes */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		FE5732C92DE308DE000F2B8E /* Common */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		FE5732CA2DE308E6000F2B8E /* Notes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Notes;
+			sourceTree = "<group>";
+		};
+		FEAF08232C4055840014DA01 = {
+			isa = PBXGroup;
+			children = (
+				FEAF082E2C4055840014DA01 /* HarmonicaNotepad */,
+				FEAF08442C4055850014DA01 /* HarmonicaNotepadTests */,
+				FEAF084E2C4055850014DA01 /* HarmonicaNotepadUITests */,
+				FEAF082D2C4055840014DA01 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FEAF082D2C4055840014DA01 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FEAF082C2C4055840014DA01 /* HarmonicaNotepad.app */,
+				FEAF08412C4055850014DA01 /* HarmonicaNotepadTests.xctest */,
+				FEAF084B2C4055850014DA01 /* HarmonicaNotepadUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FEAF082E2C4055840014DA01 /* HarmonicaNotepad */ = {
+			isa = PBXGroup;
+			children = (
+				FEAF082F2C4055840014DA01 /* HarmonicaNotepadApp.swift */,
+				FEAF08312C4055840014DA01 /* ContentView.swift */,
+				FE5732C72DE308AF000F2B8E /* Sources */,
+				FEAF08332C4055850014DA01 /* Assets.xcassets */,
+				FEAF08382C4055850014DA01 /* Persistence.swift */,
+				FEAF083A2C4055850014DA01 /* HarmonicaNotepad.xcdatamodeld */,
+				FEAF08352C4055850014DA01 /* Preview Content */,
+			);
+			path = HarmonicaNotepad;
+			sourceTree = "<group>";
+		};
+		FEAF08352C4055850014DA01 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				FEAF08362C4055850014DA01 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		FEAF08442C4055850014DA01 /* HarmonicaNotepadTests */ = {
+			isa = PBXGroup;
+			children = (
+				FEAF08452C4055850014DA01 /* HarmonicaNotepadTests.swift */,
+			);
+			path = HarmonicaNotepadTests;
+			sourceTree = "<group>";
+		};
+		FEAF084E2C4055850014DA01 /* HarmonicaNotepadUITests */ = {
+			isa = PBXGroup;
+			children = (
+				FEAF084F2C4055850014DA01 /* HarmonicaNotepadUITests.swift */,
+				FEAF08512C4055850014DA01 /* HarmonicaNotepadUITestsLaunchTests.swift */,
+			);
+			path = HarmonicaNotepadUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FEAF082B2C4055840014DA01 /* HarmonicaNotepad */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FEAF08552C4055850014DA01 /* Build configuration list for PBXNativeTarget "HarmonicaNotepad" */;
+			buildPhases = (
+				FEAF08282C4055840014DA01 /* Sources */,
+				FEAF08292C4055840014DA01 /* Frameworks */,
+				FEAF082A2C4055840014DA01 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HarmonicaNotepad;
+			productName = HarmonicaNotepad;
+			productReference = FEAF082C2C4055840014DA01 /* HarmonicaNotepad.app */;
+			productType = "com.apple.product-type.application";
+		};
+		FEAF08402C4055850014DA01 /* HarmonicaNotepadTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FEAF08582C4055850014DA01 /* Build configuration list for PBXNativeTarget "HarmonicaNotepadTests" */;
+			buildPhases = (
+				FEAF083D2C4055850014DA01 /* Sources */,
+				FEAF083E2C4055850014DA01 /* Frameworks */,
+				FEAF083F2C4055850014DA01 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FEAF08432C4055850014DA01 /* PBXTargetDependency */,
+			);
+			name = HarmonicaNotepadTests;
+			productName = HarmonicaNotepadTests;
+			productReference = FEAF08412C4055850014DA01 /* HarmonicaNotepadTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		FEAF084A2C4055850014DA01 /* HarmonicaNotepadUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FEAF085B2C4055850014DA01 /* Build configuration list for PBXNativeTarget "HarmonicaNotepadUITests" */;
+			buildPhases = (
+				FEAF08472C4055850014DA01 /* Sources */,
+				FEAF08482C4055850014DA01 /* Frameworks */,
+				FEAF08492C4055850014DA01 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FEAF084D2C4055850014DA01 /* PBXTargetDependency */,
+			);
+			name = HarmonicaNotepadUITests;
+			productName = HarmonicaNotepadUITests;
+			productReference = FEAF084B2C4055850014DA01 /* HarmonicaNotepadUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FEAF08242C4055840014DA01 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1540;
+				LastUpgradeCheck = 1540;
+				TargetAttributes = {
+					FEAF082B2C4055840014DA01 = {
+						CreatedOnToolsVersion = 15.4;
+					};
+					FEAF08402C4055850014DA01 = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = FEAF082B2C4055840014DA01;
+					};
+					FEAF084A2C4055850014DA01 = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = FEAF082B2C4055840014DA01;
+					};
+				};
+			};
+			buildConfigurationList = FEAF08272C4055840014DA01 /* Build configuration list for PBXProject "HarmonicaNotepad" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FEAF08232C4055840014DA01;
+			productRefGroup = FEAF082D2C4055840014DA01 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FEAF082B2C4055840014DA01 /* HarmonicaNotepad */,
+				FEAF08402C4055850014DA01 /* HarmonicaNotepadTests */,
+				FEAF084A2C4055850014DA01 /* HarmonicaNotepadUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FEAF082A2C4055840014DA01 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FEAF08372C4055850014DA01 /* Preview Assets.xcassets in Resources */,
+				FEAF08342C4055850014DA01 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEAF083F2C4055850014DA01 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEAF08492C4055850014DA01 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FEAF08282C4055840014DA01 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FEAF08392C4055850014DA01 /* Persistence.swift in Sources */,
+				FEAF08322C4055840014DA01 /* ContentView.swift in Sources */,
+				FEAF083C2C4055850014DA01 /* HarmonicaNotepad.xcdatamodeld in Sources */,
+				FEAF08302C4055840014DA01 /* HarmonicaNotepadApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEAF083D2C4055850014DA01 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FEAF08462C4055850014DA01 /* HarmonicaNotepadTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEAF08472C4055850014DA01 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FEAF08502C4055850014DA01 /* HarmonicaNotepadUITests.swift in Sources */,
+				FEAF08522C4055850014DA01 /* HarmonicaNotepadUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FEAF08432C4055850014DA01 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FEAF082B2C4055840014DA01 /* HarmonicaNotepad */;
+			targetProxy = FEAF08422C4055850014DA01 /* PBXContainerItemProxy */;
+		};
+		FEAF084D2C4055850014DA01 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FEAF082B2C4055840014DA01 /* HarmonicaNotepad */;
+			targetProxy = FEAF084C2C4055850014DA01 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		FEAF08532C4055850014DA01 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		FEAF08542C4055850014DA01 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FEAF08562C4055850014DA01 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"HarmonicaNotepad/Preview Content\"";
+				DEVELOPMENT_TEAM = QY278ZL6U5;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sygic.OpenAISwift.HarmonicaNotepad;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FEAF08572C4055850014DA01 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"HarmonicaNotepad/Preview Content\"";
+				DEVELOPMENT_TEAM = QY278ZL6U5;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sygic.OpenAISwift.HarmonicaNotepad;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		FEAF08592C4055850014DA01 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QY278ZL6U5;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sygic.OpenAISwift.HarmonicaNotepadTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HarmonicaNotepad.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HarmonicaNotepad";
+			};
+			name = Debug;
+		};
+		FEAF085A2C4055850014DA01 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QY278ZL6U5;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sygic.OpenAISwift.HarmonicaNotepadTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HarmonicaNotepad.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HarmonicaNotepad";
+			};
+			name = Release;
+		};
+		FEAF085C2C4055850014DA01 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QY278ZL6U5;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sygic.OpenAISwift.HarmonicaNotepadUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = HarmonicaNotepad;
+			};
+			name = Debug;
+		};
+		FEAF085D2C4055850014DA01 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QY278ZL6U5;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sygic.OpenAISwift.HarmonicaNotepadUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = HarmonicaNotepad;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FEAF08272C4055840014DA01 /* Build configuration list for PBXProject "HarmonicaNotepad" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FEAF08532C4055850014DA01 /* Debug */,
+				FEAF08542C4055850014DA01 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FEAF08552C4055850014DA01 /* Build configuration list for PBXNativeTarget "HarmonicaNotepad" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FEAF08562C4055850014DA01 /* Debug */,
+				FEAF08572C4055850014DA01 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FEAF08582C4055850014DA01 /* Build configuration list for PBXNativeTarget "HarmonicaNotepadTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FEAF08592C4055850014DA01 /* Debug */,
+				FEAF085A2C4055850014DA01 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FEAF085B2C4055850014DA01 /* Build configuration list for PBXNativeTarget "HarmonicaNotepadUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FEAF085C2C4055850014DA01 /* Debug */,
+				FEAF085D2C4055850014DA01 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		FEAF083A2C4055850014DA01 /* HarmonicaNotepad.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				FEAF083B2C4055850014DA01 /* HarmonicaNotepad.xcdatamodel */,
+			);
+			currentVersion = FEAF083B2C4055850014DA01 /* HarmonicaNotepad.xcdatamodel */;
+			path = HarmonicaNotepad.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = FEAF08242C4055840014DA01 /* Project object */;
+}
