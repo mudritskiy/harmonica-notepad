@@ -9,12 +9,13 @@ import SwiftUI
 import MusicTheory
 
 struct ContentView: View {
-    init() {
-        let layout = HarmonicaLayout(key: Key(type: .c))
-    }
-
     var body: some View {
-        NoteView()
-            .padding()
+        MelodyEditScreenView(
+            viewModel: MelodyEditScreenViewModel()
+        )
+//        NoteView()
+//            .padding()
     }
 }
+
+
