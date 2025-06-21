@@ -8,7 +8,19 @@
 import Combine
 import MusicTheory
 
-final class PlayerService {
+protocol PlayerServiceState {
+    var isPlayingMelody: Bool { get }
+    var isPlayingMelodyPublisher: AnyPublisher<Bool, Never> { get }
+}
+
+
+final class PlayerService: PlayerServiceState {
+    @Published var isPlayingMelody: Bool = false
+
+    var isPlayingMelodyPublisher: AnyPublisher<Bool, Never> {
+        $isPlayingMelody.eraseToAnyPublisher()
+    }
+
     private let player = MidiNotePlayer()
 
     private var playbackTask: Task<Void, Never>?
@@ -50,12 +62,13 @@ final class PlayerService {
         didFinishPlayMelody()
     }
 
-    func playMelody(_ melody: Melody, completion: @escaping () -> Void) {
+    func playMelody(_ melody: Melody) {
         guard playbackTask == nil else {
             stopPlayingMeloday()
-            completion()
             return
         }
+
+        isPlayingMelody = true
 
         playbackTask = Task {
             var skippedServiceNotesCount: Int = 0
@@ -80,7 +93,6 @@ final class PlayerService {
             }
             await MainActor.run {
                 didFinishPlayMelody()
-                completion()
             }
         }
     }
@@ -88,5 +100,6 @@ final class PlayerService {
     private func didFinishPlayMelody() {
         playbackTask = nil
         playingNoteIndex = nil
+        isPlayingMelody = false
     }
 }

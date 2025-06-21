@@ -10,12 +10,39 @@ import MusicTheory
 import SwiftUI
 
 final class MelodyEditScreenViewModel: ObservableObject {
-    var layoutViewModel: HarmonicaLayoutViewModel?
+    lazy var layoutViewModel: HarmonicaLayoutViewModel = HarmonicaLayoutViewModel(
+        layout: layout,
+        onNoteTap: { [weak self] note in
+            let melodyNote = MelodyNote(note: note, value: NoteValue(type: .quarter))
+            self?.addAndPlayNote(melodyNote)
+        }
+    )
+
+    lazy var melodyActionPanelViewModel: MelodyActionPanelViewModel = MelodyActionPanelViewModel(
+        playerService: playerService,
+        onSilenceTap: { [weak self] in
+            self?.melody.notes.append(.silence)
+            self?.updateMelodyRows()
+        },
+        onNewLineTap: { [weak self] in
+            self?.melody.notes.append(.newLine)
+            self?.updateMelodyRows()
+       },
+        onDeleteTap: { [weak self] in
+            self?._removeLastNote()
+        },
+        onPlayTap: { [weak self] in
+            self?.onPlayTap()
+        },
+        onClearTap: { [weak self] in
+            self?.onClearTap()
+        }
+    )
+
     let playerService = PlayerService()
 
     @Published var melody: Melody
     @Published var playingNoteIndex: Int?
-    @Published var isPlayingMelody: Bool = false
 
     private var layout: HarmonicaLayout
     private let player = MidiNotePlayer()
@@ -28,19 +55,6 @@ final class MelodyEditScreenViewModel: ObservableObject {
     init() {
         layout = HarmonicaLayout(key: Key(type: .c))
         melody = Melody(key: layout.key)
-        layoutViewModel = HarmonicaLayoutViewModel(
-            layout: layout,
-            onNoteTap: { [weak self] note in
-                let melodyNote = MelodyNote(note: note, value: NoteValue(type: .quarter))
-                self?.addAndPlayNote(melodyNote)
-            },
-            onSilenceTap: { [weak self] in
-                self?.melody.notes.append(.silence)
-            },
-            onNewLineTap: { [weak self] in
-                self?.melody.notes.append(.newLine)
-            }
-        )
 
         playerService.playingNoteIndexPublisher
             .sink { [weak self] index in
@@ -57,7 +71,6 @@ final class MelodyEditScreenViewModel: ObservableObject {
         }
     }
 
-
     @MainActor
     private func addNote(_ note: MelodyNote) {
         melody.notes.append(note)
@@ -65,15 +78,18 @@ final class MelodyEditScreenViewModel: ObservableObject {
         playingNoteIndex = melody.notes.count - 1
     }
 
+    private func _removeLastNote() {
+        guard !melody.notes.isEmpty else { return }
+        melody.notes.removeLast()
+        updateMelodyRows()
+    }
+
     func onPlayTap() {
         guard !melody.notes.isEmpty else { return }
-        if isPlayingMelody {
+        if playerService.isPlayingMelody {
             playerService.stopPlayingMeloday()
         } else {
-            isPlayingMelody = true
-            playerService.playMelody(melody) { [weak self] in
-                self?.isPlayingMelody = false
-            }
+            playerService.playMelody(melody)
         }
     }
 
@@ -123,7 +139,7 @@ final class MelodyEditScreenViewModel: ObservableObject {
 
     func onKeyChange(to key: Key) {
         layout = HarmonicaLayout(key: key)
-        layoutViewModel?.updateNoteGrid(with: layout)
+        layoutViewModel.updateNoteGrid(with: layout)
         melody.key = key
         isPresentedKeySetup = false
     }

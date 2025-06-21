@@ -30,8 +30,22 @@ enum BreathDirection: Int, CustomStringConvertible {
 }
 
 enum NoteTechnique: Equatable, Identifiable, CustomStringConvertible {
-    enum BendLevel: Int {
-        case level1 = 1, level2, level3
+    enum BendLevel: Int, Comparable, CaseIterable {
+        case none
+        case level1
+        case level2
+        case level3
+
+        var description: String {
+            switch self {
+                case .none: ""
+                default: String(self.rawValue)
+            }
+        }
+
+        static func < (lhs: Self, rhs: Self) -> Bool {
+            lhs.rawValue < rhs.rawValue
+        }
     }
 
     case natural

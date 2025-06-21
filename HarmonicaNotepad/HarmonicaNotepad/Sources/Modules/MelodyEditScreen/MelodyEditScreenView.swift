@@ -16,25 +16,17 @@ struct MelodyEditScreenView: View {
             Text("Title")
 
             HStack(alignment: .center, spacing: 12) {
-                MelodyPlayButton(isActive: viewModel.isPlayingMelody) {
-                    withAnimation(.easeInOut(duration: 0.4)) {
-                        viewModel.onPlayTap()
-                    }
-                }
-                .animation(.bouncy, value: viewModel.isPlayingMelody)
-                MelodyClearButton() {
-                    viewModel.onClearTap()
-                }
                 SwiftUI.Button(role: .none) {
                     viewModel.onTempoTap()
                 } label: {
-                    Text("Tempo")
+                    Text("Tempo: \(Int(viewModel.melody.tempo.bpm)) bpm")
                 }
                 SwiftUI.Button(role: .none) {
                     viewModel.onKeyTap()
                 } label: {
-                    Text("Key")
+                    Text("Key: \(viewModel.melody.key.description)")
                 }
+                .padding(.leading, 12)
             }
 
             ScrollView(.vertical) {
@@ -86,127 +78,9 @@ struct MelodyEditScreenView: View {
                 .presentationContentInteraction(.resizes)
             }
 
-            if let layoutViewModel = viewModel.layoutViewModel {
-                HarmonicaLayoutView(
-                    viewModel: layoutViewModel
-                )
-            }
-        }
-    }
-}
+            MelodyActionPanelView(viewModel: viewModel.melodyActionPanelViewModel)
 
-struct MelodyPlayButton: View {
-    let isActive: Bool
-    let onTap: () -> Void
-
-    var iconName: String { isActive ? "stop.circle.fill" : "arrowtriangle.right.circle.fill" }
-//    var title: String { isActive ? "Stop" : "Play" }
-
-    var body: some View {
-        SwiftUI.Button(role: .none) {
-            onTap()
-        } label: {
-            _buttonContentView()
-        }
-        .buttonStyle(.plain)
-    }
-
-    private func _buttonContentView() -> some View {
-        _contentView()
-            .frame(width: 80)
-            .padding(4)
-            .background {
-                RoundedRectangle(cornerRadius: 18)
-                    .stroke(.purple, lineWidth: 1)
-            }
-    }
-
-    private func _contentView() -> some View {
-        HStack(alignment: .center, spacing: 0) {
-            Image(systemName: iconName)
-                .resizable()
-                .frame(width: 24, height: 24)
-                .symbolRenderingMode(.multicolor)
-                .symbolEffect(.pulse, isActive: isActive)
-                .foregroundStyle(
-                    LinearGradient(
-                        colors: [.purple, .purple.opacity(0.6)],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
-            ZStack {
-                if isActive {
-                    _titleContent(with: "Stop")
-                        .transition(.asymmetric(
-                            insertion: .move(edge: .bottom).combined(with: .opacity),
-                            removal: .move(edge: .top).combined(with: .opacity)
-                        ))
-                } else {
-                    _titleContent(with: "Play")
-                        .transition(.asymmetric(
-                            insertion: .move(edge: .bottom).combined(with: .opacity),
-                            removal: .move(edge: .top).combined(with: .opacity)
-                        ))
-                }
-            }
-            .clipped()
-        }
-    }
-
-    private func _titleContent(with title: String) -> some View {
-        Text(title)
-            .font(.body)
-            .foregroundStyle(.purple)
-            .padding(.leading, 4)
-            .stretching(.horizontal, alignment: .center)
-    }
-}
-
-struct MelodyClearButton: View {
-    let onTap: () -> Void
-
-    var iconName: String { "xmark.circle.fill" }
-    var title: String { "Clear" }
-
-    var body: some View {
-        SwiftUI.Button(role: .none) {
-            onTap()
-        } label: {
-            _buttonContentView()
-        }
-        .buttonStyle(.plain)
-    }
-
-    private func _buttonContentView() -> some View {
-        _contentView()
-            .frame(width: 80)
-            .padding(4)
-            .background {
-                RoundedRectangle(cornerRadius: 18)
-                    .stroke(.red.opacity(0.7), lineWidth: 1)
-                    .foregroundStyle(.purple)
-            }
-    }
-
-    private func _contentView() -> some View {
-        HStack(alignment: .center, spacing: 0) {
-            Image(systemName: iconName)
-                .resizable()
-                .frame(width: 24, height: 24)
-                .symbolRenderingMode(.multicolor)
-                .foregroundStyle(
-                    LinearGradient(
-                        colors: [.red, .red.opacity(0.6)],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
-            Text(title)
-                .font(.body)
-                .foregroundStyle(.red)
-                .padding(.leading, 4)
-                .stretching(.horizontal, alignment: .center)
+            HarmonicaLayoutView(viewModel: viewModel.layoutViewModel)
         }
     }
 }

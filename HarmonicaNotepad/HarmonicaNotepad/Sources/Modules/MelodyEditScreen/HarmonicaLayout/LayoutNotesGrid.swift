@@ -20,8 +20,8 @@ extension LayoutNotesGrid {
         return notes[row][hole - 1]
     }
 
-    init(with layout: HarmonicaLayout) {
-        let groupedNotes = Array(Dictionary(grouping: layout.notes, by: \.hole).values)
+    init(with notes: [HarmonicaNote]) {
+        let groupedNotes = Array(Dictionary(grouping: notes, by: \.hole).values)
 
         let maxBlowNotesPerHole = groupedNotes
             .map { $0.filter { $0.direction == .blow }.count }
@@ -56,5 +56,28 @@ extension LayoutNotesGrid {
         }
 
         self.init(notes: grid, holesRowIndex: maxBlowNotesPerHole + 1)
+    }
+}
+
+extension HarmonicaLayout {
+    func notes(by configuration: HarmonicaLayoutConfiguration) -> [HarmonicaNote] {
+        let notes = self.notes.filter { note in
+            if note.technique == .overdraw || note.technique == .overblow {
+                return configuration.isOverbandsOn
+            } else if case let .bend(level) = note.technique {
+                guard level <= configuration.bendsLevel else { return false }
+                if level > .none {
+                    if !configuration.isBlowBendsOn, note.direction == .blow {
+                        return false
+                    }
+                    if !configuration.isDrawBendsOn, note.direction == .draw {
+                        return false
+                    }
+                }
+                return level <= configuration.bendsLevel
+            }
+            return true
+        }
+        return notes
     }
 }
