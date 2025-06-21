@@ -21,6 +21,8 @@
 		FE65DC232E05C697002A3381 /* SwiftUI+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE65DC222E05C696002A3381 /* SwiftUI+Debug.swift */; };
 		FE65DC282E05DA40002A3381 /* HoleCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE65DC272E05DA3D002A3381 /* HoleCellView.swift */; };
 		FE65DC2A2E05DA69002A3381 /* HarmonicaLayoutConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE65DC292E05DA65002A3381 /* HarmonicaLayoutConfigurationView.swift */; };
+		FE65DC2C2E06E4A5002A3381 /* BaseRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE65DC2B2E06E4A0002A3381 /* BaseRouter.swift */; };
+		FE65DC302E072F65002A3381 /* MainScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE65DC2F2E072F63002A3381 /* MainScreenView.swift */; };
 		FEAB3C292DF8A7810015B5A6 /* MelodyActionPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAB3C282DF8A7800015B5A6 /* MelodyActionPanelView.swift */; };
 		FEAB3C2B2DF8A8250015B5A6 /* MelodyActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAB3C2A2DF8A8230015B5A6 /* MelodyActionButton.swift */; };
 		FEAB3C2D2DF8A8680015B5A6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAB3C2C2DF8A8660015B5A6 /* Constants.swift */; };
@@ -71,6 +73,8 @@
 		FE65DC222E05C696002A3381 /* SwiftUI+Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Debug.swift"; sourceTree = "<group>"; };
 		FE65DC272E05DA3D002A3381 /* HoleCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoleCellView.swift; sourceTree = "<group>"; };
 		FE65DC292E05DA65002A3381 /* HarmonicaLayoutConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HarmonicaLayoutConfigurationView.swift; sourceTree = "<group>"; };
+		FE65DC2B2E06E4A0002A3381 /* BaseRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRouter.swift; sourceTree = "<group>"; };
+		FE65DC2F2E072F63002A3381 /* MainScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenView.swift; sourceTree = "<group>"; };
 		FEAB3C282DF8A7800015B5A6 /* MelodyActionPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MelodyActionPanelView.swift; sourceTree = "<group>"; };
 		FEAB3C2A2DF8A8230015B5A6 /* MelodyActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MelodyActionButton.swift; sourceTree = "<group>"; };
 		FEAB3C2C2DF8A8660015B5A6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -153,7 +157,9 @@
 		FE5732C82DE308BC000F2B8E /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				FE65DC2F2E072F63002A3381 /* MainScreenView.swift */,
 				FE27819A2DE96C0A009C7FDF /* PlayerService.swift */,
+				FE65DC2B2E06E4A0002A3381 /* BaseRouter.swift */,
 				FE2781952DE965EB009C7FDF /* MelodyEditScreen */,
 				FEAB3C2E2DF8AA950015B5A6 /* MelodyActionPanel */,
 				FE5732CA2DE308E6000F2B8E /* Notes */,
@@ -430,8 +436,10 @@
 				FE0B6DCC2DEB30B800BA8793 /* TempoSetupView.swift in Sources */,
 				FEF61F592DE4E66B009A504F /* HarmonicaLayoutView.swift in Sources */,
 				FE0B6DD22DEC1BB300BA8793 /* LayoutNotesGrid.swift in Sources */,
+				FE65DC2C2E06E4A5002A3381 /* BaseRouter.swift in Sources */,
 				FE2781992DE96638009C7FDF /* MelodyEditScreenView.swift in Sources */,
 				FEAB3C302DF8AAB00015B5A6 /* MelodyPlayButton.swift in Sources */,
+				FE65DC302E072F65002A3381 /* MainScreenView.swift in Sources */,
 				FE65DC2A2E05DA69002A3381 /* HarmonicaLayoutConfigurationView.swift in Sources */,
 				FE5732CF2DE30B37000F2B8E /* NoteView.swift in Sources */,
 				FEAB3C2B2DF8A8250015B5A6 /* MelodyActionButton.swift in Sources */,
@@ -609,6 +617,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -641,6 +650,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
