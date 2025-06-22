@@ -22,7 +22,6 @@ struct ContentView: View {
 @Observable
 final class ContetnCoordinatorViewModel {
     let mainScreenViewModel: MainScreenViewModel
-    var selectedTab: ContentTab = .main
 
     init() {
         self.mainScreenViewModel = MainScreenViewModel()
@@ -32,23 +31,36 @@ final class ContetnCoordinatorViewModel {
 struct ContetnCoordinatorView: View {
     @Bindable private var _viewModel: ContetnCoordinatorViewModel
 
+    @Environment(AppNavigationModel.self) private var _appNavigation
+
     init(viewModel: ContetnCoordinatorViewModel) {
         _viewModel = viewModel
     }
 
     var body: some View {
-        TabView(selection: $_viewModel.selectedTab) {
-            MainScreenView(viewModel: _viewModel.mainScreenViewModel)
-                .tag(ContentTab.main)
-                .tabItem {
-                    Image(systemName: _viewModel.selectedTab == .main ? "house.fill" : "house")
-                }
-            NoteView()
-                .tag(ContentTab.favorites)
-                .tabItem {
-                    Image(systemName: _viewModel.selectedTab == .favorites ? "bookmark.fill" : "bookmark")
-                }
+        @Bindable var appNavigation = _appNavigation
+
+        TabView(selection: $appNavigation.selectedTab) {
+
+            NavigationStack(path: $appNavigation.mainRouter.path) {
+                MainScreenView(viewModel: _viewModel.mainScreenViewModel)
+            }
+            .tag(ContentTab.main)
+            .tabItem {
+                Image(systemName: appNavigation.selectedTab == .main ? "house.fill" : "house")
+            }
+            .environment(appNavigation.mainRouter)
+
+            NavigationStack(path: $appNavigation.favoriteRouter.path) {
+                NoteView()
+            }
+            .tag(ContentTab.favorites)
+            .tabItem {
+                Image(systemName: appNavigation.selectedTab == .favorites ? "bookmark.fill" : "bookmark")
+            }
+            .environment(appNavigation.favoriteRouter)
 
         }
+        .environment(\.currentTab, $appNavigation.selectedTab)
     }
 }

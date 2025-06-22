@@ -10,11 +10,13 @@ import SwiftUI
 @main
 struct HarmonicaNotepadApp: App {
     let persistenceController = PersistenceController.shared
+    @Bindable private var _appNavigation = AppNavigationModel()
 
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environment(_appNavigation)
         }
     }
 }

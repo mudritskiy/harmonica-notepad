@@ -7,44 +7,37 @@
 
 import SwiftUI
 
-typealias MainScreenRouter = BaseRouter<MainScreenViewModel.Route>
-
 @Observable
 final class MainScreenViewModel {
     enum Route: Hashable {
-        case some
-    }
-
-    var router: MainScreenRouter
-
-    init(router: MainScreenRouter = MainScreenRouter()) {
-        self.router = router
-    }
-
-    func openEditMelody() {
-        router.navigate(to: .some)
+        case editSong
     }
 }
 
 struct MainScreenView: View {
-    @Bindable var viewModel: MainScreenViewModel
+    @Bindable private var _viewModel: MainScreenViewModel
+    @Environment(MainRouter.self) private var _router
+
+    init(viewModel: MainScreenViewModel) {
+        _viewModel = viewModel
+    }
 
     var body: some View {
-        NavigationStack(path: $viewModel.router.path) {
-            Text("Hello, World!")
-                .navigationDestination(for: MainScreenViewModel.Route.self) { route in
-                    switch route {
-                        case .some:
-                            MelodyEditScreenView(
-                                viewModel: MelodyEditScreenViewModel()
-                            )
-                    }
-                }
+        List {
             Button {
-                viewModel.openEditMelody()
+                _router.navigate(to: MainScreenViewModel.Route.editSong)
             } label: {
-                Text("Open Detail")
+                Text("Open song edit")
             }
         }
+        .navigationDestination(for: MainScreenViewModel.Route.self) { route in
+            switch route {
+                case .editSong:
+                    SongEditScreenView(
+                        viewModel: SongEditScreenViewModel()
+                    )
+            }
+        }
+        .environment(_router)
     }
 }
