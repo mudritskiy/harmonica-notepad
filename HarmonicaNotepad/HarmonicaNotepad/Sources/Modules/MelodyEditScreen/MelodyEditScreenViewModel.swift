@@ -40,6 +40,7 @@ final class MelodyEditScreenViewModel: ObservableObject {
     )
 
     let playerService = PlayerService()
+    let melodyService = MelodyService()
 
     @Published var melody: Melody
     @Published var playingNoteIndex: Int?
@@ -145,7 +146,13 @@ final class MelodyEditScreenViewModel: ObservableObject {
     }
 
     private func updateMelodyRows() {
-        var result: [[MelodyNote]] = [melody.notes]
+        melodyRows = melodyService.breakInRows(notes: melody.notes)
+    }
+}
+
+final class MelodyService {
+    func breakInRows(notes: [MelodyNote]) -> [[MelodyNote]] {
+        var result: [[MelodyNote]] = [notes]
         while let lastRow = result.last,
               let splitIndex = lastRow.firstIndex(where: { $0.type == .newLine }) {
             let firstPart = Array(lastRow[..<splitIndex])
@@ -153,7 +160,7 @@ final class MelodyEditScreenViewModel: ObservableObject {
             result.removeLast()
             result.append(contentsOf: [firstPart, secondPart])
         }
-        melodyRows = result
+        return result
     }
 }
 

@@ -279,6 +279,28 @@ struct Melody {
     }
 }
 
+import SwiftData
+
+@Model
+final class MelodyDataModel {
+    @Attribute(.unique) var id: SongId
+    var key: Key
+    var tempo: Tempo
+    var notes: [MelodyNote]
+
+    init(
+        id: SongId,
+        key: Key,
+        tempo: Tempo,
+        notes: [MelodyNote]
+    ) {
+        self.id = id
+        self.key = key
+        self.tempo = tempo
+        self.notes = notes
+    }
+}
+
 // MARK: - MedolyNote
 struct MelodyNote {
     let type: MelodyNoteType
