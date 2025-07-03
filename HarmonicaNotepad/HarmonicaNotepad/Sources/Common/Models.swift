@@ -17,11 +17,11 @@ extension String {
     static let minus = "-"
 }
 
-enum BreathDirection: Int, CustomStringConvertible {
+enum BreathDirection: Int, Codable, CaseIterable {
     case blow = 1
     case draw
 
-    var description: String {
+    var presentation: String {
         switch self {
             case .blow: .empty
             case .draw: .minus
@@ -29,14 +29,14 @@ enum BreathDirection: Int, CustomStringConvertible {
     }
 }
 
-enum NoteTechnique: Equatable, Identifiable, CustomStringConvertible {
-    enum BendLevel: Int, Comparable, CaseIterable {
+enum NoteTechnique: Equatable, Codable, Identifiable {
+    enum BendLevel: Int, Codable, Comparable, CaseIterable {
         case none
         case level1
         case level2
         case level3
 
-        var description: String {
+        var presentation: String {
             switch self {
                 case .none: ""
                 default: String(self.rawValue)
@@ -62,61 +62,12 @@ enum NoteTechnique: Equatable, Identifiable, CustomStringConvertible {
         }
     }
 
-    var description: String {
+    var presentation: String {
         switch self {
             case.natural: .empty
             case .bend(let level): String(repeating: .apostrophe, count: level.rawValue)
             case .overblow, .overdraw: .degree
         }
-    }
-}
-
-// MARK: - HarmonicaNoteID with Bitmask Encoding/Decoding
-struct HarmonicaNoteId: Hashable, Equatable {
-    let rawValue: Int
-
-    // Encoding layout:
-    // bits 8...15: hole (8 bits)
-    // bits 4...7: technique (4 bits)
-    // bits 0...3: direction (4 bits)
-
-    init(hole: Int, technique: NoteTechnique, direction: BreathDirection) {
-        self.rawValue =
-        (hole << 8) |
-        (technique.id << 4) |
-        direction.rawValue
-    }
-}
-
-// MARK: - Harmonica Note Model
-struct HarmonicaNote: Equatable {
-    var id: HarmonicaNoteId {
-        HarmonicaNoteId(
-            hole: hole,
-            technique: technique,
-            direction: direction
-        )
-    }
-
-    let hole: Int
-    let direction: BreathDirection
-    let technique: NoteTechnique
-    let basePitch: Pitch
-
-    var midiNote: UInt8 {
-        UInt8(clamping: basePitch.rawValue)
-    }
-
-    var velocity: UInt8 {
-        switch technique {
-            case .natural: return 80
-            case .bend: return 90
-            case .overblow, .overdraw: return 100
-        }
-    }
-
-    var description: String {
-        "\(direction.description)\(hole)\(technique.description)"
     }
 }
 
@@ -244,109 +195,4 @@ struct HarmonicaLayout {
             )
         }
     }
-}
-
-
-struct Identified<Owner>: Hashable, Equatable {
-    let rawValue: String
-
-    init(_ rawValue: String) {
-        self.rawValue = rawValue
-    }
-}
-
-// MARK: - Melody Model
-typealias MelodyId = Identified<Melody>
-struct Melody {
-    let id: MelodyId
-    var key: Key
-    var tempo: Tempo
-    var notes: [MelodyNote]
-
-    init(
-        key: Key,
-        tempo: Tempo = Tempo(bpm: Double(TempoStyle.andante.rawValue)),
-        notes: [MelodyNote] = []
-    ) {
-        self.id = MelodyId(UUID().uuidString)
-        self.key = key
-        self.tempo = tempo
-        self.notes = notes
-    }
-
-    func duration(for note: MelodyNote) -> TimeInterval {
-        tempo.duration(of: note.value)
-    }
-}
-
-import SwiftData
-
-@Model
-final class MelodyDataModel {
-    @Attribute(.unique) var id: SongId
-    var key: Key
-    var tempo: Tempo
-    var notes: [MelodyNote]
-
-    init(
-        id: SongId,
-        key: Key,
-        tempo: Tempo,
-        notes: [MelodyNote]
-    ) {
-        self.id = id
-        self.key = key
-        self.tempo = tempo
-        self.notes = notes
-    }
-}
-
-// MARK: - MedolyNote
-struct MelodyNote {
-    let type: MelodyNoteType
-    let note: HarmonicaNote
-    let value: NoteValue
-
-    init(
-        type: MelodyNoteType = .normal,
-        note: HarmonicaNote,
-        value: NoteValue
-    ) {
-        self.type = type
-        self.note = note
-        self.value = value
-    }
-}
-
-extension MelodyNote {
-    static let silence = MelodyNote(
-        type: .silence,
-        note: .default,
-        value: NoteValue(type: .quarter)
-    )
-
-    static let newLine = MelodyNote(
-        type: .newLine,
-        note: .default,
-        value: NoteValue(type: .quarter)
-    )
-
-    var isServiceNote: Bool {
-        type == .silence || type == .newLine
-    }
-}
-
-enum MelodyNoteType: Int {
-    case normal
-    case silence
-    case newLine
-}
-
-extension HarmonicaNote {
-    static let `default` = HarmonicaNote(
-        hole: 1,
-        direction: .blow,
-        technique: .natural,
-        basePitch: .init(key: Key(type: .c), octave: 4)
-    )
 }

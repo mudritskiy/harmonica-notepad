@@ -5,7 +5,7 @@
 //  Created by Volodymyr Mudrik on 31.05.2025.
 //
 
-enum TempoStyle: Int, CaseIterable, CustomStringConvertible {
+enum TempoStyle: Int, CaseIterable {
     case larghissimo = 20
     case grave       = 40
     case largo       = 60
@@ -16,7 +16,7 @@ enum TempoStyle: Int, CaseIterable, CustomStringConvertible {
     case vivace      = 200
     case prestissimo = 300
 
-    var description: String {
+    var presentation: String {
         switch self {
             case .larghissimo: "Larghissimo"
             case .grave:       "Grave"

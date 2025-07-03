@@ -27,7 +27,6 @@ enum SwiftDataServiceError: Error {
     case failedToRecreateStore(storeError: Error, recreationError: Error)
 }
 
-@available(iOS 17, *)
 protocol SwiftDataService {
     static var shared: SwiftDataService { get }
 
@@ -36,12 +35,11 @@ protocol SwiftDataService {
     func resetContainer(for group: SwiftDataModelGroup)
     func resetAllContainers()
 
-    @MainActor
+//    @MainActor
     func context(for group: SwiftDataModelGroup) throws(SwiftDataServiceError) -> ModelContext
 }
 
-@available(iOS 17, *)
-class SwiftDataServiceImpl: SwiftDataService {
+final class SwiftDataServiceImpl: SwiftDataService {
     static let shared: SwiftDataService = SwiftDataServiceImpl()
 
     // MARK: - Dependencies
@@ -169,7 +167,10 @@ struct SwiftDataServiceModelFactoryImpl: SwiftDataServiceModelFactory {
     func makeModel(for group: SwiftDataModelGroup) -> [any PersistentModel.Type] {
         switch group {
             case .song: [
-                MelodyDataModel.self
+                HarmonicaSong.self,
+//                Melody.self,
+//                HarmonicaNote.self,
+//                MelodyNote.self
             ]
         }
     }

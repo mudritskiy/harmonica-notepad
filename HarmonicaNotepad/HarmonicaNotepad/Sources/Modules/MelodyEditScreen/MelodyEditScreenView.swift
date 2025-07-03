@@ -90,7 +90,7 @@ struct MelodyNoteSimpleCellView: View {
     let isPlaying: Bool
 
     var body: some View {
-        Text(note.description)
+        Text(note.presentation)
             .font(.system(size: 11))
             .cornerRadius(4)
             .padding(2)

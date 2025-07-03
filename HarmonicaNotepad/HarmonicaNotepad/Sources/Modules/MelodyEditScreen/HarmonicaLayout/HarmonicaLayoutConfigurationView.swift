@@ -94,7 +94,7 @@ struct HarmonicaLayoutConfigurationBendButtonView: View {
         Button {
             onTap()
         } label: {
-            Text(level.description)
+            Text(level.presentation)
                 .frame(width: 44, height: 44)
                 .background {
                     RoundedRectangle(cornerRadius: 12)

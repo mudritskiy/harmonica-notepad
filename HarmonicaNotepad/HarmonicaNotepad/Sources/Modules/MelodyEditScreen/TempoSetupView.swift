@@ -21,7 +21,7 @@ struct TempoSetupView: View {
         VStack(spacing: 0) {
             Picker("", selection: $selectedBpm) {
                 ForEach(TempoStyle.allCases, id:\.self) { style in
-                    Text("\(style.description)").tag(style.rawValue)
+                    Text("\(style.presentation)").tag(style.rawValue)
                 }
             }
             .pickerStyle(.wheel)
