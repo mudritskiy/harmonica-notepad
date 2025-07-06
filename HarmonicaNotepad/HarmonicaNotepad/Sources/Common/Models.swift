@@ -196,3 +196,15 @@ struct HarmonicaLayout {
         }
     }
 }
+
+extension Key {
+    static var `default`: Key {
+        Key(type: .c)
+    }
+}
+
+extension Tempo {
+    static var `default`: Tempo {
+        Tempo(bpm: Double(TempoStyle.andante.rawValue))
+    }
+}

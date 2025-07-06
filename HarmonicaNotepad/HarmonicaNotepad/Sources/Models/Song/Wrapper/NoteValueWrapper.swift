@@ -8,14 +8,19 @@
 import MusicTheory
 
 struct NoteValueWrapper: Codable {
-    var type: NoteValueTypeWrapper
+    let type: NoteValueTypeWrapper
+    let modifier: NoteModifier.RawValue
 
     init(_ value: NoteValue) {
         self.type = NoteValueTypeWrapper(value.type)
+        self.modifier = value.modifier.rawValue
     }
 
     var wrappedValue: NoteValue {
-        NoteValue(type: type.wrappedValue)
+        NoteValue(
+            type: type.wrappedValue,
+            modifier: NoteModifier(rawValue: modifier) ?? .default
+        )
     }
 }
 

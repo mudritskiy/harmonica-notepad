@@ -7,12 +7,13 @@
 
 import SwiftData
 
-typealias SongId = String//Identified<HarmonicaSong>
+typealias SongId = String
 
 @Model
-final class HarmonicaSong: Sendable {
+final class HarmonicaSong {
     @Attribute(.unique) var id: SongId
     var title: String
+    @Relationship(deleteRule: .cascade, inverse: \Melody.song)
     var melody: Melody
 
     init(id: SongId, title: String, melody: Melody) {
@@ -21,14 +22,3 @@ final class HarmonicaSong: Sendable {
         self.melody = melody
     }
 }
-
-//@Model
-//final class HarmonicaSongDataModel {
-//    @Attribute(.unique) var id: String //SongId
-//    var title: String
-//
-//    init(id: SongId, title: String) {
-//        self.id = id.rawValue
-//        self.title = title
-//    }
-//}

@@ -10,6 +10,7 @@ import SwiftUI
 struct MelodyEditScreenView: View {
     @ObservedObject var viewModel: MelodyEditScreenViewModel
     @State private var isAnimating = false
+    @Environment(\.dismiss) var dismiss
 
     var body: some View {
         VStack {
@@ -19,12 +20,12 @@ struct MelodyEditScreenView: View {
                 SwiftUI.Button(role: .none) {
                     viewModel.onTempoTap()
                 } label: {
-                    Text("Tempo: \(Int(viewModel.melody.tempo.bpm)) bpm")
+                    Text("Tempo: \(Int(viewModel.tempo.bpm)) bpm")
                 }
                 SwiftUI.Button(role: .none) {
                     viewModel.onKeyTap()
                 } label: {
-                    Text("Key: \(viewModel.melody.key.description)")
+                    Text("Key: \(viewModel.key.description)")
                 }
                 .padding(.leading, 12)
             }
@@ -58,7 +59,7 @@ struct MelodyEditScreenView: View {
             }
             .stretching(.vertical)
             .sheet(isPresented: $viewModel.isPresentedTempoSetup) {
-                TempoSetupView(tempo: viewModel.melody.tempo.bpm) { tempo in
+                TempoSetupView(tempo: viewModel.tempo.bpm) { tempo in
                     viewModel.onTempoChange(to: tempo)
                 }
                     .presentationDetents([.fraction(0.4)])
@@ -68,7 +69,7 @@ struct MelodyEditScreenView: View {
                     .presentationContentInteraction(.resizes)
             }
             .sheet(isPresented: $viewModel.isPresentedKeySetup) {
-                KeySetupView(key: viewModel.melody.key) { key in
+                KeySetupView(key: viewModel.key) { key in
                     viewModel.onKeyChange(to: key)
                 }
                 .presentationDetents([.fraction(0.3)])
@@ -82,36 +83,19 @@ struct MelodyEditScreenView: View {
 
             HarmonicaLayoutView(viewModel: viewModel.layoutViewModel)
         }
-    }
-}
-
-struct MelodyNoteSimpleCellView: View {
-    let note: HarmonicaNote
-    let isPlaying: Bool
-
-    var body: some View {
-        Text(note.presentation)
-            .font(.system(size: 11))
-            .cornerRadius(4)
-            .padding(2)
-            .frame(width: 25, height: 25, alignment: .center)
-            .background(
-                MelodyNoteSimpleCellViewBackground(isActive: isPlaying)
-            )
-            .aspectRatio(1, contentMode: .fit)
-    }
-}
-
-struct MelodyNoteSimpleCellViewBackground: View {
-    let isActive: Bool
-    var body: some View {
-        if isActive {
-            RoundedRectangle(cornerRadius: 4)
-                .fill(Color.gray.opacity(0.3))
-        } else {
-            RoundedRectangle(cornerRadius: 4)
-                .stroke(Color.gray.opacity(0.3), lineWidth: 0.5)
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Text("Cancel")
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    viewModel.onApplyTap()
+                    dismiss()
+                } label: {
+                    Text("Apply")
+                }
+            }
         }
-
     }
 }
+

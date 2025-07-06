@@ -62,7 +62,7 @@ final class PlayerService: PlayerServiceState {
         didFinishPlayMelody()
     }
 
-    func playMelody(_ melody: Melody) {
+    func playMelody(_ notes: [MelodyNote], with tempo: Tempo) {
         guard playbackTask == nil else {
             stopPlayingMeloday()
             return
@@ -72,7 +72,7 @@ final class PlayerService: PlayerServiceState {
 
         playbackTask = Task {
             var skippedServiceNotesCount: Int = 0
-            for (index, note) in melody.notes.enumerated() {
+            for (index, note) in notes.enumerated() {
                 skippedServiceNotesCount += note.type == .newLine ? 1 : 0
                 await MainActor.run { [skippedServiceNotesCount] in
                     playingNoteIndex = note.isServiceNote ? nil : (index - skippedServiceNotesCount)
@@ -80,10 +80,10 @@ final class PlayerService: PlayerServiceState {
 
                 switch note.type {
                     case .normal:
-                        await playNote(note, with: melody.tempo)
+                        await playNote(note, with: tempo)
 
                     case .silence, .newLine:
-                        let duration = melody.duration(for: note)
+                        let duration = tempo.duration(of: note.value)
                         try? await Task.sleep(nanoseconds: UInt64(duration * 1_000_000_000))
 
                         await MainActor.run {

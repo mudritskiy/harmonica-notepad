@@ -8,50 +8,21 @@
 import MusicTheory
 import SwiftData
 
-struct HarmonicaNoteId: Hashable, Equatable {
-    let rawValue: Int
-
-    // Encoding layout:
-    // bits 8...15: hole (8 bits)
-    // bits 4...7: technique (4 bits)
-    // bits 0...3: direction (4 bits)
-
-    init(hole: Int, technique: NoteTechnique, direction: BreathDirection) {
-        self.rawValue =
-        (hole << 8) |
-        (technique.id << 4) |
-        direction.rawValue
-    }
-}
-
-@Model
-final class HarmonicaNote: Equatable {
-    var id: HarmonicaNoteId {
-        HarmonicaNoteId(
-            hole: hole,
-            technique: technique,
-            direction: direction
-        )
-    }
-
+struct HarmonicaNotePosition: Codable, Equatable {
     var hole: Int
     var direction: BreathDirection
     var technique: NoteTechnique
-    var basePitchValue: Pitch.RawValue
-    @Transient
-    var basePitch: Pitch { Pitch(rawValue: basePitchValue) ?? .default }
+}
 
+struct HarmonicaNote: Equatable {
+    let position: HarmonicaNotePosition
+    var basePitch: Pitch
 
-    init(hole: Int, direction: BreathDirection, technique: NoteTechnique, basePitch: Pitch) {
-        self.hole = hole
-        self.direction = direction
-        self.technique = technique
-        self.basePitchValue = basePitch.rawValue
-    }
+    var hole: Int { position.hole }
+    var direction: BreathDirection { position.direction }
+    var technique: NoteTechnique { position.technique }
 
-    var midiNote: UInt8 {
-        UInt8(clamping: basePitchValue)
-    }
+    var midiNote: UInt8 { UInt8(clamping: basePitch.rawValue) }
 
     var velocity: UInt8 {
         switch technique {
@@ -63,6 +34,15 @@ final class HarmonicaNote: Equatable {
 
     var presentation: String {
         "\(direction.presentation)\(hole)\(technique.presentation)"
+    }
+
+    init(hole: Int, direction: BreathDirection, technique: NoteTechnique, basePitch: Pitch) {
+        self.position = HarmonicaNotePosition(
+            hole: hole,
+            direction: direction,
+            technique: technique
+        )
+        self.basePitch = basePitch
     }
 }
 

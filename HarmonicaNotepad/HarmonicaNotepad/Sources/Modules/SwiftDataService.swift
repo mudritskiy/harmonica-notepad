@@ -9,16 +9,19 @@ import Foundation
 import SwiftData
 
 protocol SwiftDataServiceFileFactory {
-    func makeFile(for group: SwiftDataModelGroup) -> URL
+//    func makeFile(for group: SwiftDataModelGroup) -> URL
+    func makeFile(name: String?) -> URL
 }
 
 struct SwiftDataServiceFileFactoryImpl: SwiftDataServiceFileFactory {
-    let filePrefix = "swift_data"
-    let fileExtension = "sqlite"
+    private let _filePrefix = "swift_data"
+    private let _fileExtension = "sqlite"
+    private let _mainBundleName = "main"
 
-    func makeFile(for group: SwiftDataModelGroup) -> URL {
-        let fileFullName = "\(filePrefix)_\(group.rawValue).\(fileExtension)"
-        return URL.documentsDirectory.appending(path: fileFullName)
+    func makeFile(name: String? = nil) -> URL {
+        let name: String = name ?? _mainBundleName
+        let fileName = "\(_filePrefix)_\(name).\(_fileExtension)"
+        return URL.documentsDirectory.appending(path: fileName)
     }
 }
 
@@ -27,72 +30,69 @@ enum SwiftDataServiceError: Error {
     case failedToRecreateStore(storeError: Error, recreationError: Error)
 }
 
-protocol SwiftDataService {
-    static var shared: SwiftDataService { get }
 
-    func register(group: SwiftDataModelGroup)
-    func container(for group: SwiftDataModelGroup) throws -> ModelContainer
-    func resetContainer(for group: SwiftDataModelGroup)
-    func resetAllContainers()
-
-//    @MainActor
-    func context(for group: SwiftDataModelGroup) throws(SwiftDataServiceError) -> ModelContext
+protocol SwiftDataCoreService {
+    func container() -> ModelContainer
+    func previewContainer() -> ModelContainer
 }
 
-final class SwiftDataServiceImpl: SwiftDataService {
-    static let shared: SwiftDataService = SwiftDataServiceImpl()
+final class SwiftDataCoreServiceImpl: SwiftDataCoreService {
+    static let shared: SwiftDataCoreService = SwiftDataCoreServiceImpl()
 
     // MARK: - Dependencies
-    private let _modelFactory: SwiftDataServiceModelFactory
     private let _fileFactory: SwiftDataServiceFileFactory
     private let _fileEncryptor: FileEncryptor
 
     // MARK: - Properties
-    private var modelGroups: [SwiftDataModelGroup: [any PersistentModel.Type]] = [:]
-    private var configurations: [SwiftDataModelGroup: ModelConfiguration] = [:]
-    private var containers: [SwiftDataModelGroup: ModelContainer] = [:]
+    private var _cachedContainer: ModelContainer?
+    private var _cachedConfiguration: ModelConfiguration?
+    private let _models: [any PersistentModel.Type] = [HarmonicaSong.self]
 
     // MARK: - Init
     private init(
-        modelFactory: SwiftDataServiceModelFactory = SwiftDataServiceModelFactoryImpl(),
         fileFactory: SwiftDataServiceFileFactory = SwiftDataServiceFileFactoryImpl(),
         fileEncryptor: FileEncryptor = FileEncryptorImpl()
     ) {
-        _modelFactory = modelFactory
         _fileFactory = fileFactory
         _fileEncryptor = fileEncryptor
     }
 
-    // MARK: - Service methods
-    func register(group: SwiftDataModelGroup) {
-        let models = _modelFactory.makeModel(for: group)
-        if var existing = modelGroups[group] {
-            existing.append(contentsOf: models)
-            modelGroups[group] = existing
-        } else {
-            modelGroups[group] = models
+    // MARK: - Service
+    func container() -> ModelContainer {
+        do {
+            return try _container()
+        } catch {
+            fatalError("Coud not configure the container: \(error)")
         }
     }
 
-    func container(for group: SwiftDataModelGroup) throws(SwiftDataServiceError) -> ModelContainer {
-        if let container = containers[group] {
+    func previewContainer() -> ModelContainer {
+        do {
+            let schema = try _schema()
+            let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
+            let container = try ModelContainer(for: schema, configurations: [configuration])
+            return container
+        } catch {
+            fatalError("Could not configure preview container: \(error)")
+        }
+    }
+
+    private func _container() throws(SwiftDataServiceError) -> ModelContainer {
+        if let container = _cachedContainer {
             return container
         }
 
-        guard let models = modelGroups[group], !models.isEmpty else {
-            throw SwiftDataServiceError.noModelRegistered
-        }
-
-        let schema = Schema(models)
-        let url = _fileFactory.makeFile(for: group)
-        _encryptFile(at: url)
+        let schema = try _schema()
+        let url = _fileFactory.makeFile(name: nil)
+        debugPrint(url.absoluteString)
+//        _encryptFile(at: url)
 
         let configuration: ModelConfiguration
-        if let cachedConfiguration = configurations[group] {
+        if let cachedConfiguration = _cachedConfiguration {
             configuration = cachedConfiguration
         } else {
             configuration = ModelConfiguration(schema: schema, url: url, allowsSave: true)
-            configurations[group] = configuration
+            _cachedConfiguration = configuration
         }
 
         let newContainer: ModelContainer
@@ -110,9 +110,17 @@ final class SwiftDataServiceImpl: SwiftDataService {
             }
         }
 
-
-        containers[group] = newContainer
+        _cachedContainer = newContainer
         return newContainer
+    }
+
+    private func _schema() throws(SwiftDataServiceError) -> Schema {
+        guard !_models.isEmpty else {
+            throw SwiftDataServiceError.noModelRegistered
+        }
+
+        let schema = Schema(_models)
+        return schema
     }
 
     private func _removeOldStoreFiles(at url: URL) {
@@ -129,49 +137,9 @@ final class SwiftDataServiceImpl: SwiftDataService {
         }
     }
 
-    @MainActor
-    func context(for group: SwiftDataModelGroup) throws(SwiftDataServiceError) -> ModelContext {
-        do {
-            return try container(for: group).mainContext
-        } catch {
-            throw SwiftDataServiceError.failedToRecreateStore(storeError: error, recreationError: error)
-        }
-    }
-
-    func resetContainer(for group: SwiftDataModelGroup) {
-        containers.removeValue(forKey: group)
-        let customURL = _fileFactory.makeFile(for: group)
+    func resetContainer() {
+        _cachedContainer = nil
+        let customURL = _fileFactory.makeFile(name: nil)
         _removeOldStoreFiles(at: customURL)
-    }
-
-    func resetAllContainers() {
-        for group in SwiftDataModelGroup.allCases {
-            resetContainer(for: group)
-        }
-    }
-}
-
-// MARK: - ModelGroup
-enum SwiftDataModelGroup: String, CaseIterable {
-    case song
-}
-
-// MARK: - SwiftDataServiceModelFactory
-@available(iOS 17, *)
-protocol SwiftDataServiceModelFactory {
-    func makeModel(for group: SwiftDataModelGroup) -> [any PersistentModel.Type]
-}
-
-@available(iOS 17, *)
-struct SwiftDataServiceModelFactoryImpl: SwiftDataServiceModelFactory {
-    func makeModel(for group: SwiftDataModelGroup) -> [any PersistentModel.Type] {
-        switch group {
-            case .song: [
-                HarmonicaSong.self,
-//                Melody.self,
-//                HarmonicaNote.self,
-//                MelodyNote.self
-            ]
-        }
     }
 }

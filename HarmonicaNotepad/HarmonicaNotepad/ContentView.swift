@@ -5,6 +5,7 @@
 //  Created by Volodymyr Mudrik on 11.07.2024.
 //
 
+import SwiftData
 import SwiftUI
 import MusicTheory
 
@@ -15,35 +16,52 @@ enum ContentTab {
 
 struct ContentView: View {
     var body: some View {
-        ContetnCoordinatorView(viewModel: ContetnCoordinatorViewModel())
+        ContentCoordinatorView(viewModel: ContentCoordinatorViewModel())
     }
 }
 
 @Observable
-final class ContetnCoordinatorViewModel {
-    let mainScreenViewModel: MainScreenViewModel
+final class ContentCoordinatorViewModel {
+    // MARK: - Dependencies
+    private let _swiftDataCoreService: SwiftDataCoreService
 
-    init() {
-        self.mainScreenViewModel = MainScreenViewModel()
+    // MARK: - Properties
+    let mainScreenViewModel: MainScreenViewModel
+    let songListViewModel: SongListViewModel
+    let container: ModelContainer
+
+    // MARK: - Init
+    init(
+        swiftDataCoreService: SwiftDataCoreService = SwiftDataCoreServiceImpl.shared
+    ) {
+        mainScreenViewModel = MainScreenViewModel()
+        songListViewModel = SongListViewModel()
+        _swiftDataCoreService = swiftDataCoreService
+        container = swiftDataCoreService.container()
     }
 }
 
-struct ContetnCoordinatorView: View {
-    @Bindable private var _viewModel: ContetnCoordinatorViewModel
-
+struct ContentCoordinatorView: View {
+    // MARK: - Properties
+    @Bindable private var _viewModel: ContentCoordinatorViewModel
     @Environment(AppNavigationModel.self) private var _appNavigation
 
-    init(viewModel: ContetnCoordinatorViewModel) {
+    // MARK: - Init
+    init(
+        viewModel: ContentCoordinatorViewModel
+    ) {
         _viewModel = viewModel
     }
 
+    // MARK: - Render
     var body: some View {
         @Bindable var appNavigation = _appNavigation
 
         TabView(selection: $appNavigation.selectedTab) {
 
             NavigationStack(path: $appNavigation.mainRouter.path) {
-                MainScreenView(viewModel: _viewModel.mainScreenViewModel)
+                SongListView(viewModel: _viewModel.songListViewModel)
+//                MainScreenView(viewModel: _viewModel.mainScreenViewModel)
             }
             .tag(ContentTab.main)
             .tabItem {
@@ -62,5 +80,24 @@ struct ContetnCoordinatorView: View {
 
         }
         .environment(\.currentTab, $appNavigation.selectedTab)
+        .modelContainer(_viewModel.container)
+    }
+}
+
+
+struct Preview {
+    let container: ModelContainer
+
+    init() {
+        container = SwiftDataCoreServiceImpl.shared.previewContainer()
+    }
+
+    func populate(with examples: [any PersistentModel]) {
+        Task { @MainActor in
+            examples.forEach { example in
+                container.mainContext.insert(example)
+            }
+            try container.mainContext.save()
+        }
     }
 }

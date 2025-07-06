@@ -9,29 +9,26 @@ import Foundation
 import MusicTheory
 import SwiftData
 
-// MARK: - Melody Model
-typealias MelodyId = Identified<Melody>
-
 @Model
 final class Melody {
-//    var id: SongId
     var key: Key
-    
     var bpm: Double
-    var notes: [MelodyNote]
+    var notesWrapped: [MelodyNoteWrapper]
+    var song: HarmonicaSong?
 
-    init(
-//        id: SongId,
-        key: Key,
-        tempo: Tempo = Tempo(bpm: Double(TempoStyle.andante.rawValue)),
-        notes: [MelodyNote] = []
-    ) {
-        //        self.id = MelodyId(UUID().uuidString)
-//        self.id = id
-        self.key = key
-        self.tempo = tempo
-        self.notes = notes
-        self.bpm = tempo.bpm
+    @Transient
+    private var _notes: [MelodyNote] = []
+    var notes: [MelodyNote] {
+        get {
+            guard _notes.isEmpty else { return _notes }
+            let layout = HarmonicaLayout(key: key)
+            let layoutNotes = layout.notes
+            _notes = notesWrapped.compactMap { MelodyNote(storeNote: $0, notes: layoutNotes) }
+            return _notes
+        }
+        set {
+            _notes = newValue
+        }
     }
 
     @Transient
@@ -39,27 +36,15 @@ final class Melody {
         didSet { bpm = tempo.bpm }
     }
 
-    func duration(for note: MelodyNote) -> TimeInterval {
-        tempo.duration(of: note.value)
+    init(
+        key: Key = .default,
+        tempo: Tempo = Tempo(bpm: Double(TempoStyle.andante.rawValue)),
+        notes: [MelodyNote] = []
+    ) {
+        self.key = key
+        self.bpm = tempo.bpm
+        self.tempo = tempo
+        self.notesWrapped = notes.map { $0.wrappedValue }
+        _notes = notes
     }
 }
-
-//@Model
-//final class MelodyDataModel {
-//    @Attribute(.unique) var id: String //SongId
-//    var key: Key
-//    var tempo: Tempo
-//    var notes: [MelodyNote]
-//
-//    init(
-//        id: SongId,
-//        key: Key,
-//        tempo: Tempo,
-//        notes: [MelodyNote]
-//    ) {
-//        self.id = id.rawValue
-//        self.key = key
-//        self.tempo = tempo
-//        self.notes = notes
-//    }
-//}
