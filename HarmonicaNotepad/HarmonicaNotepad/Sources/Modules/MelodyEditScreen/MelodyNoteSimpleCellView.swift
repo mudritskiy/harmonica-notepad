@@ -13,7 +13,7 @@ struct MelodyNoteSimpleCellView: View {
 
     var body: some View {
         Text(note.presentation)
-            .font(.system(size: 11))
+            .font(.system(size: 10))
             .cornerRadius(4)
             .padding(2)
             .frame(width: 25, height: 25, alignment: .center)
@@ -39,8 +39,14 @@ struct MelodyNoteSimpleCellViewBackground: View {
 }
 
 #Preview {
+    let note = HarmonicaNote(
+        hole: 3,
+        direction: .draw,
+        technique: .bend(.level3),
+        basePitch: .default
+    )
     HStack(spacing: 8) {
         MelodyNoteSimpleCellView(note: .default, isPlaying: false)
-        MelodyNoteSimpleCellView(note: .default, isPlaying: true)
+        MelodyNoteSimpleCellView(note: note, isPlaying: true)
     }
 }

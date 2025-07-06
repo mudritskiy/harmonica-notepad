@@ -31,9 +31,7 @@ struct NotesPresentationView: View {
 }
 
 #Preview {
-    let layout = HarmonicaLayout.init(key: .default)
-    let notes = layout.notes.prefix(15).map {
-        MelodyNote(note: $0)
-    }
+    let preview = Preview()
+    let notes = preview.sampleMelodyNotes()
     NotesPresentationView(notes: notes, style: .numbers)
 }

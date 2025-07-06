@@ -83,21 +83,3 @@ struct ContentCoordinatorView: View {
         .modelContainer(_viewModel.container)
     }
 }
-
-
-struct Preview {
-    let container: ModelContainer
-
-    init() {
-        container = SwiftDataCoreServiceImpl.shared.previewContainer()
-    }
-
-    func populate(with examples: [any PersistentModel]) {
-        Task { @MainActor in
-            examples.forEach { example in
-                container.mainContext.insert(example)
-            }
-            try container.mainContext.save()
-        }
-    }
-}
