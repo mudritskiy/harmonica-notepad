@@ -66,8 +66,8 @@ struct SongListView: View {
         .navigationDestination(for: SongListViewModel.Route.self) { route in
             switch route {
                 case .editSong(let song):
-                    SongEditScreenView(
-                        viewModel: SongEditScreenViewModel(song: song)
+                    SongScreenView(
+                        viewModel: SongScreenViewModel(song: song)
                     )
                 case .addSong:
                     SongEditScreenView(

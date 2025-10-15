@@ -9,6 +9,11 @@ import SwiftUI
 
 @Observable
 final class SongScreenViewModel {
+    enum Route: Hashable {
+        case editSong
+        case editMelody
+    }
+
     var song: HarmonicaSong
 
     init(song: HarmonicaSong) {
@@ -18,6 +23,7 @@ final class SongScreenViewModel {
 
 struct SongScreenView: View {
     private var _viewModel: SongScreenViewModel
+    @Environment(MainRouter.self) private var _router
 
     init(viewModel: SongScreenViewModel) {
         _viewModel = viewModel
@@ -55,7 +61,7 @@ struct SongScreenView: View {
                 }
                 .padding(.leading, 8)
                 HStack(spacing: 0)  {
-                    Image(systemName: "metronome")
+                    Image(systemName: "chevron.up.2")
                     Text("easy")
                         .padding(.leading, 4)
                 }
@@ -75,63 +81,166 @@ struct SongScreenView: View {
                             .padding(.horizontal, 8)
                             .font(.caption2)
                             .fontWeight(.light)
+                            .fontDesign(.rounded)
+                            .foregroundStyle(.black.opacity(0.7))
                             .frame(height: 20)
                             .background {
                                 RoundedRectangle(cornerRadius: 4)
                                     .fill(.gray.opacity(0.1))
-//                                    .overlay(
-//                                        RoundedRectangle(cornerRadius: 4)
-//                                            .stroke(.gray.opacity(0.1), lineWidth: 1)
-////                                            .padding(1)
-//                                    )
                             }
                     }
-                }
+                    Spacer()
+                    HStack(alignment: .firstTextBaseline, spacing: 4) {
+                        Button {
+                            _router.navigate(to: SongScreenViewModel.Route.editSong)
+                        } label: {
+                            ButttonEditContentViewV2()
+                        }
+                        .padding(.trailing, 16)
+                    }
+               }
                 .padding(.vertical, 16)
             }
             Rectangle()
                 .frame(height: 0.5)
                 .foregroundColor(.gray.opacity(0.5))
                 .padding(.vertical, 16)
-            NotesPresentationView(
-                notes: _viewModel.song.melody.notes,
-                style: .numbers
-            )
+
+            VStack(alignment: .leading, spacing: 0) {
+                HStack(alignment: .center, spacing: 0) {
+                    Text("Melody")
+                        .font(.title2)
+                        .fontWeight(.regular)
+                    Spacer()
+                    Button {
+                        _router.navigate(to: SongScreenViewModel.Route.editSong)
+                    } label: {
+                        HStack(spacing: 0) {
+                            Image(systemName: "play")
+                            Text("Play")
+                                .padding(.leading, 4)
+                        }
+                        .padding(8)
+                        .font(.caption)
+                        .fontWeight(.light)
+                        .foregroundStyle(.black)
+                        .background {
+                            RoundedRectangle(cornerRadius: 4)
+                                .stroke(.gray.opacity(0.5), lineWidth: 0.5)
+                        }
+                    }
+                    Button {
+                        _router.navigate(to: SongScreenViewModel.Route.editSong)
+                    } label: {
+                        ButttonEditContentViewV2()
+                    }
+                    .padding(.trailing, 16)
+                        .padding(.leading, 16)
+                }
+
+                HStack(spacing: 0) {
+                    HStack(spacing: 0)  {
+                        Image(systemName: "key")
+                        Text("Key \(_viewModel.song.melody.key.description)")
+                            .padding(.leading, 4)
+                    }
+                    HStack(spacing: 0)  {
+                        Image(systemName: "metronome")
+                        Text(
+                            "\(TempoStyle.tempo(for: Int(_viewModel.song.melody.bpm)).presentation) (\(String(format: "%d bpm", Int(_viewModel.song.melody.tempo.bpm))))"
+                        )
+                        .padding(.leading, 4)
+                    }
+                    .padding(.leading, 8)
+                    Spacer()
+                }
+                .font(.caption)
+                .fontWeight(.thin)
+                .padding(.top, 16)
+
+                ScrollView {
+                    NotesPresentationView(
+                        notes: _viewModel.song.melody.notes,
+                        style: .numbers
+                    )
+                }
+                .padding(.top, 16)
+                HStack(alignment: .center, spacing: 0) {
+                    Spacer()
+                    HStack(alignment: .center, spacing: 0) {
+                        Image(systemName: "text.magnifyingglass")
+                            .resizable()
+                            .frame(width: 16, height: 16, alignment: .center)
+                        Text("expand".uppercased())
+                            .padding(.leading, 8)
+                    }
+                    .foregroundStyle(.black)
+                    .fontWeight(.light)
+                    .font(.caption)
+                    .padding(8)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(style: StrokeStyle(lineWidth: 0.5, dash: [4]))
+                            .foregroundColor(.gray)
+                    )
+                    Spacer()
+                }
+            }
             Spacer()
         }
         .padding(16)
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button {
-
-                } label: {
-                    HStack(alignment: .center, spacing: 0) {
-                        Image(systemName: "heart")
-                        Text("Back")
-                    }
-                }
-            }
-            ToolbarItem(placement: .topBarTrailing) {
-                HStack(alignment: .center, spacing: 0) {
-                    Button {
-
-                    } label: {
-                        HStack(alignment: .center, spacing: 0) {
-                            Image(systemName: "square.and.pencil")
-                            Text("Edit")
-                        }
-                    }
-                }
+        .navigationDestination(for: SongScreenViewModel.Route.self) { route in
+            switch route {
+                case .editSong:
+                    SongEditScreenView(
+                        viewModel: SongEditScreenViewModel(song: _viewModel.song)
+                    )
+                case .editMelody:
+                    EmptyView()
             }
         }
+    }
+}
 
+struct ButttonEditContentView: View {
+    var body: some View {
+        Image(systemName: "square.and.pencil")
+            .resizable()
+            .foregroundStyle(.white)
+            .frame(width: 16, height: 16, alignment: .center)
+            .background {
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(.gray.opacity(0.75))
+                    .frame(width: 32, height: 32, alignment: .center)
+                    .padding(.trailing, 2)
+                    .padding(.top, 2)
+            }
+    }
+}
+
+struct ButttonEditContentViewV2: View {
+    var body: some View {
+        Image(systemName: "square.and.pencil")
+            .resizable()
+            .foregroundStyle(.black)
+            .font(.callout)
+            .fontWeight(.light)
+            .frame(width: 20, height: 20, alignment: .center)
     }
 }
 
 #Preview {
     let preview = Preview()
-    let song = preview.sampleSong()
+    let appNavigation = AppNavigationModel()
+    let song = preview.sampleSong(
+        hasArtist: true,
+        hasComments: true,
+        hasTags: true,
+        hasNotes: true
+    )
     SongScreenView(
         viewModel: SongScreenViewModel(song: song)
     )
+    .modelContainer(preview.container)
+    .environment(appNavigation.mainRouter)
 }
