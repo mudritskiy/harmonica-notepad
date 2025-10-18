@@ -5,6 +5,7 @@
 //  Created by Volodymyr Mudrik on 06.07.2025.
 //
 
+import MusicTheory
 import SwiftUI
 
 @Observable
@@ -15,9 +16,11 @@ final class SongScreenViewModel {
     }
 
     var song: HarmonicaSong
+    var notes: [MelodyNote]
 
     init(song: HarmonicaSong) {
         self.song = song
+        self.notes = song.melody.notes
     }
 }
 
@@ -147,7 +150,7 @@ struct SongScreenView: View {
                     HStack(spacing: 0)  {
                         Image(systemName: "metronome")
                         Text(
-                            "\(TempoStyle.tempo(for: Int(_viewModel.song.melody.bpm)).presentation) (\(String(format: "%d bpm", Int(_viewModel.song.melody.tempo.bpm))))"
+                            "\(TempoStyle.tempo(for: Int(_viewModel.song.melody.bpm)).presentation) (\(String(format: "%d bpm", Int(_viewModel.song.melody.bpm))))"
                         )
                         .padding(.leading, 4)
                     }
@@ -160,7 +163,7 @@ struct SongScreenView: View {
 
                 ScrollView {
                     NotesPresentationView(
-                        notes: _viewModel.song.melody.notes,
+                        notes: _viewModel.notes,
                         style: .numbers
                     )
                 }

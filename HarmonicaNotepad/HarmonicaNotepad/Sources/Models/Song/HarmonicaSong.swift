@@ -18,8 +18,7 @@ final class HarmonicaSong {
     var comments: String
     var isFavorite: Bool = false
 
-    @Relationship(deleteRule: .cascade, inverse: \Melody.song)
-    var melody: Melody
+    var melody: MelodyWrapper
 
     @Relationship(deleteRule: .nullify)
     var tags: [SongTag]?
@@ -29,7 +28,7 @@ final class HarmonicaSong {
         title: String,
         artist: String = "",
         comments: String = "",
-        melody: Melody
+        melody: MelodyWrapper
     ) {
         self.id = id
         self.title = title

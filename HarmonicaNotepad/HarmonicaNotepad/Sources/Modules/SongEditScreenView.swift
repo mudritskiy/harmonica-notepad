@@ -30,11 +30,7 @@ final class SongEditScreenViewModel {
     }
 
     func isMelodyAvailable() -> Bool {
-        let targetSongId = self.songId
-        var descriptor = FetchDescriptor<Melody>(predicate: #Predicate { $0.song?.id == targetSongId } )
-        descriptor.fetchLimit = 1
-        let melody = try? modelContext?.fetch(descriptor).first
-        return melody != nil
+        !melody.notes.isEmpty
     }
 
     @ObservationIgnored
@@ -53,7 +49,7 @@ final class SongEditScreenViewModel {
         if let song = song {
             self.songId = song.id
             self.title = song.title
-            self.melody = song.melody
+            self.melody = song.melody.value
         } else {
             self.songId = SongId(UUID().uuidString)
             self.title = ""
@@ -64,7 +60,11 @@ final class SongEditScreenViewModel {
     func save() {
         guard let container = modelContext?.container else { return }
         Task.detached(priority: .background) {
-            let song = HarmonicaSong(id: self.songId, title: self.title, melody: self.melody)
+            let song = HarmonicaSong(
+                id: self.songId,
+                title: self.title,
+                melody: MelodyWrapper(self.melody)
+            )
             let actor = SongService(modelContainer: container)
             await actor.save(song)
         }

@@ -37,7 +37,8 @@ struct Preview {
             title: "All You Need Is Love",
             artist: hasArtist ? "The Beatles" : "",
             comments: hasComments ? "Chord progression, Strong Lyrics, Solid song structure (chord and lyrics have to come together), Ability to evoke reaction and emotion, and having that Special hook with certain musical interlude that can embed itself in your listeners’ brains." : "",
-            melody: melody
+//            melody: melody
+            melody: MelodyWrapper(melody)
         )
         if hasTags {
             song.tags = Array(sampleTags().prefix(3))
