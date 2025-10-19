@@ -69,3 +69,16 @@ struct MelodyActionPanelView: View {
         }
     }
 }
+
+#Preview {
+    MelodyActionPanelView(
+        viewModel: MelodyActionPanelViewModel(
+            playerService: PlayerService(),
+            onSilenceTap: {},
+            onNewLineTap: {},
+            onDeleteTap: {},
+            onPlayTap: {},
+            onClearTap: {}
+        )
+    )
+}

@@ -57,14 +57,14 @@ final class PlayerService: PlayerServiceState {
         currentlyPlayingNote = nil
     }
 
-    func stopPlayingMeloday() {
+    func stopPlayingMelody() {
         playbackTask?.cancel()
         didFinishPlayMelody()
     }
 
     func playMelody(_ notes: [MelodyNote], with tempo: Tempo) {
         guard playbackTask == nil else {
-            stopPlayingMeloday()
+            stopPlayingMelody()
             return
         }
 

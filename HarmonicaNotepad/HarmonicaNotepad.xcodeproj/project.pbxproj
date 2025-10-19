@@ -16,6 +16,7 @@
 		FE2781972DE965FB009C7FDF /* MelodyEditScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2781962DE965F9009C7FDF /* MelodyEditScreenViewModel.swift */; };
 		FE2781992DE96638009C7FDF /* MelodyEditScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2781982DE96635009C7FDF /* MelodyEditScreenView.swift */; };
 		FE27819B2DE96C0D009C7FDF /* PlayerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE27819A2DE96C0A009C7FDF /* PlayerService.swift */; };
+		FE2E2EEF2EA507F000F82415 /* View+AlertInfoModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2E2EEE2EA507EA00F82415 /* View+AlertInfoModifier.swift */; };
 		FE37594C2E164D6400B7F3E5 /* NoteValueWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE37594B2E164D6100B7F3E5 /* NoteValueWrapper.swift */; };
 		FE4F96242EA3ACDA00B4146D /* NoteValueTypeWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4F96232EA3ACD900B4146D /* NoteValueTypeWrapper.swift */; };
 		FE4F96272EA3B36500B4146D /* MelodyNoteWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4F96262EA3B36400B4146D /* MelodyNoteWrapper.swift */; };
@@ -89,6 +90,7 @@
 		FE2781962DE965F9009C7FDF /* MelodyEditScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MelodyEditScreenViewModel.swift; sourceTree = "<group>"; };
 		FE2781982DE96635009C7FDF /* MelodyEditScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MelodyEditScreenView.swift; sourceTree = "<group>"; };
 		FE27819A2DE96C0A009C7FDF /* PlayerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerService.swift; sourceTree = "<group>"; };
+		FE2E2EEE2EA507EA00F82415 /* View+AlertInfoModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+AlertInfoModifier.swift"; sourceTree = "<group>"; };
 		FE37594B2E164D6100B7F3E5 /* NoteValueWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteValueWrapper.swift; sourceTree = "<group>"; };
 		FE4F96232EA3ACD900B4146D /* NoteValueTypeWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteValueTypeWrapper.swift; sourceTree = "<group>"; };
 		FE4F96262EA3B36400B4146D /* MelodyNoteWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MelodyNoteWrapper.swift; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 				FE0B6DD42DEC1C1100BA8793 /* SwiftUI+View.swift */,
 				FE65DC222E05C696002A3381 /* SwiftUI+Debug.swift */,
 				FEB5CDFA2E195DBB00C5BDC9 /* View+OnFirstAppear.swift */,
+				FE2E2EEE2EA507EA00F82415 /* View+AlertInfoModifier.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -176,15 +179,23 @@
 		FE2781952DE965EB009C7FDF /* MelodyEditScreen */ = {
 			isa = PBXGroup;
 			children = (
+				FE2E2EED2EA4E1E700F82415 /* SetupViews */,
+				FEAB3C2E2DF8AA950015B5A6 /* MelodyActionPanel */,
 				FE65DC242E05D9D4002A3381 /* HarmonicaLayout */,
 				FE2781962DE965F9009C7FDF /* MelodyEditScreenViewModel.swift */,
-				FE0B6DCD2DEB30D500BA8793 /* TempoStyle.swift */,
-				FE0B6DCB2DEB30B700BA8793 /* TempoSetupView.swift */,
-				FE0B6DCF2DEB463800BA8793 /* KeySetupView.swift */,
 				FE2781982DE96635009C7FDF /* MelodyEditScreenView.swift */,
 				FEB5CDFE2E1A81BD00C5BDC9 /* MelodyNoteSimpleCellView.swift */,
 			);
 			path = MelodyEditScreen;
+			sourceTree = "<group>";
+		};
+		FE2E2EED2EA4E1E700F82415 /* SetupViews */ = {
+			isa = PBXGroup;
+			children = (
+				FE0B6DCB2DEB30B700BA8793 /* TempoSetupView.swift */,
+				FE0B6DCF2DEB463800BA8793 /* KeySetupView.swift */,
+			);
+			path = SetupViews;
 			sourceTree = "<group>";
 		};
 		FE3759492E164C9500B7F3E5 /* Song */ = {
@@ -255,7 +266,6 @@
 				FEB5CDF82E1959D600C5BDC9 /* NotesPresentationStyle.swift */,
 				FEB5CDF62E19597500C5BDC9 /* NotesPresentationNumbersStyleView.swift */,
 				FE2781952DE965EB009C7FDF /* MelodyEditScreen */,
-				FEAB3C2E2DF8AA950015B5A6 /* MelodyActionPanel */,
 				FE5732CA2DE308E6000F2B8E /* Notes */,
 			);
 			path = Modules;
@@ -304,6 +314,7 @@
 			children = (
 				FE4F96282EA3BB6400B4146D /* Helpers */,
 				FE3759492E164C9500B7F3E5 /* Song */,
+				FE0B6DCD2DEB30D500BA8793 /* TempoStyle.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -545,6 +556,7 @@
 				FEAF083C2C4055850014DA01 /* HarmonicaNotepad.xcdatamodeld in Sources */,
 				FE4F962B2EA3BBBD00B4146D /* MelodyWrapper.swift in Sources */,
 				FE4F96272EA3B36500B4146D /* MelodyNoteWrapper.swift in Sources */,
+				FE2E2EEF2EA507F000F82415 /* View+AlertInfoModifier.swift in Sources */,
 				FE5732D22DE36A33000F2B8E /* Models.swift in Sources */,
 				FEAB3C322DF8AAE60015B5A6 /* MelodyClearButton.swift in Sources */,
 				FE9F72082E14673000ED83FE /* MelodyNote.swift in Sources */,
@@ -753,7 +765,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -786,7 +798,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
