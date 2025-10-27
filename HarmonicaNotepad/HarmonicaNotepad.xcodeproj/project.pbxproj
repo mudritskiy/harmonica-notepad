@@ -270,10 +270,10 @@
 				FEB5CE002E1ADAAF00C5BDC9 /* Services */,
 				FE65DC2F2E072F63002A3381 /* MainScreenView.swift */,
 				FE0747F02E0837EF00A9A797 /* SongEditScreenView.swift */,
-				FEB7C77A2E1ADF690064B630 /* SongScreenView.swift */,
 				FEB5CDFC2E19A1F900C5BDC9 /* SongListView.swift */,
 				FEB5CDF82E1959D600C5BDC9 /* NotesPresentationStyle.swift */,
 				FEB5CDF62E19597500C5BDC9 /* NotesPresentationNumbersStyleView.swift */,
+				FE8C70822EA68A2000B65FC4 /* SongScreenView */,
 				FE2781952DE965EB009C7FDF /* MelodyEditScreen */,
 				FE5732CA2DE308E6000F2B8E /* Notes */,
 			);
@@ -326,6 +326,15 @@
 				FE83CCC02EAE2503002B9F0D /* HarmonicaTextEditField.swift */,
 			);
 			path = CommonHelpers;
+			sourceTree = "<group>";
+		};
+		FE8C70822EA68A2000B65FC4 /* SongScreenView */ = {
+			isa = PBXGroup;
+			children = (
+				FE8C70832EA68A3800B65FC4 /* Views */,
+				FEB7C77A2E1ADF690064B630 /* SongScreenView.swift */,
+			);
+			path = SongScreenView;
 			sourceTree = "<group>";
 		};
 		FE8C70832EA68A3800B65FC4 /* Views */ = {

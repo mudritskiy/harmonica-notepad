@@ -77,7 +77,6 @@ struct ContentCoordinatorView: View {
                 Image(systemName: appNavigation.selectedTab == .favorites ? "bookmark.fill" : "bookmark")
             }
             .environment(appNavigation.favoriteRouter)
-
         }
         .environment(\.currentTab, $appNavigation.selectedTab)
         .modelContainer(_viewModel.container)

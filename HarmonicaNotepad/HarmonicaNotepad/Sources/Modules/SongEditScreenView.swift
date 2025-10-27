@@ -103,40 +103,21 @@ struct SongEditScreenView: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: .zero) {
-            VStack(spacing: 4) {
-                TextField("Title", text: $_viewModel.title)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .textFieldStyle(.plain)
-                Rectangle()
-                    .frame(
-                        width: _viewModel.titleWidth + 32,
-                        height: 0.5
-                    )
-                    .foregroundColor(.gray)
-                    .animation(.easeInOut, value: _viewModel.titleWidth)
-                Text("Title")
-                    .font(.caption)
-                    .foregroundColor(.gray)
-                    .padding(.top, 4)
-            }
-            Button {
-                _router.navigate(to: SongEditScreenViewModel.Route.editMelody)
-            } label: {
-                Text("Edit melody")
-            }
-            .padding(.top, 16)
-            Button {
-                _viewModel.save()
-            } label: {
-                Text("Save melody")
-            }
-            .padding(.top, 16)
+            HarmonicaTextEditFieldRounded(
+                title: "Title",
+                placeholder: "Title",
+                text: $_viewModel.title,
+                limit: 30
+            )
+            _buttonEdit()
+                .padding(.top, 16)
+            _buttonSave()
+                .padding(.top, 16)
             NotesPresentationView(
                 notes: _viewModel.isMelodyAvailable() ? _viewModel.melody.notes : [],
                 style: .numbers
             )
-                .padding(.top, 16)
+            .padding(.top, 16)
             Spacer()
         }
         .padding(.horizontal, 16)
@@ -152,5 +133,21 @@ struct SongEditScreenView: View {
             }
         }
         .environment(_router)
+    }
+
+    private func _buttonEdit() -> some View {
+        Button {
+            _router.navigate(to: SongEditScreenViewModel.Route.editMelody)
+        } label: {
+            Text("Edit melody")
+        }
+    }
+
+    private func _buttonSave() -> some View {
+        Button {
+            _viewModel.save()
+        } label: {
+            Text("Save melody")
+        }
     }
 }
