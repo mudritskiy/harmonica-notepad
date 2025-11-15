@@ -13,13 +13,13 @@ struct HarmonicaTextEditFieldRounded: View {
     @Binding var text: String
     let limit: Int
 
-    var titleWidth: CGFloat {
-        let displayText = text.isEmpty ? placeholder : text
-        let font = UIFont.systemFont(ofSize: 17)
-        let attributes = [NSAttributedString.Key.font: font]
-        let size = (displayText as NSString).size(withAttributes: attributes)
-        return size.width
-    }
+//    var titleWidth: CGFloat {
+//        let displayText = text.isEmpty ? placeholder : text
+//        let font = UIFont.systemFont(ofSize: 17)
+//        let attributes = [NSAttributedString.Key.font: font]
+//        let size = (displayText as NSString).size(withAttributes: attributes)
+//        return size.width
+//    }
 
     var body: some View {
         CardContainer {

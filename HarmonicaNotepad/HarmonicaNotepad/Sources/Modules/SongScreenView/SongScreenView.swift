@@ -15,12 +15,36 @@ final class SongScreenViewModel {
         case editMelody
     }
 
+    private let _playerService = PlayerService()
+
     var song: HarmonicaSong
     var notes: [MelodyNote]
 
     init(song: HarmonicaSong) {
         self.song = song
         self.notes = song.melody.notes
+    }
+
+    func updateSong(with songProperties: HarmonicaSongProperties) {
+        song.artist = songProperties.artist
+        song.comments = songProperties.comments
+        song.title = songProperties.title
+    }
+
+    func updateMelody(with melody: Melody) {
+        song.melody = MelodyWrapper(melody)
+    }
+
+    func onPlayTap() {
+        guard !notes.isEmpty else { return }
+        if _playerService.isPlayingMelody {
+            _playerService.stopPlayingMelody()
+        } else {
+            _playerService.playMelody(
+                notes,
+                with: Tempo(bpm: song.melody.bpm)
+            )
+        }
     }
 }
 
@@ -29,6 +53,7 @@ struct SongScreenView: View {
     @Environment(MainRouter.self) private var _router
     // Local state for modal presentation
     @State private var modalRoute: ModalRoute?
+    @State private var _hasUnsavedChanges = false
 
     // Identifiable wrapper for routes
     struct ModalRoute: Identifiable {
@@ -44,26 +69,42 @@ struct SongScreenView: View {
         _contentView()
             .padding(16)
             .navigationDestination(for: SongScreenViewModel.Route.self) { route in
-                modalView(for: route)
+                _modalView(for: route)
 
             }
             .sheet(item: $modalRoute) { modalRoute in
-                modalView(for: modalRoute.route)
-                    .presentationDetents([.large])
-                    .presentationDragIndicator(.visible)
-                    .presentationBackground(.thinMaterial)
+                NavigationStack { // to show toolbar
+                    _modalView(for: modalRoute.route)
+                }
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
+                .presentationBackground(.thinMaterial)
+                .interactiveDismissDisabled(_hasUnsavedChanges)
             }
     }
 
     @ViewBuilder
-    private func modalView(for route: SongScreenViewModel.Route) -> some View {
+    private func _modalView(for route: SongScreenViewModel.Route) -> some View {
         switch route {
             case .editSong:
+                let viewModel = SongEditScreenViewModel(song: _viewModel.song) { songProperties in
+                    _viewModel.updateSong(with: songProperties)
+                }
                 SongEditScreenView(
-                    viewModel: SongEditScreenViewModel(song: _viewModel.song)
+                    viewModel: viewModel,
+                    hasUnsavedChanges: $_hasUnsavedChanges
                 )
             case .editMelody:
-                EmptyView()
+                let viewModel = MelodyEditScreenViewModel(
+                    melody: _viewModel.song.melody.value,
+                    onApplyTap: { },
+                    onApplyTap2: { melody in
+                    _viewModel.updateMelody(with: melody)
+                })
+
+                MelodyEditScreenView(
+                    viewModel: viewModel
+                )
         }
     }
 
@@ -191,7 +232,8 @@ struct SongScreenView: View {
 
     private func _playButton() -> some View {
         Button {
-            _router.navigate(to: SongScreenViewModel.Route.editSong)
+//            _router.navigate(to: SongScreenViewModel.Route.editSong)
+            _viewModel.onPlayTap()
         } label: {
             _playButtonContentView()
         }

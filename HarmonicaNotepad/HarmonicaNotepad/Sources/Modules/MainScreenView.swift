@@ -34,7 +34,7 @@ struct MainScreenView: View {
             switch route {
                 case .editSong:
                     SongEditScreenView(
-                        viewModel: SongEditScreenViewModel()
+                        viewModel: SongEditScreenViewModel() { _ in }
                     )
             }
         }

@@ -33,6 +33,7 @@ final class MelodyEditScreenViewModel: ObservableObject {
     private(set) var melodyRows: [[MelodyNote]] = []
 
     private let _onApplyTap: () -> Void
+    private let _onApplyTap2: (Melody) -> Void
     private var _layout: HarmonicaLayout
     private var _playbackTask: Task<Void, Never>?
     private var _cancellables = Set<AnyCancellable>()
@@ -71,8 +72,9 @@ final class MelodyEditScreenViewModel: ObservableObject {
     )
 
     // MARK: - Init
-    init(melody: Melody? = nil, onApplyTap: @escaping () -> Void) {
+    init(melody: Melody? = nil, onApplyTap: @escaping () -> Void, onApplyTap2: @escaping (Melody) -> Void) {
         _onApplyTap = onApplyTap
+        _onApplyTap2 = onApplyTap2
 
         let melodyKey = melody?.key ?? .default
         key = melodyKey
@@ -174,7 +176,8 @@ final class MelodyEditScreenViewModel: ObservableObject {
             message: "Do you want to apply the changes you made?",
             buttons: [
                 AlertButton("Apply", role: .confirm) {
-                    self._onApplyTap()
+//                    self._onApplyTap()
+                    self._applyMelody()
                     self.dismiss?()
                 },
                 AlertButton("Keep Editing", role: .none) {
@@ -183,6 +186,15 @@ final class MelodyEditScreenViewModel: ObservableObject {
             ]
         )
         showAlert = true
+    }
+
+    private func _applyMelody() {
+        let melody = Melody(
+            key: key,
+            tempo: tempo,
+            notes: notes
+        )
+        _onApplyTap2(melody)
     }
 
     func onCancelTap() {

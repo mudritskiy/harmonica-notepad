@@ -13,6 +13,7 @@ struct MelodyEditScreenView: View {
 
     var body: some View {
         _contentView()
+            .toolbarVisibility(.hidden, for: .tabBar)
             .toolbar {
                 _toolbarContentView()
             }

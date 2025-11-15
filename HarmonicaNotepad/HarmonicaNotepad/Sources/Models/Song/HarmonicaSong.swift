@@ -6,11 +6,35 @@
 //
 
 import SwiftData
+import SwiftUI
 
 typealias SongId = String
 
+enum HarmonicaSongProperty: CaseIterable {
+    case title
+    case artist
+    case comments
+}
+
+protocol HarmonicaSongProperties {
+    var title: String { get set }
+    var artist: String { get set }
+    var comments: String { get set }
+}
+
+extension HarmonicaSongProperties {
+    func placeholder(for property: HarmonicaSongProperty) -> String {
+        switch property {
+            case .title: "Title"
+            case .artist: "Artist"
+            case .comments: "Comments"
+        }
+    }
+}
+
+
 @Model
-final class HarmonicaSong {
+final class HarmonicaSong: HarmonicaSongProperties {
     @Attribute(.unique) var id: SongId
 
     var title: String
