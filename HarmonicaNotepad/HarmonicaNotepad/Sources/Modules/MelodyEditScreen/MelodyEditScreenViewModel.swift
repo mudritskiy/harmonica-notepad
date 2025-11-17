@@ -178,7 +178,6 @@ final class MelodyEditScreenViewModel: ObservableObject {
                 AlertButton("Apply", role: .confirm) {
 //                    self._onApplyTap()
                     self._applyMelody()
-                    self.dismiss?()
                 },
                 AlertButton("Keep Editing", role: .none) {
                     self.showAlert = false
@@ -195,6 +194,7 @@ final class MelodyEditScreenViewModel: ObservableObject {
             notes: notes
         )
         _onApplyTap2(melody)
+        dismiss?()
     }
 
     func onCancelTap() {

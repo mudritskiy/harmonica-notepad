@@ -6,6 +6,7 @@
 //
 
 import MusicTheory
+import SwiftData
 import SwiftUI
 
 @Observable
@@ -17,6 +18,8 @@ final class SongScreenViewModel {
 
     private let _playerService = PlayerService()
 
+    private(set) var hasUnsavedChanges: Bool = false
+    var modelContext: ModelContext? = nil
     var song: HarmonicaSong
     var notes: [MelodyNote]
 
@@ -29,6 +32,7 @@ final class SongScreenViewModel {
         song.artist = songProperties.artist
         song.comments = songProperties.comments
         song.title = songProperties.title
+        hasUnsavedChanges = true
     }
 
     func updateMelody(with melody: Melody) {
@@ -46,11 +50,29 @@ final class SongScreenViewModel {
             )
         }
     }
+
+    func save() {
+        guard let container = modelContext?.container else { return }
+        Task.detached(priority: .background) {
+//            let song = HarmonicaSong(
+//                id: self.songId,
+//                title: self.songProperties.title,
+//                artist: self.songProperties.artist,
+//                comments: self.songProperties.comments,
+//                melody: MelodyWrapper(self.melody)
+//            )
+            let actor = SongService(modelContainer: container)
+            await actor.save(self.song)
+        }
+    }
 }
 
 struct SongScreenView: View {
     private var _viewModel: SongScreenViewModel
     @Environment(MainRouter.self) private var _router
+    @Environment(\.modelContext) private var _context
+    @Environment(\.dismiss) private var dismiss
+
     // Local state for modal presentation
     @State private var modalRoute: ModalRoute?
     @State private var _hasUnsavedChanges = false
@@ -71,6 +93,27 @@ struct SongScreenView: View {
             .navigationDestination(for: SongScreenViewModel.Route.self) { route in
                 _modalView(for: route)
 
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark")
+                    }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        _viewModel.save()
+                        dismiss()
+                    } label: {
+                        Image(systemName: "checkmark")
+                    }
+                }
+            }
+            .onFirstAppear {
+                _viewModel.modelContext = _context
+                _hasUnsavedChanges = false
             }
             .sheet(item: $modalRoute) { modalRoute in
                 NavigationStack { // to show toolbar
@@ -99,9 +142,9 @@ struct SongScreenView: View {
                     melody: _viewModel.song.melody.value,
                     onApplyTap: { },
                     onApplyTap2: { melody in
-                    _viewModel.updateMelody(with: melody)
+                        _viewModel.updateMelody(with: melody)
+                        dismiss()
                 })
-
                 MelodyEditScreenView(
                     viewModel: viewModel
                 )
