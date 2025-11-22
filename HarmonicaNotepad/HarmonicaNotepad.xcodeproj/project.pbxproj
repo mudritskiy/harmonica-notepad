@@ -64,6 +64,7 @@
 		FEC91A562E111A7200F48FEE /* FileEncryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC91A552E111A7100F48FEE /* FileEncryptor.swift */; };
 		FECD65C92DE745DA0025F788 /* MidiNotePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECD65C82DE745D80025F788 /* MidiNotePlayer.swift */; };
 		FECD65D42DE791530025F788 /* harmonica_basic_soundfont.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = FECD65D32DE791530025F788 /* harmonica_basic_soundfont.sf2 */; };
+		FED1ABEA2ECFB1A300811358 /* SearchListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FED1ABE92ECFB19100811358 /* SearchListView.swift */; };
 		FED545C02EB91CFA00626655 /* SongEditScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FED545BF2EB91CF700626655 /* SongEditScreenViewModel.swift */; };
 		FEF61F592DE4E66B009A504F /* HarmonicaLayoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF61F582DE4E658009A504F /* HarmonicaLayoutView.swift */; };
 /* End PBXBuildFile section */
@@ -145,6 +146,7 @@
 		FEC91A552E111A7100F48FEE /* FileEncryptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileEncryptor.swift; sourceTree = "<group>"; };
 		FECD65C82DE745D80025F788 /* MidiNotePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiNotePlayer.swift; sourceTree = "<group>"; };
 		FECD65D32DE791530025F788 /* harmonica_basic_soundfont.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = harmonica_basic_soundfont.sf2; sourceTree = "<group>"; };
+		FED1ABE92ECFB19100811358 /* SearchListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListView.swift; sourceTree = "<group>"; };
 		FED545BF2EB91CF700626655 /* SongEditScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongEditScreenViewModel.swift; sourceTree = "<group>"; };
 		FEF61F582DE4E658009A504F /* HarmonicaLayoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HarmonicaLayoutView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -260,6 +262,7 @@
 			children = (
 				FE9F72002E1465D900ED83FE /* Models */,
 				FE5732C92DE308DE000F2B8E /* Common */,
+				FEB5CE002E1ADAAF00C5BDC9 /* Services */,
 				FE5732C82DE308BC000F2B8E /* Modules */,
 			);
 			path = Sources;
@@ -269,16 +272,14 @@
 			isa = PBXGroup;
 			children = (
 				FE83CCBA2EAE228F002B9F0D /* CommonHelpers */,
-				FEB5CE002E1ADAAF00C5BDC9 /* Services */,
-				FE65DC2F2E072F63002A3381 /* MainScreenView.swift */,
-				FE0747F02E0837EF00A9A797 /* SongEditScreenView.swift */,
-				FED545BF2EB91CF700626655 /* SongEditScreenViewModel.swift */,
-				FEB5CDFC2E19A1F900C5BDC9 /* SongListView.swift */,
-				FEB5CDF82E1959D600C5BDC9 /* NotesPresentationStyle.swift */,
-				FEB5CDF62E19597500C5BDC9 /* NotesPresentationNumbersStyleView.swift */,
+				FED1ABE82ECFAE7300811358 /* SongEditScreenView */,
+				FED1ABE72ECFAE5400811358 /* NotesPresentation */,
 				FE8C70822EA68A2000B65FC4 /* SongScreenView */,
 				FE2781952DE965EB009C7FDF /* MelodyEditScreen */,
 				FE5732CA2DE308E6000F2B8E /* Notes */,
+				FE65DC2F2E072F63002A3381 /* MainScreenView.swift */,
+				FEB5CDFC2E19A1F900C5BDC9 /* SongListView.swift */,
+				FED1ABE92ECFB19100811358 /* SearchListView.swift */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -450,6 +451,24 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		FED1ABE72ECFAE5400811358 /* NotesPresentation */ = {
+			isa = PBXGroup;
+			children = (
+				FEB5CDF82E1959D600C5BDC9 /* NotesPresentationStyle.swift */,
+				FEB5CDF62E19597500C5BDC9 /* NotesPresentationNumbersStyleView.swift */,
+			);
+			path = NotesPresentation;
+			sourceTree = "<group>";
+		};
+		FED1ABE82ECFAE7300811358 /* SongEditScreenView */ = {
+			isa = PBXGroup;
+			children = (
+				FE0747F02E0837EF00A9A797 /* SongEditScreenView.swift */,
+				FED545BF2EB91CF700626655 /* SongEditScreenViewModel.swift */,
+			);
+			path = SongEditScreenView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -590,6 +609,7 @@
 				FE0B6DD02DEB463800BA8793 /* KeySetupView.swift in Sources */,
 				FE0B6DCE2DEB30D600BA8793 /* TempoStyle.swift in Sources */,
 				FEAF08392C4055850014DA01 /* Persistence.swift in Sources */,
+				FED1ABEA2ECFB1A300811358 /* SearchListView.swift in Sources */,
 				FEAB3C292DF8A7810015B5A6 /* MelodyActionPanelView.swift in Sources */,
 				FEAF08322C4055840014DA01 /* ContentView.swift in Sources */,
 				FE65DC282E05DA40002A3381 /* HoleCellView.swift in Sources */,

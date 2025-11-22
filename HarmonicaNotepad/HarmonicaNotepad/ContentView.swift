@@ -12,6 +12,7 @@ import MusicTheory
 enum ContentTab {
     case main
     case favorites
+    case search
 }
 
 struct ContentView: View {
@@ -59,24 +60,35 @@ struct ContentCoordinatorView: View {
 
         TabView(selection: $appNavigation.selectedTab) {
 
-            NavigationStack(path: $appNavigation.mainRouter.path) {
-                SongListView(viewModel: _viewModel.songListViewModel)
-//                MainScreenView(viewModel: _viewModel.mainScreenViewModel)
+            Tab("Songs", systemImage: appNavigation.selectedTab == .main ? "house.fill" : "house", value: ContentTab.main) {
+                NavigationStack(path: $appNavigation.mainRouter.path) {
+                    SongListView(viewModel: _viewModel.songListViewModel)
+                    //                MainScreenView(viewModel: _viewModel.mainScreenViewModel)
+                }
+//                .tag(ContentTab.main)
+//                .tabItem {
+//                    Image(systemName: appNavigation.selectedTab == .main ? "house.fill" : "house")
+//                }
+                .environment(appNavigation.mainRouter)
             }
-            .tag(ContentTab.main)
-            .tabItem {
-                Image(systemName: appNavigation.selectedTab == .main ? "house.fill" : "house")
-            }
-            .environment(appNavigation.mainRouter)
 
-            NavigationStack(path: $appNavigation.favoriteRouter.path) {
-                NoteView()
+            Tab("Favorites", systemImage: appNavigation.selectedTab == .favorites ? "bookmark.fill" : "bookmark", value: ContentTab.favorites) {
+                NavigationStack(path: $appNavigation.favoriteRouter.path) {
+                    NoteView()
+                }
+//                .tag(ContentTab.favorites)
+//                .tabItem {
+//                    Image(systemName: appNavigation.selectedTab == .favorites ? "bookmark.fill" : "bookmark")
+//                }
+                .environment(appNavigation.favoriteRouter)
             }
-            .tag(ContentTab.favorites)
-            .tabItem {
-                Image(systemName: appNavigation.selectedTab == .favorites ? "bookmark.fill" : "bookmark")
+
+            Tab("Search", systemImage: "magnifyingglass", value: ContentTab.search, role: .search) {
+                NavigationStack(path: $appNavigation.mainRouter.path) {
+                    SearchListView()
+                }
+                .environment(appNavigation.mainRouter)
             }
-            .environment(appNavigation.favoriteRouter)
         }
         .environment(\.currentTab, $appNavigation.selectedTab)
         .modelContainer(_viewModel.container)
