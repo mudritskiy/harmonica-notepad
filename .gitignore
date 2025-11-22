@@ -88,3 +88,13 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
+
+# workspaces
+*.xcscheme
+project.pbxproj
+*.xcworkspacedata
+*.xcworkspace
+
+# Playgrounds
+timeline.xctimeline
+playground.xcworkspace

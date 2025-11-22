@@ -1,0 +1,1031 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FE0747F12E0837F000A9A797 /* SongEditScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0747F02E0837EF00A9A797 /* SongEditScreenView.swift */; };
+		FE0B6DCC2DEB30B800BA8793 /* TempoSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0B6DCB2DEB30B700BA8793 /* TempoSetupView.swift */; };
+		FE0B6DCE2DEB30D600BA8793 /* TempoStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0B6DCD2DEB30D500BA8793 /* TempoStyle.swift */; };
+		FE0B6DD02DEB463800BA8793 /* KeySetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0B6DCF2DEB463800BA8793 /* KeySetupView.swift */; };
+		FE0B6DD22DEC1BB300BA8793 /* LayoutNotesGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0B6DD12DEC1BB200BA8793 /* LayoutNotesGrid.swift */; };
+		FE0B6DD52DEC1C1300BA8793 /* SwiftUI+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0B6DD42DEC1C1100BA8793 /* SwiftUI+View.swift */; };
+		FE2781972DE965FB009C7FDF /* MelodyEditScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2781962DE965F9009C7FDF /* MelodyEditScreenViewModel.swift */; };
+		FE2781992DE96638009C7FDF /* MelodyEditScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2781982DE96635009C7FDF /* MelodyEditScreenView.swift */; };
+		FE27819B2DE96C0D009C7FDF /* PlayerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE27819A2DE96C0A009C7FDF /* PlayerService.swift */; };
+		FE2E2EEF2EA507F000F82415 /* View+AlertInfoModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2E2EEE2EA507EA00F82415 /* View+AlertInfoModifier.swift */; };
+		FE37594C2E164D6400B7F3E5 /* NoteValueWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE37594B2E164D6100B7F3E5 /* NoteValueWrapper.swift */; };
+		FE4F96242EA3ACDA00B4146D /* NoteValueTypeWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4F96232EA3ACD900B4146D /* NoteValueTypeWrapper.swift */; };
+		FE4F96272EA3B36500B4146D /* MelodyNoteWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4F96262EA3B36400B4146D /* MelodyNoteWrapper.swift */; };
+		FE4F962B2EA3BBBD00B4146D /* MelodyWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4F962A2EA3BBBC00B4146D /* MelodyWrapper.swift */; };
+		FE5732CF2DE30B37000F2B8E /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5732CE2DE30B35000F2B8E /* NoteView.swift */; };
+		FE5732D22DE36A33000F2B8E /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5732D12DE36A2F000F2B8E /* Models.swift */; };
+		FE5732D52DE36AB3000F2B8E /* MusicTheory in Frameworks */ = {isa = PBXBuildFile; productRef = FE5732D42DE36AB3000F2B8E /* MusicTheory */; };
+		FE65DC232E05C697002A3381 /* SwiftUI+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE65DC222E05C696002A3381 /* SwiftUI+Debug.swift */; };
+		FE65DC282E05DA40002A3381 /* HoleCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE65DC272E05DA3D002A3381 /* HoleCellView.swift */; };
+		FE65DC2A2E05DA69002A3381 /* HarmonicaLayoutConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE65DC292E05DA65002A3381 /* HarmonicaLayoutConfigurationView.swift */; };
+		FE65DC2C2E06E4A5002A3381 /* AppNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE65DC2B2E06E4A0002A3381 /* AppNavigation.swift */; };
+		FE65DC302E072F65002A3381 /* MainScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE65DC2F2E072F63002A3381 /* MainScreenView.swift */; };
+		FE83CCBD2EAE22B5002B9F0D /* CardContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE83CCBC2EAE22B3002B9F0D /* CardContainer.swift */; };
+		FE83CCBF2EAE23FA002B9F0D /* HarmonicaTextEditFieldRounded.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE83CCBE2EAE23F7002B9F0D /* HarmonicaTextEditFieldRounded.swift */; };
+		FE83CCC12EAE2508002B9F0D /* HarmonicaTextEditField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE83CCC02EAE2503002B9F0D /* HarmonicaTextEditField.swift */; };
+		FE8940DA2E1AF32100193557 /* Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8940D92E1AF31E00193557 /* Preview.swift */; };
+		FE8C70852EA68A5500B65FC4 /* ButttonEditContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8C70842EA68A5300B65FC4 /* ButttonEditContentView.swift */; };
+		FE9F72022E1465E300ED83FE /* HarmonicaNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9F72012E1465E200ED83FE /* HarmonicaNote.swift */; };
+		FE9F72042E1466A100ED83FE /* Melody.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9F72032E1466A000ED83FE /* Melody.swift */; };
+		FE9F72062E1466AC00ED83FE /* Identified.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9F72052E1466AB00ED83FE /* Identified.swift */; };
+		FE9F72082E14673000ED83FE /* MelodyNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9F72072E14672E00ED83FE /* MelodyNote.swift */; };
+		FE9F720A2E14684700ED83FE /* HarmonicaSong.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9F72092E14684600ED83FE /* HarmonicaSong.swift */; };
+		FEAB3C292DF8A7810015B5A6 /* MelodyActionPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAB3C282DF8A7800015B5A6 /* MelodyActionPanelView.swift */; };
+		FEAB3C2B2DF8A8250015B5A6 /* MelodyActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAB3C2A2DF8A8230015B5A6 /* MelodyActionButton.swift */; };
+		FEAB3C2D2DF8A8680015B5A6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAB3C2C2DF8A8660015B5A6 /* Constants.swift */; };
+		FEAB3C302DF8AAB00015B5A6 /* MelodyPlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAB3C2F2DF8AAAF0015B5A6 /* MelodyPlayButton.swift */; };
+		FEAB3C322DF8AAE60015B5A6 /* MelodyClearButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAB3C312DF8AAE40015B5A6 /* MelodyClearButton.swift */; };
+		FEAF08302C4055840014DA01 /* HarmonicaNotepadApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAF082F2C4055840014DA01 /* HarmonicaNotepadApp.swift */; };
+		FEAF08322C4055840014DA01 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAF08312C4055840014DA01 /* ContentView.swift */; };
+		FEAF08342C4055850014DA01 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEAF08332C4055850014DA01 /* Assets.xcassets */; };
+		FEAF08372C4055850014DA01 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEAF08362C4055850014DA01 /* Preview Assets.xcassets */; };
+		FEAF08392C4055850014DA01 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAF08382C4055850014DA01 /* Persistence.swift */; };
+		FEAF083C2C4055850014DA01 /* HarmonicaNotepad.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FEAF083A2C4055850014DA01 /* HarmonicaNotepad.xcdatamodeld */; };
+		FEAF08462C4055850014DA01 /* HarmonicaNotepadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAF08452C4055850014DA01 /* HarmonicaNotepadTests.swift */; };
+		FEAF08502C4055850014DA01 /* HarmonicaNotepadUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAF084F2C4055850014DA01 /* HarmonicaNotepadUITests.swift */; };
+		FEAF08522C4055850014DA01 /* HarmonicaNotepadUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAF08512C4055850014DA01 /* HarmonicaNotepadUITestsLaunchTests.swift */; };
+		FEB5CDF72E19599500C5BDC9 /* NotesPresentationNumbersStyleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB5CDF62E19597500C5BDC9 /* NotesPresentationNumbersStyleView.swift */; };
+		FEB5CDF92E1959D600C5BDC9 /* NotesPresentationStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB5CDF82E1959D600C5BDC9 /* NotesPresentationStyle.swift */; };
+		FEB5CDFB2E195DBB00C5BDC9 /* View+OnFirstAppear.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB5CDFA2E195DBB00C5BDC9 /* View+OnFirstAppear.swift */; };
+		FEB5CDFD2E19A20000C5BDC9 /* SongListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB5CDFC2E19A1F900C5BDC9 /* SongListView.swift */; };
+		FEB5CDFF2E1A81BD00C5BDC9 /* MelodyNoteSimpleCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB5CDFE2E1A81BD00C5BDC9 /* MelodyNoteSimpleCellView.swift */; };
+		FEB7C77B2E1ADFA20064B630 /* SongScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB7C77A2E1ADF690064B630 /* SongScreenView.swift */; };
+		FEC91A522E11182D00F48FEE /* SwiftDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC91A512E11182500F48FEE /* SwiftDataService.swift */; };
+		FEC91A542E1119E000F48FEE /* SongReviewSwiftDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC91A532E1119D000F48FEE /* SongReviewSwiftDataService.swift */; };
+		FEC91A562E111A7200F48FEE /* FileEncryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC91A552E111A7100F48FEE /* FileEncryptor.swift */; };
+		FECD65C92DE745DA0025F788 /* MidiNotePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECD65C82DE745D80025F788 /* MidiNotePlayer.swift */; };
+		FECD65D42DE791530025F788 /* harmonica_basic_soundfont.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = FECD65D32DE791530025F788 /* harmonica_basic_soundfont.sf2 */; };
+		FED1ABEA2ECFB1A300811358 /* SearchListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FED1ABE92ECFB19100811358 /* SearchListView.swift */; };
+		FED545C02EB91CFA00626655 /* SongEditScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FED545BF2EB91CF700626655 /* SongEditScreenViewModel.swift */; };
+		FEF61F592DE4E66B009A504F /* HarmonicaLayoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF61F582DE4E658009A504F /* HarmonicaLayoutView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		FEAF08422C4055850014DA01 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FEAF08242C4055840014DA01 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FEAF082B2C4055840014DA01;
+			remoteInfo = HarmonicaNotepad;
+		};
+		FEAF084C2C4055850014DA01 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FEAF08242C4055840014DA01 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FEAF082B2C4055840014DA01;
+			remoteInfo = HarmonicaNotepad;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		FE0747F02E0837EF00A9A797 /* SongEditScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongEditScreenView.swift; sourceTree = "<group>"; };
+		FE0B6DCB2DEB30B700BA8793 /* TempoSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoSetupView.swift; sourceTree = "<group>"; };
+		FE0B6DCD2DEB30D500BA8793 /* TempoStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoStyle.swift; sourceTree = "<group>"; };
+		FE0B6DCF2DEB463800BA8793 /* KeySetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeySetupView.swift; sourceTree = "<group>"; };
+		FE0B6DD12DEC1BB200BA8793 /* LayoutNotesGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutNotesGrid.swift; sourceTree = "<group>"; };
+		FE0B6DD42DEC1C1100BA8793 /* SwiftUI+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+View.swift"; sourceTree = "<group>"; };
+		FE2781962DE965F9009C7FDF /* MelodyEditScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MelodyEditScreenViewModel.swift; sourceTree = "<group>"; };
+		FE2781982DE96635009C7FDF /* MelodyEditScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MelodyEditScreenView.swift; sourceTree = "<group>"; };
+		FE27819A2DE96C0A009C7FDF /* PlayerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerService.swift; sourceTree = "<group>"; };
+		FE2E2EEE2EA507EA00F82415 /* View+AlertInfoModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+AlertInfoModifier.swift"; sourceTree = "<group>"; };
+		FE37594B2E164D6100B7F3E5 /* NoteValueWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteValueWrapper.swift; sourceTree = "<group>"; };
+		FE4F96232EA3ACD900B4146D /* NoteValueTypeWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteValueTypeWrapper.swift; sourceTree = "<group>"; };
+		FE4F96262EA3B36400B4146D /* MelodyNoteWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MelodyNoteWrapper.swift; sourceTree = "<group>"; };
+		FE4F962A2EA3BBBC00B4146D /* MelodyWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MelodyWrapper.swift; sourceTree = "<group>"; };
+		FE5732CE2DE30B35000F2B8E /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
+		FE5732D12DE36A2F000F2B8E /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		FE65DC222E05C696002A3381 /* SwiftUI+Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Debug.swift"; sourceTree = "<group>"; };
+		FE65DC272E05DA3D002A3381 /* HoleCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoleCellView.swift; sourceTree = "<group>"; };
+		FE65DC292E05DA65002A3381 /* HarmonicaLayoutConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HarmonicaLayoutConfigurationView.swift; sourceTree = "<group>"; };
+		FE65DC2B2E06E4A0002A3381 /* AppNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNavigation.swift; sourceTree = "<group>"; };
+		FE65DC2F2E072F63002A3381 /* MainScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenView.swift; sourceTree = "<group>"; };
+		FE83CCBC2EAE22B3002B9F0D /* CardContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardContainer.swift; sourceTree = "<group>"; };
+		FE83CCBE2EAE23F7002B9F0D /* HarmonicaTextEditFieldRounded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HarmonicaTextEditFieldRounded.swift; sourceTree = "<group>"; };
+		FE83CCC02EAE2503002B9F0D /* HarmonicaTextEditField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HarmonicaTextEditField.swift; sourceTree = "<group>"; };
+		FE8940D92E1AF31E00193557 /* Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview.swift; sourceTree = "<group>"; };
+		FE8C70842EA68A5300B65FC4 /* ButttonEditContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButttonEditContentView.swift; sourceTree = "<group>"; };
+		FE9F72012E1465E200ED83FE /* HarmonicaNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HarmonicaNote.swift; sourceTree = "<group>"; };
+		FE9F72032E1466A000ED83FE /* Melody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Melody.swift; sourceTree = "<group>"; };
+		FE9F72052E1466AB00ED83FE /* Identified.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identified.swift; sourceTree = "<group>"; };
+		FE9F72072E14672E00ED83FE /* MelodyNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MelodyNote.swift; sourceTree = "<group>"; };
+		FE9F72092E14684600ED83FE /* HarmonicaSong.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HarmonicaSong.swift; sourceTree = "<group>"; };
+		FEAB3C282DF8A7800015B5A6 /* MelodyActionPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MelodyActionPanelView.swift; sourceTree = "<group>"; };
+		FEAB3C2A2DF8A8230015B5A6 /* MelodyActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MelodyActionButton.swift; sourceTree = "<group>"; };
+		FEAB3C2C2DF8A8660015B5A6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		FEAB3C2F2DF8AAAF0015B5A6 /* MelodyPlayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MelodyPlayButton.swift; sourceTree = "<group>"; };
+		FEAB3C312DF8AAE40015B5A6 /* MelodyClearButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MelodyClearButton.swift; sourceTree = "<group>"; };
+		FEAF082C2C4055840014DA01 /* HarmonicaNotepad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HarmonicaNotepad.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FEAF082F2C4055840014DA01 /* HarmonicaNotepadApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HarmonicaNotepadApp.swift; sourceTree = "<group>"; };
+		FEAF08312C4055840014DA01 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		FEAF08332C4055850014DA01 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FEAF08362C4055850014DA01 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		FEAF08382C4055850014DA01 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		FEAF083B2C4055850014DA01 /* HarmonicaNotepad.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HarmonicaNotepad.xcdatamodel; sourceTree = "<group>"; };
+		FEAF08412C4055850014DA01 /* HarmonicaNotepadTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HarmonicaNotepadTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FEAF08452C4055850014DA01 /* HarmonicaNotepadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HarmonicaNotepadTests.swift; sourceTree = "<group>"; };
+		FEAF084B2C4055850014DA01 /* HarmonicaNotepadUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HarmonicaNotepadUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FEAF084F2C4055850014DA01 /* HarmonicaNotepadUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HarmonicaNotepadUITests.swift; sourceTree = "<group>"; };
+		FEAF08512C4055850014DA01 /* HarmonicaNotepadUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HarmonicaNotepadUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		FEB5CDF62E19597500C5BDC9 /* NotesPresentationNumbersStyleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesPresentationNumbersStyleView.swift; sourceTree = "<group>"; };
+		FEB5CDF82E1959D600C5BDC9 /* NotesPresentationStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesPresentationStyle.swift; sourceTree = "<group>"; };
+		FEB5CDFA2E195DBB00C5BDC9 /* View+OnFirstAppear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+OnFirstAppear.swift"; sourceTree = "<group>"; };
+		FEB5CDFC2E19A1F900C5BDC9 /* SongListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListView.swift; sourceTree = "<group>"; };
+		FEB5CDFE2E1A81BD00C5BDC9 /* MelodyNoteSimpleCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MelodyNoteSimpleCellView.swift; sourceTree = "<group>"; };
+		FEB7C77A2E1ADF690064B630 /* SongScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongScreenView.swift; sourceTree = "<group>"; };
+		FEC91A512E11182500F48FEE /* SwiftDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataService.swift; sourceTree = "<group>"; };
+		FEC91A532E1119D000F48FEE /* SongReviewSwiftDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongReviewSwiftDataService.swift; sourceTree = "<group>"; };
+		FEC91A552E111A7100F48FEE /* FileEncryptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileEncryptor.swift; sourceTree = "<group>"; };
+		FECD65C82DE745D80025F788 /* MidiNotePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiNotePlayer.swift; sourceTree = "<group>"; };
+		FECD65D32DE791530025F788 /* harmonica_basic_soundfont.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = harmonica_basic_soundfont.sf2; sourceTree = "<group>"; };
+		FED1ABE92ECFB19100811358 /* SearchListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListView.swift; sourceTree = "<group>"; };
+		FED545BF2EB91CF700626655 /* SongEditScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongEditScreenViewModel.swift; sourceTree = "<group>"; };
+		FEF61F582DE4E658009A504F /* HarmonicaLayoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HarmonicaLayoutView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FEAF08292C4055840014DA01 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FE5732D52DE36AB3000F2B8E /* MusicTheory in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEAF083E2C4055850014DA01 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEAF08482C4055850014DA01 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FE0B6DD32DEC1BF400BA8793 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				FE0B6DD42DEC1C1100BA8793 /* SwiftUI+View.swift */,
+				FE65DC222E05C696002A3381 /* SwiftUI+Debug.swift */,
+				FEB5CDFA2E195DBB00C5BDC9 /* View+OnFirstAppear.swift */,
+				FE2E2EEE2EA507EA00F82415 /* View+AlertInfoModifier.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		FE2781952DE965EB009C7FDF /* MelodyEditScreen */ = {
+			isa = PBXGroup;
+			children = (
+				FE2E2EED2EA4E1E700F82415 /* SetupViews */,
+				FEAB3C2E2DF8AA950015B5A6 /* MelodyActionPanel */,
+				FE65DC242E05D9D4002A3381 /* HarmonicaLayout */,
+				FE2781962DE965F9009C7FDF /* MelodyEditScreenViewModel.swift */,
+				FE2781982DE96635009C7FDF /* MelodyEditScreenView.swift */,
+				FEB5CDFE2E1A81BD00C5BDC9 /* MelodyNoteSimpleCellView.swift */,
+			);
+			path = MelodyEditScreen;
+			sourceTree = "<group>";
+		};
+		FE2E2EED2EA4E1E700F82415 /* SetupViews */ = {
+			isa = PBXGroup;
+			children = (
+				FE0B6DCB2DEB30B700BA8793 /* TempoSetupView.swift */,
+				FE0B6DCF2DEB463800BA8793 /* KeySetupView.swift */,
+			);
+			path = SetupViews;
+			sourceTree = "<group>";
+		};
+		FE3759492E164C9500B7F3E5 /* Song */ = {
+			isa = PBXGroup;
+			children = (
+				FE37594A2E164D3000B7F3E5 /* MusicTheoryWrapper */,
+				FE4F96252EA3B35300B4146D /* MelodyNote */,
+				FE4F96292EA3BBB000B4146D /* Melody */,
+				FE9F72092E14684600ED83FE /* HarmonicaSong.swift */,
+				FE9F72012E1465E200ED83FE /* HarmonicaNote.swift */,
+			);
+			path = Song;
+			sourceTree = "<group>";
+		};
+		FE37594A2E164D3000B7F3E5 /* MusicTheoryWrapper */ = {
+			isa = PBXGroup;
+			children = (
+				FE37594B2E164D6100B7F3E5 /* NoteValueWrapper.swift */,
+				FE4F96232EA3ACD900B4146D /* NoteValueTypeWrapper.swift */,
+			);
+			path = MusicTheoryWrapper;
+			sourceTree = "<group>";
+		};
+		FE4F96252EA3B35300B4146D /* MelodyNote */ = {
+			isa = PBXGroup;
+			children = (
+				FE9F72072E14672E00ED83FE /* MelodyNote.swift */,
+				FE4F96262EA3B36400B4146D /* MelodyNoteWrapper.swift */,
+			);
+			path = MelodyNote;
+			sourceTree = "<group>";
+		};
+		FE4F96282EA3BB6400B4146D /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				FE9F72052E1466AB00ED83FE /* Identified.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		FE4F96292EA3BBB000B4146D /* Melody */ = {
+			isa = PBXGroup;
+			children = (
+				FE9F72032E1466A000ED83FE /* Melody.swift */,
+				FE4F962A2EA3BBBC00B4146D /* MelodyWrapper.swift */,
+			);
+			path = Melody;
+			sourceTree = "<group>";
+		};
+		FE5732C72DE308AF000F2B8E /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				FE9F72002E1465D900ED83FE /* Models */,
+				FE5732C92DE308DE000F2B8E /* Common */,
+				FEB5CE002E1ADAAF00C5BDC9 /* Services */,
+				FE5732C82DE308BC000F2B8E /* Modules */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		FE5732C82DE308BC000F2B8E /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				FE83CCBA2EAE228F002B9F0D /* CommonHelpers */,
+				FED1ABE82ECFAE7300811358 /* SongEditScreenView */,
+				FED1ABE72ECFAE5400811358 /* NotesPresentation */,
+				FE8C70822EA68A2000B65FC4 /* SongScreenView */,
+				FE2781952DE965EB009C7FDF /* MelodyEditScreen */,
+				FE5732CA2DE308E6000F2B8E /* Notes */,
+				FE65DC2F2E072F63002A3381 /* MainScreenView.swift */,
+				FEB5CDFC2E19A1F900C5BDC9 /* SongListView.swift */,
+				FED1ABE92ECFB19100811358 /* SearchListView.swift */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		FE5732C92DE308DE000F2B8E /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				FE0B6DD32DEC1BF400BA8793 /* Extensions */,
+				FEAB3C2C2DF8A8660015B5A6 /* Constants.swift */,
+				FE8940D92E1AF31E00193557 /* Preview.swift */,
+				FE5732D12DE36A2F000F2B8E /* Models.swift */,
+				FECD65C82DE745D80025F788 /* MidiNotePlayer.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		FE5732CA2DE308E6000F2B8E /* Notes */ = {
+			isa = PBXGroup;
+			children = (
+				FE5732CE2DE30B35000F2B8E /* NoteView.swift */,
+			);
+			path = Notes;
+			sourceTree = "<group>";
+		};
+		FE5732D32DE36AB3000F2B8E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FE65DC242E05D9D4002A3381 /* HarmonicaLayout */ = {
+			isa = PBXGroup;
+			children = (
+				FEF61F582DE4E658009A504F /* HarmonicaLayoutView.swift */,
+				FE65DC272E05DA3D002A3381 /* HoleCellView.swift */,
+				FE65DC292E05DA65002A3381 /* HarmonicaLayoutConfigurationView.swift */,
+				FE0B6DD12DEC1BB200BA8793 /* LayoutNotesGrid.swift */,
+			);
+			path = HarmonicaLayout;
+			sourceTree = "<group>";
+		};
+		FE83CCBA2EAE228F002B9F0D /* CommonHelpers */ = {
+			isa = PBXGroup;
+			children = (
+				FE83CCBC2EAE22B3002B9F0D /* CardContainer.swift */,
+				FE83CCBE2EAE23F7002B9F0D /* HarmonicaTextEditFieldRounded.swift */,
+				FE83CCC02EAE2503002B9F0D /* HarmonicaTextEditField.swift */,
+			);
+			path = CommonHelpers;
+			sourceTree = "<group>";
+		};
+		FE8C70822EA68A2000B65FC4 /* SongScreenView */ = {
+			isa = PBXGroup;
+			children = (
+				FE8C70832EA68A3800B65FC4 /* Views */,
+				FEB7C77A2E1ADF690064B630 /* SongScreenView.swift */,
+			);
+			path = SongScreenView;
+			sourceTree = "<group>";
+		};
+		FE8C70832EA68A3800B65FC4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FE8C70842EA68A5300B65FC4 /* ButttonEditContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FE9F72002E1465D900ED83FE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FE4F96282EA3BB6400B4146D /* Helpers */,
+				FE3759492E164C9500B7F3E5 /* Song */,
+				FE0B6DCD2DEB30D500BA8793 /* TempoStyle.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		FEAB3C2E2DF8AA950015B5A6 /* MelodyActionPanel */ = {
+			isa = PBXGroup;
+			children = (
+				FEAB3C2A2DF8A8230015B5A6 /* MelodyActionButton.swift */,
+				FEAB3C282DF8A7800015B5A6 /* MelodyActionPanelView.swift */,
+				FEAB3C2F2DF8AAAF0015B5A6 /* MelodyPlayButton.swift */,
+				FEAB3C312DF8AAE40015B5A6 /* MelodyClearButton.swift */,
+			);
+			path = MelodyActionPanel;
+			sourceTree = "<group>";
+		};
+		FEAF08232C4055840014DA01 = {
+			isa = PBXGroup;
+			children = (
+				FEAF082E2C4055840014DA01 /* HarmonicaNotepad */,
+				FEAF08442C4055850014DA01 /* HarmonicaNotepadTests */,
+				FEAF084E2C4055850014DA01 /* HarmonicaNotepadUITests */,
+				FE5732D32DE36AB3000F2B8E /* Frameworks */,
+				FEAF082D2C4055840014DA01 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FEAF082D2C4055840014DA01 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FEAF082C2C4055840014DA01 /* HarmonicaNotepad.app */,
+				FEAF08412C4055850014DA01 /* HarmonicaNotepadTests.xctest */,
+				FEAF084B2C4055850014DA01 /* HarmonicaNotepadUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FEAF082E2C4055840014DA01 /* HarmonicaNotepad */ = {
+			isa = PBXGroup;
+			children = (
+				FECD65CA2DE74E5E0025F788 /* Resources */,
+				FEAF082F2C4055840014DA01 /* HarmonicaNotepadApp.swift */,
+				FEAF08312C4055840014DA01 /* ContentView.swift */,
+				FE5732C72DE308AF000F2B8E /* Sources */,
+				FEAF08332C4055850014DA01 /* Assets.xcassets */,
+				FEAF08382C4055850014DA01 /* Persistence.swift */,
+				FEAF083A2C4055850014DA01 /* HarmonicaNotepad.xcdatamodeld */,
+				FEAF08352C4055850014DA01 /* Preview Content */,
+			);
+			path = HarmonicaNotepad;
+			sourceTree = "<group>";
+		};
+		FEAF08352C4055850014DA01 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				FEAF08362C4055850014DA01 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		FEAF08442C4055850014DA01 /* HarmonicaNotepadTests */ = {
+			isa = PBXGroup;
+			children = (
+				FEAF08452C4055850014DA01 /* HarmonicaNotepadTests.swift */,
+			);
+			path = HarmonicaNotepadTests;
+			sourceTree = "<group>";
+		};
+		FEAF084E2C4055850014DA01 /* HarmonicaNotepadUITests */ = {
+			isa = PBXGroup;
+			children = (
+				FEAF084F2C4055850014DA01 /* HarmonicaNotepadUITests.swift */,
+				FEAF08512C4055850014DA01 /* HarmonicaNotepadUITestsLaunchTests.swift */,
+			);
+			path = HarmonicaNotepadUITests;
+			sourceTree = "<group>";
+		};
+		FEB5CE002E1ADAAF00C5BDC9 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				FE65DC2B2E06E4A0002A3381 /* AppNavigation.swift */,
+				FEC91A512E11182500F48FEE /* SwiftDataService.swift */,
+				FEC91A552E111A7100F48FEE /* FileEncryptor.swift */,
+				FEC91A532E1119D000F48FEE /* SongReviewSwiftDataService.swift */,
+				FE27819A2DE96C0A009C7FDF /* PlayerService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		FECD65CA2DE74E5E0025F788 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FECD65D32DE791530025F788 /* harmonica_basic_soundfont.sf2 */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		FED1ABE72ECFAE5400811358 /* NotesPresentation */ = {
+			isa = PBXGroup;
+			children = (
+				FEB5CDF82E1959D600C5BDC9 /* NotesPresentationStyle.swift */,
+				FEB5CDF62E19597500C5BDC9 /* NotesPresentationNumbersStyleView.swift */,
+			);
+			path = NotesPresentation;
+			sourceTree = "<group>";
+		};
+		FED1ABE82ECFAE7300811358 /* SongEditScreenView */ = {
+			isa = PBXGroup;
+			children = (
+				FE0747F02E0837EF00A9A797 /* SongEditScreenView.swift */,
+				FED545BF2EB91CF700626655 /* SongEditScreenViewModel.swift */,
+			);
+			path = SongEditScreenView;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FEAF082B2C4055840014DA01 /* HarmonicaNotepad */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FEAF08552C4055850014DA01 /* Build configuration list for PBXNativeTarget "HarmonicaNotepad" */;
+			buildPhases = (
+				FEAF08282C4055840014DA01 /* Sources */,
+				FEAF08292C4055840014DA01 /* Frameworks */,
+				FEAF082A2C4055840014DA01 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HarmonicaNotepad;
+			productName = HarmonicaNotepad;
+			productReference = FEAF082C2C4055840014DA01 /* HarmonicaNotepad.app */;
+			productType = "com.apple.product-type.application";
+		};
+		FEAF08402C4055850014DA01 /* HarmonicaNotepadTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FEAF08582C4055850014DA01 /* Build configuration list for PBXNativeTarget "HarmonicaNotepadTests" */;
+			buildPhases = (
+				FEAF083D2C4055850014DA01 /* Sources */,
+				FEAF083E2C4055850014DA01 /* Frameworks */,
+				FEAF083F2C4055850014DA01 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FEAF08432C4055850014DA01 /* PBXTargetDependency */,
+			);
+			name = HarmonicaNotepadTests;
+			productName = HarmonicaNotepadTests;
+			productReference = FEAF08412C4055850014DA01 /* HarmonicaNotepadTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		FEAF084A2C4055850014DA01 /* HarmonicaNotepadUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FEAF085B2C4055850014DA01 /* Build configuration list for PBXNativeTarget "HarmonicaNotepadUITests" */;
+			buildPhases = (
+				FEAF08472C4055850014DA01 /* Sources */,
+				FEAF08482C4055850014DA01 /* Frameworks */,
+				FEAF08492C4055850014DA01 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FEAF084D2C4055850014DA01 /* PBXTargetDependency */,
+			);
+			name = HarmonicaNotepadUITests;
+			productName = HarmonicaNotepadUITests;
+			productReference = FEAF084B2C4055850014DA01 /* HarmonicaNotepadUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FEAF08242C4055840014DA01 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1540;
+				LastUpgradeCheck = 1540;
+				TargetAttributes = {
+					FEAF082B2C4055840014DA01 = {
+						CreatedOnToolsVersion = 15.4;
+					};
+					FEAF08402C4055850014DA01 = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = FEAF082B2C4055840014DA01;
+					};
+					FEAF084A2C4055850014DA01 = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = FEAF082B2C4055840014DA01;
+					};
+				};
+			};
+			buildConfigurationList = FEAF08272C4055840014DA01 /* Build configuration list for PBXProject "HarmonicaNotepad" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FEAF08232C4055840014DA01;
+			packageReferences = (
+				FE5732D02DE35836000F2B8E /* XCRemoteSwiftPackageReference "MusicTheory" */,
+			);
+			productRefGroup = FEAF082D2C4055840014DA01 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FEAF082B2C4055840014DA01 /* HarmonicaNotepad */,
+				FEAF08402C4055850014DA01 /* HarmonicaNotepadTests */,
+				FEAF084A2C4055850014DA01 /* HarmonicaNotepadUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FEAF082A2C4055840014DA01 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FECD65D42DE791530025F788 /* harmonica_basic_soundfont.sf2 in Resources */,
+				FEAF08372C4055850014DA01 /* Preview Assets.xcassets in Resources */,
+				FEAF08342C4055850014DA01 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEAF083F2C4055850014DA01 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEAF08492C4055850014DA01 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FEAF08282C4055840014DA01 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FE0B6DD52DEC1C1300BA8793 /* SwiftUI+View.swift in Sources */,
+				FE83CCBF2EAE23FA002B9F0D /* HarmonicaTextEditFieldRounded.swift in Sources */,
+				FEAB3C2D2DF8A8680015B5A6 /* Constants.swift in Sources */,
+				FE0B6DD02DEB463800BA8793 /* KeySetupView.swift in Sources */,
+				FE0B6DCE2DEB30D600BA8793 /* TempoStyle.swift in Sources */,
+				FEAF08392C4055850014DA01 /* Persistence.swift in Sources */,
+				FED1ABEA2ECFB1A300811358 /* SearchListView.swift in Sources */,
+				FEAB3C292DF8A7810015B5A6 /* MelodyActionPanelView.swift in Sources */,
+				FEAF08322C4055840014DA01 /* ContentView.swift in Sources */,
+				FE65DC282E05DA40002A3381 /* HoleCellView.swift in Sources */,
+				FEAF083C2C4055850014DA01 /* HarmonicaNotepad.xcdatamodeld in Sources */,
+				FE4F962B2EA3BBBD00B4146D /* MelodyWrapper.swift in Sources */,
+				FE4F96272EA3B36500B4146D /* MelodyNoteWrapper.swift in Sources */,
+				FE2E2EEF2EA507F000F82415 /* View+AlertInfoModifier.swift in Sources */,
+				FE5732D22DE36A33000F2B8E /* Models.swift in Sources */,
+				FEAB3C322DF8AAE60015B5A6 /* MelodyClearButton.swift in Sources */,
+				FE9F72082E14673000ED83FE /* MelodyNote.swift in Sources */,
+				FEAF08302C4055840014DA01 /* HarmonicaNotepadApp.swift in Sources */,
+				FEC91A562E111A7200F48FEE /* FileEncryptor.swift in Sources */,
+				FECD65C92DE745DA0025F788 /* MidiNotePlayer.swift in Sources */,
+				FE83CCC12EAE2508002B9F0D /* HarmonicaTextEditField.swift in Sources */,
+				FEB7C77B2E1ADFA20064B630 /* SongScreenView.swift in Sources */,
+				FE8C70852EA68A5500B65FC4 /* ButttonEditContentView.swift in Sources */,
+				FE2781972DE965FB009C7FDF /* MelodyEditScreenViewModel.swift in Sources */,
+				FE27819B2DE96C0D009C7FDF /* PlayerService.swift in Sources */,
+				FE0B6DCC2DEB30B800BA8793 /* TempoSetupView.swift in Sources */,
+				FE9F72042E1466A100ED83FE /* Melody.swift in Sources */,
+				FEB5CDFD2E19A20000C5BDC9 /* SongListView.swift in Sources */,
+				FE0747F12E0837F000A9A797 /* SongEditScreenView.swift in Sources */,
+				FEB5CDFF2E1A81BD00C5BDC9 /* MelodyNoteSimpleCellView.swift in Sources */,
+				FEF61F592DE4E66B009A504F /* HarmonicaLayoutView.swift in Sources */,
+				FEC91A542E1119E000F48FEE /* SongReviewSwiftDataService.swift in Sources */,
+				FE9F720A2E14684700ED83FE /* HarmonicaSong.swift in Sources */,
+				FE0B6DD22DEC1BB300BA8793 /* LayoutNotesGrid.swift in Sources */,
+				FE9F72062E1466AC00ED83FE /* Identified.swift in Sources */,
+				FE37594C2E164D6400B7F3E5 /* NoteValueWrapper.swift in Sources */,
+				FE9F72022E1465E300ED83FE /* HarmonicaNote.swift in Sources */,
+				FE65DC2C2E06E4A5002A3381 /* AppNavigation.swift in Sources */,
+				FE2781992DE96638009C7FDF /* MelodyEditScreenView.swift in Sources */,
+				FEB5CDF92E1959D600C5BDC9 /* NotesPresentationStyle.swift in Sources */,
+				FEB5CDFB2E195DBB00C5BDC9 /* View+OnFirstAppear.swift in Sources */,
+				FE83CCBD2EAE22B5002B9F0D /* CardContainer.swift in Sources */,
+				FEC91A522E11182D00F48FEE /* SwiftDataService.swift in Sources */,
+				FEAB3C302DF8AAB00015B5A6 /* MelodyPlayButton.swift in Sources */,
+				FE65DC302E072F65002A3381 /* MainScreenView.swift in Sources */,
+				FE65DC2A2E05DA69002A3381 /* HarmonicaLayoutConfigurationView.swift in Sources */,
+				FED545C02EB91CFA00626655 /* SongEditScreenViewModel.swift in Sources */,
+				FE5732CF2DE30B37000F2B8E /* NoteView.swift in Sources */,
+				FE4F96242EA3ACDA00B4146D /* NoteValueTypeWrapper.swift in Sources */,
+				FEAB3C2B2DF8A8250015B5A6 /* MelodyActionButton.swift in Sources */,
+				FE8940DA2E1AF32100193557 /* Preview.swift in Sources */,
+				FE65DC232E05C697002A3381 /* SwiftUI+Debug.swift in Sources */,
+				FEB5CDF72E19599500C5BDC9 /* NotesPresentationNumbersStyleView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEAF083D2C4055850014DA01 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FEAF08462C4055850014DA01 /* HarmonicaNotepadTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEAF08472C4055850014DA01 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FEAF08502C4055850014DA01 /* HarmonicaNotepadUITests.swift in Sources */,
+				FEAF08522C4055850014DA01 /* HarmonicaNotepadUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FEAF08432C4055850014DA01 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FEAF082B2C4055840014DA01 /* HarmonicaNotepad */;
+			targetProxy = FEAF08422C4055850014DA01 /* PBXContainerItemProxy */;
+		};
+		FEAF084D2C4055850014DA01 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FEAF082B2C4055840014DA01 /* HarmonicaNotepad */;
+			targetProxy = FEAF084C2C4055850014DA01 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		FEAF08532C4055850014DA01 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				EXCLUDED_ARCHS = "";
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		FEAF08542C4055850014DA01 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FEAF08562C4055850014DA01 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"HarmonicaNotepad/Preview Content\"";
+				DEVELOPMENT_TEAM = QY278ZL6U5;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vmudrytskiy.HarmonicaNotepad;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		FEAF08572C4055850014DA01 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"HarmonicaNotepad/Preview Content\"";
+				DEVELOPMENT_TEAM = QY278ZL6U5;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vmudrytskiy.HarmonicaNotepad;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		FEAF08592C4055850014DA01 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QY278ZL6U5;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sygic.OpenAISwift.HarmonicaNotepadTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HarmonicaNotepad.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HarmonicaNotepad";
+			};
+			name = Debug;
+		};
+		FEAF085A2C4055850014DA01 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QY278ZL6U5;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sygic.OpenAISwift.HarmonicaNotepadTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HarmonicaNotepad.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HarmonicaNotepad";
+			};
+			name = Release;
+		};
+		FEAF085C2C4055850014DA01 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QY278ZL6U5;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sygic.OpenAISwift.HarmonicaNotepadUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = HarmonicaNotepad;
+			};
+			name = Debug;
+		};
+		FEAF085D2C4055850014DA01 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QY278ZL6U5;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sygic.OpenAISwift.HarmonicaNotepadUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = HarmonicaNotepad;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FEAF08272C4055840014DA01 /* Build configuration list for PBXProject "HarmonicaNotepad" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FEAF08532C4055850014DA01 /* Debug */,
+				FEAF08542C4055850014DA01 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FEAF08552C4055850014DA01 /* Build configuration list for PBXNativeTarget "HarmonicaNotepad" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FEAF08562C4055850014DA01 /* Debug */,
+				FEAF08572C4055850014DA01 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FEAF08582C4055850014DA01 /* Build configuration list for PBXNativeTarget "HarmonicaNotepadTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FEAF08592C4055850014DA01 /* Debug */,
+				FEAF085A2C4055850014DA01 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FEAF085B2C4055850014DA01 /* Build configuration list for PBXNativeTarget "HarmonicaNotepadUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FEAF085C2C4055850014DA01 /* Debug */,
+				FEAF085D2C4055850014DA01 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FE5732D02DE35836000F2B8E /* XCRemoteSwiftPackageReference "MusicTheory" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/cemolcay/MusicTheory";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FE5732D42DE36AB3000F2B8E /* MusicTheory */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FE5732D02DE35836000F2B8E /* XCRemoteSwiftPackageReference "MusicTheory" */;
+			productName = MusicTheory;
+		};
+/* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		FEAF083A2C4055850014DA01 /* HarmonicaNotepad.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				FEAF083B2C4055850014DA01 /* HarmonicaNotepad.xcdatamodel */,
+			);
+			currentVersion = FEAF083B2C4055850014DA01 /* HarmonicaNotepad.xcdatamodel */;
+			path = HarmonicaNotepad.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = FEAF08242C4055840014DA01 /* Project object */;
+}
