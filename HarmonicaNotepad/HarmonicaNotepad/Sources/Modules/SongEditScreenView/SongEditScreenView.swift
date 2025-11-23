@@ -13,7 +13,6 @@ struct SongEditScreenView: View {
     @Bindable private var _viewModel: SongEditScreenViewModel
     @Binding private var _hasUnsavedChanges: Bool
 
-    @Environment(MainRouter.self) private var _router
     @Environment(\.modelContext) private var _context
     @Environment(\.dismiss) private var dismiss
 
@@ -51,24 +50,11 @@ struct SongEditScreenView: View {
             _viewModel.modelContext = _context
             _hasUnsavedChanges = false
         }
-        .navigationDestination(for: SongEditScreenViewModel.Route.self) { route in
-            switch route {
-                case .editMelody:
-                    MelodyEditScreenView(
-                        viewModel: _viewModel.melodyEditViewModel
-                    )
-            }
-        }
-        .environment(_router)
     }
 
     private func _contentView() -> some View {
         VStack(alignment: .center, spacing: .zero) {
             _fieldsContent()
-            _buttonEdit()
-                .padding(.top, 16)
-            _buttonSave()
-                .padding(.top, 16)
             NotesPresentationView(
                 notes: _viewModel.isMelodyAvailable() ? _viewModel.melody.notes : [],
                 style: .numbers
@@ -89,22 +75,6 @@ struct SongEditScreenView: View {
                     limit: 30
                 )
             }
-        }
-    }
-
-    private func _buttonEdit() -> some View {
-        Button {
-            _router.navigate(to: SongEditScreenViewModel.Route.editMelody)
-        } label: {
-            Text("Edit melody")
-        }
-    }
-
-    private func _buttonSave() -> some View {
-        Button {
-            _viewModel.save()
-        } label: {
-            Text("Save melody")
         }
     }
 }

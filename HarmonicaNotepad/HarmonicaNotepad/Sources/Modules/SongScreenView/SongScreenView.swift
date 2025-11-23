@@ -5,118 +5,47 @@
 //  Created by Volodymyr Mudrik on 06.07.2025.
 //
 
-import MusicTheory
-import SwiftData
 import SwiftUI
 
-@Observable
-final class SongScreenViewModel {
-    enum Route: Hashable {
-        case editSong
-        case editMelody
-    }
-
-    private let _playerService = PlayerService()
-
-    private(set) var hasUnsavedChanges: Bool = false
-    var modelContext: ModelContext? = nil
-    var song: HarmonicaSong
-    var notes: [MelodyNote]
-
-    init(song: HarmonicaSong) {
-        self.song = song
-        self.notes = song.melody.notes
-    }
-
-    func updateSong(with songProperties: HarmonicaSongProperties) {
-        song.artist = songProperties.artist
-        song.comments = songProperties.comments
-        song.title = songProperties.title
-        hasUnsavedChanges = true
-    }
-
-    func updateMelody(with melody: Melody) {
-        song.melody = MelodyWrapper(melody)
-    }
-
-    func onPlayTap() {
-        guard !notes.isEmpty else { return }
-        if _playerService.isPlayingMelody {
-            _playerService.stopPlayingMelody()
-        } else {
-            _playerService.playMelody(
-                notes,
-                with: Tempo(bpm: song.melody.bpm)
-            )
-        }
-    }
-
-    func save() {
-        guard let container = modelContext?.container else { return }
-        Task.detached(priority: .background) {
-//            let song = HarmonicaSong(
-//                id: self.songId,
-//                title: self.songProperties.title,
-//                artist: self.songProperties.artist,
-//                comments: self.songProperties.comments,
-//                melody: MelodyWrapper(self.melody)
-//            )
-            let actor = SongService(modelContainer: container)
-            await actor.save(self.song)
-        }
-    }
-}
-
 struct SongScreenView: View {
-    private var _viewModel: SongScreenViewModel
-    @Environment(MainRouter.self) private var _router
-    @Environment(\.modelContext) private var _context
-    @Environment(\.dismiss) private var dismiss
-
-    // Local state for modal presentation
-    @State private var modalRoute: ModalRoute?
-    @State private var _hasUnsavedChanges = false
-
     // Identifiable wrapper for routes
     struct ModalRoute: Identifiable {
         let id = UUID()
         let route: SongScreenViewModel.Route
     }
 
+    @Environment(MainRouter.self) private var _router
+    @Environment(\.modelContext) private var _context
+    @Environment(\.dismiss) private var dismiss
+
+    // Local state for modal presentation
+    @State private var _modalRoute: ModalRoute?
+    @State private var _hasUnsavedChanges = false
+
+    private var _viewModel: SongScreenViewModel
+
+    // MARK: - Init
     init(viewModel: SongScreenViewModel) {
         _viewModel = viewModel
     }
 
+    // MARK: - Render
     var body: some View {
         _contentView()
             .padding(16)
             .navigationDestination(for: SongScreenViewModel.Route.self) { route in
                 _modalView(for: route)
-
             }
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "xmark")
-                    }
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        _viewModel.save()
-                        dismiss()
-                    } label: {
-                        Image(systemName: "checkmark")
-                    }
-                }
+                _toolbarContent()
             }
+            .navigationBarBackButtonHidden()
             .onFirstAppear {
                 _viewModel.modelContext = _context
                 _hasUnsavedChanges = false
             }
-            .sheet(item: $modalRoute) { modalRoute in
-                NavigationStack { // to show toolbar
+            .sheet(item: $_modalRoute) { modalRoute in
+                NavigationStack {
                     _modalView(for: modalRoute.route)
                 }
                 .presentationDetents([.large])
@@ -126,27 +55,36 @@ struct SongScreenView: View {
             }
     }
 
+    @ToolbarContentBuilder
+    private func _toolbarContent() -> some ToolbarContent {
+        ToolbarItem(placement: .topBarLeading) {
+            Button {
+                dismiss()
+            } label: {
+                Image(systemName: "xmark")
+            }
+        }
+        ToolbarItem(placement: .topBarTrailing) {
+            Button {
+                _viewModel.save()
+                dismiss()
+            } label: {
+                Image(systemName: "checkmark")
+            }
+        }
+    }
+
     @ViewBuilder
     private func _modalView(for route: SongScreenViewModel.Route) -> some View {
         switch route {
             case .editSong:
-                let viewModel = SongEditScreenViewModel(song: _viewModel.song) { songProperties in
-                    _viewModel.updateSong(with: songProperties)
-                }
                 SongEditScreenView(
-                    viewModel: viewModel,
+                    viewModel: _viewModel.songEditScreenViewModel,
                     hasUnsavedChanges: $_hasUnsavedChanges
                 )
             case .editMelody:
-                let viewModel = MelodyEditScreenViewModel(
-                    melody: _viewModel.song.melody.value,
-                    onApplyTap: { },
-                    onApplyTap2: { melody in
-                        _viewModel.updateMelody(with: melody)
-                        dismiss()
-                })
                 MelodyEditScreenView(
-                    viewModel: viewModel
+                    viewModel: _viewModel.melodyEditScreenViewModel
                 )
         }
     }
@@ -232,7 +170,7 @@ struct SongScreenView: View {
             Spacer()
             HStack(alignment: .firstTextBaseline, spacing: 4) {
                 Button {
-                    modalRoute = ModalRoute(route: SongScreenViewModel.Route.editSong)
+                    _modalRoute = ModalRoute(route: SongScreenViewModel.Route.editSong)
 //                    _router.navigate(to: SongScreenViewModel.Route.editSong)
                 } label: {
                     ButttonEditContentViewV2()

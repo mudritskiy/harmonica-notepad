@@ -9,14 +9,13 @@ import SwiftUI
 
 @Observable
 final class NotesPresentationNumbersStyleViewModel {
-    let notes: [MelodyNote]
     let notesRows: [[MelodyNote]]
 
-    private let _melodyService = MelodyService()
-
-    init(notes: [MelodyNote]) {
-        self.notes = notes
-        notesRows = _melodyService.breakInRows(notes: notes)
+    init(
+        notes: [MelodyNote],
+        melodyService: MelodyService = MelodyServiceImpl()
+    ) {
+        notesRows = melodyService.breakInRows(notes: notes)
     }
 }
 

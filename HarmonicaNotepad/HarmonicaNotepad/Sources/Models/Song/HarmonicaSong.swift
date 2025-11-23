@@ -32,7 +32,6 @@ extension HarmonicaSongProperties {
     }
 }
 
-
 @Model
 final class HarmonicaSong: HarmonicaSongProperties {
     @Attribute(.unique) var id: SongId

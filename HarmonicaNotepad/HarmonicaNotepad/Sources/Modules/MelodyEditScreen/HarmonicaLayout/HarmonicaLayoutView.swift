@@ -5,47 +5,53 @@
 //  Created by Volodymyr Mudrik on 26.05.2025.
 //
 
+import Combine
 import SwiftUI
 import MusicTheory
 
-final class HarmonicaLayoutViewModel: ObservableObject {
-    @Published var notesGrid: LayoutNotesGrid
-    @Published var isPresentedKeySetup: Bool = false
-    var configuration: HarmonicaLayoutConfiguration
+@Observable
+final class HarmonicaLayoutViewModel {
+    var notesGrid: LayoutNotesGrid
+    var isPresentedKeySetup: Bool = false
 
-    let onNoteTap: (HarmonicaNote) -> Void
-    let layout: HarmonicaLayout
-    let layoutConfigurationViewModel: HarmonicaLayoutConfigurationViewModel
+    private var _configuration: HarmonicaLayoutConfiguration
+    private let _layout: HarmonicaLayout
+
+    @ObservationIgnored let layoutConfigurationViewModel: HarmonicaLayoutConfigurationViewModel
+    @ObservationIgnored let notePublisher = PassthroughSubject<HarmonicaNote, Never>()
 
     init(
-        layout: HarmonicaLayout = HarmonicaLayout(key: Key(type: .c)),
-        onNoteTap: @escaping (HarmonicaNote) -> Void
+        layout: HarmonicaLayout = HarmonicaLayout(key: Key(type: .c))
     ) {
         let configuration = HarmonicaLayoutConfiguration()
         let notes = layout.notes(by: configuration)
-        let notesGrid = LayoutNotesGrid(with: notes)
-        self.layout = layout
-        self.notesGrid = notesGrid
-        self.onNoteTap = onNoteTap
-        self.configuration = configuration
-        self.layoutConfigurationViewModel = HarmonicaLayoutConfigurationViewModel(
+        notesGrid = LayoutNotesGrid(with: notes)
+
+        _layout = layout
+        _configuration = configuration
+
+        layoutConfigurationViewModel = HarmonicaLayoutConfigurationViewModel(
             configuration: configuration
         )
     }
 
     func updateNoteGrid(with layout: HarmonicaLayout) {
-        let notes = layout.notes(by: configuration)
+        let notes = layout.notes(by: _configuration)
         notesGrid = LayoutNotesGrid(with: notes)
     }
 
     func applyConfiguration() {
-        self.configuration = layoutConfigurationViewModel.configuration
-        updateNoteGrid(with: layout)
+        _configuration = layoutConfigurationViewModel.configuration
+        updateNoteGrid(with: _layout)
+    }
+
+    func onNoteTap(_ note: HarmonicaNote) {
+        notePublisher.send(note)
     }
 }
 
 struct HarmonicaLayoutView: View {
-    @ObservedObject var viewModel: HarmonicaLayoutViewModel
+    @Bindable var viewModel: HarmonicaLayoutViewModel
 
     var body: some View {
         VStack(spacing: .zero) {

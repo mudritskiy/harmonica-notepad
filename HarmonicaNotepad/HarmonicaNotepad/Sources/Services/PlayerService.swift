@@ -7,14 +7,27 @@
 
 import Combine
 import MusicTheory
+import SwiftUI
+
+private struct PlayerServiceKey: EnvironmentKey {
+    static let defaultValue = PlayerService.shared
+}
+
+extension EnvironmentValues {
+    var playerService: PlayerService {
+        get { self[PlayerServiceKey.self] }
+        set { self[PlayerServiceKey.self] = newValue }
+    }
+}
 
 protocol PlayerServiceState {
     var isPlayingMelody: Bool { get }
     var isPlayingMelodyPublisher: AnyPublisher<Bool, Never> { get }
 }
 
-
 final class PlayerService: PlayerServiceState {
+    static let shared = PlayerService()
+
     @Published var isPlayingMelody: Bool = false
 
     var isPlayingMelodyPublisher: AnyPublisher<Bool, Never> {

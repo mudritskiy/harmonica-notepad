@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MelodyEditScreenView: View {
-    @ObservedObject var viewModel: MelodyEditScreenViewModel
+    @Bindable var viewModel: MelodyEditScreenViewModel
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
@@ -36,8 +36,32 @@ struct MelodyEditScreenView: View {
             _headerContentView()
             _melodyContentView()
                 .stretching(.vertical)
-            MelodyActionPanelView(viewModel: viewModel.melodyActionPanelViewModel)
+            _melodyActionPanelView()
             HarmonicaLayoutView(viewModel: viewModel.layoutViewModel)
+        }
+    }
+
+    private func _melodyActionPanelView() -> some View {
+        HStack(alignment: .center, spacing: .zero) {
+            MelodyPlayButton(isActive: viewModel.isPlayingMelody) {
+                viewModel.onPlayTap()
+            }
+            Spacer()
+            MelodyActionButton(iconName: "space") {
+                viewModel.onServiceKeyTap(.silence)
+            }
+            MelodyActionButton(iconName: "return") {
+                viewModel.onServiceKeyTap(.newLine)
+            }
+            .padding(.leading, 8)
+            MelodyActionButton(iconName: "delete.backward.fill") {
+                viewModel.onRemoveKeyTap()
+            }
+            .padding(.leading, 8)
+            Spacer()
+            MelodyClearButton() {
+                viewModel.onClearTap()
+            }
         }
     }
 
@@ -89,7 +113,8 @@ struct MelodyEditScreenView: View {
                 Text("Key: \(viewModel.key.description)")
             }
             .padding(.leading, 12)
-        }    }
+        }
+    }
 
     // MARK: - Toolbar
     @ToolbarContentBuilder

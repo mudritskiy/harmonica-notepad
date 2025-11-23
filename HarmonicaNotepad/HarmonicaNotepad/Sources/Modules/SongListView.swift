@@ -71,7 +71,7 @@ struct SongListView: View {
                     )
                 case .addSong:
                     SongEditScreenView(
-                        viewModel: SongEditScreenViewModel(song: nil) { _ in }
+                        viewModel: SongEditScreenViewModel(song: nil)
                     )
             }
         }
