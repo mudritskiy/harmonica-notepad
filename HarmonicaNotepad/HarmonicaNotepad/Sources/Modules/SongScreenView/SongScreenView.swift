@@ -5,7 +5,22 @@
 //  Created by Volodymyr Mudrik on 06.07.2025.
 //
 
+import SwiftData
 import SwiftUI
+
+struct SongScreenContentView: View {
+    @Environment(\.modelContext) private var _context
+    let initialSong: HarmonicaSong?
+
+    var body: some View {
+        SongScreenView(
+            viewModel: SongScreenViewModel(
+                song: initialSong,
+                context: _context
+            )
+        )
+    }
+}
 
 struct SongScreenView: View {
     // Identifiable wrapper for routes
@@ -18,15 +33,20 @@ struct SongScreenView: View {
     @Environment(\.modelContext) private var _context
     @Environment(\.dismiss) private var dismiss
 
+    @Query private var favoriteEntries: [FavoriteSong]
+
     // Local state for modal presentation
     @State private var _modalRoute: ModalRoute?
     @State private var _hasUnsavedChanges = false
 
     private var _viewModel: SongScreenViewModel
+    private var isFavorited: Bool { !favoriteEntries.isEmpty }
 
     // MARK: - Init
     init(viewModel: SongScreenViewModel) {
         _viewModel = viewModel
+        let songId = viewModel.song.id
+        _favoriteEntries = Query(filter: #Predicate { $0.songId == songId })
     }
 
     // MARK: - Render
@@ -41,7 +61,6 @@ struct SongScreenView: View {
             }
             .navigationBarBackButtonHidden()
             .onFirstAppear {
-                _viewModel.modelContext = _context
                 _hasUnsavedChanges = false
             }
             .sheet(item: $_modalRoute) { modalRoute in
@@ -66,8 +85,9 @@ struct SongScreenView: View {
         }
         ToolbarItem(placement: .topBarTrailing) {
             Button {
-                _viewModel.save()
-                dismiss()
+                _viewModel.save() {
+                    dismiss()
+                }
             } label: {
                 Image(systemName: "checkmark")
             }
@@ -118,7 +138,12 @@ struct SongScreenView: View {
             }
             Spacer()
             Group {
-                Image(systemName: "heart")
+                Button {
+                    _viewModel.onFavoriteTap(isFavorited)
+                } label: {
+                    Image(systemName: isFavorited ? "heart.fill" : "heart")
+                }
+
                 Image(systemName: "square.and.arrow.up")
             }
             .padding(.all, 16)
@@ -309,7 +334,7 @@ struct SongScreenView: View {
         hasNotes: true
     )
     SongScreenView(
-        viewModel: SongScreenViewModel(song: song)
+        viewModel: SongScreenViewModel(song: song, context: preview.container.mainContext)
     )
     .modelContainer(preview.container)
     .environment(appNavigation.mainRouter)

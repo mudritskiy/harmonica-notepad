@@ -33,7 +33,7 @@ struct Preview {
     ) -> HarmonicaSong {
         let melody = sampleMelody(hasNotes: hasNotes)
         let song = HarmonicaSong(
-            id: "0197e0f3-a7a7-74b7-b8a4-28fb69e56300",
+            id: UUID(),
             title: "All You Need Is Love",
             artist: hasArtist ? "The Beatles" : "",
             comments: hasComments ? "Chord progression, Strong Lyrics, Solid song structure (chord and lyrics have to come together), Ability to evoke reaction and emotion, and having that Special hook with certain musical interlude that can embed itself in your listeners’ brains." : "",

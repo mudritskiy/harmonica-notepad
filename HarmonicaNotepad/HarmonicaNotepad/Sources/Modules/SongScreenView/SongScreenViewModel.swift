@@ -19,26 +19,34 @@ final class SongScreenViewModel {
 
     // MARK: - Dependencies
     private let _playerService: PlayerService
+    private var _songService: SongService?
+    private let _favoritesService: FavoritesService
 
     // MARK: - View Context
-    var modelContext: ModelContext? = nil
-    var dismiss: (() -> Void)?
+    let context: ModelContext
 
     // MARK: - Properties
     var song: HarmonicaSong
     var notes: [MelodyNote]
-    private(set) var hasUnsavedChanges: Bool = false
+
+    @ObservationIgnored private(set) var hasUnsavedChanges: Bool = false
     @ObservationIgnored let melodyEditScreenViewModel: MelodyEditScreenViewModel
     @ObservationIgnored let songEditScreenViewModel: SongEditScreenViewModel
+
     private var _cancellables = Set<AnyCancellable>()
 
     // MARK: - Init
     init(
-        song: HarmonicaSong,
-        playerService: PlayerService = .shared
+        song: HarmonicaSong? = nil,
+        context: ModelContext,
+        playerService: PlayerService = .shared,
+        favoritesService: FavoritesService = FavoritesServiceImpl.shared
     ) {
         _playerService = playerService
+        _favoritesService = favoritesService
+        self.context = context
 
+        let song = song ?? .new()
         self.song = song
         self.notes = song.melody.notes
 
@@ -53,7 +61,6 @@ final class SongScreenViewModel {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] melody in
                 self?.song.melody = MelodyWrapper(melody)
-                self?.dismiss?()
             }
             .store(in: &_cancellables)
 
@@ -73,23 +80,31 @@ final class SongScreenViewModel {
     }
 
     // MARK: - View Methods
+    func onFavoriteTap(_ isFavorited: Bool) {
+        if isFavorited {
+            _favoritesService.removeFavorite(by: song.id, in: context)
+        } else {
+            _favoritesService.addFavorite(by: song.id, in: context)
+        }
+    }
+
     func onPlayTap() {
         guard !notes.isEmpty else { return }
         if _playerService.isPlayingMelody {
             _playerService.stopPlayingMelody()
         } else {
-            _playerService.playMelody(
-                notes,
-                with: Tempo(bpm: song.melody.bpm)
-            )
+            let tempo = Tempo(bpm: song.melody.bpm)
+            _playerService.playMelody(notes, with: tempo)
         }
     }
 
-    func save() {
-        guard let container = modelContext?.container else { return }
-        Task.detached(priority: .background) {
-            let actor = SongService(modelContainer: container)
-            await actor.save(self.song)
+    func save(completion: @escaping () -> Void) {
+        Task {
+            context.insert(song)
+            try? context.save()
+            await MainActor.run {
+                completion()
+            }
         }
     }
 }

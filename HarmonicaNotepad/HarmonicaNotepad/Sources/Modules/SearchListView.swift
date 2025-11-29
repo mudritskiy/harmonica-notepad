@@ -55,7 +55,7 @@ struct SearchListContentView: View {
     var body: some View {
         List(songs) { song in
             Button {
-                _router.navigate(to: SongListViewModel.Route.editSong(song))
+                _router.navigate(to: SongListViewModel.Route.showSong(song))
             } label: {
                 Text(song.title)
             }

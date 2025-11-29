@@ -11,8 +11,7 @@ import SwiftUI
 @Observable
 final class SongListViewModel {
     enum Route: Hashable {
-        case addSong
-        case editSong(HarmonicaSong)
+        case showSong(HarmonicaSong)
     }
 
     var modelContext: ModelContext? = nil
@@ -50,7 +49,7 @@ struct SongListView: View {
         List {
             ForEach(_viewModel.songs) { song in
                 Button {
-                    _router.navigate(to: SongListViewModel.Route.editSong(song))
+                    _router.navigate(to: SongListViewModel.Route.showSong(song))
                 } label: {
                     Text(song.title)
                 }
@@ -65,20 +64,18 @@ struct SongListView: View {
         }
         .navigationDestination(for: SongListViewModel.Route.self) { route in
             switch route {
-                case .editSong(let song):
-                    SongScreenView(
-                        viewModel: SongScreenViewModel(song: song)
-                    )
-                case .addSong:
-                    SongEditScreenView(
-                        viewModel: SongEditScreenViewModel(song: nil)
-                    )
+                case .showSong(let song):
+                    SongScreenContentView(initialSong: song)
+//                    SongScreenView(
+//                        viewModel: SongScreenViewModel(song: song)
+//                    )
             }
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    _router.navigate(to: SongListViewModel.Route.addSong)
+                    let newSong: HarmonicaSong = .new()
+                    _router.navigate(to: SongListViewModel.Route.showSong(newSong))
                 } label: {
                     Text("Add")
                 }

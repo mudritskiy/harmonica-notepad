@@ -8,7 +8,7 @@
 import SwiftData
 import SwiftUI
 
-typealias SongId = String
+typealias SongId = UUID
 
 enum HarmonicaSongProperty: CaseIterable {
     case title
@@ -58,6 +58,14 @@ final class HarmonicaSong: HarmonicaSongProperties {
         self.artist = artist
         self.comments = comments
         self.melody = melody
+    }
+
+    static func new() -> HarmonicaSong {
+        HarmonicaSong(
+            id: SongId(),
+            title: .empty,
+            melody: MelodyWrapper(Melody())
+        )
     }
 }
 

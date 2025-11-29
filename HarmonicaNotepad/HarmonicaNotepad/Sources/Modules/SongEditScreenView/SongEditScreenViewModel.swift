@@ -32,7 +32,7 @@ final class SongEditScreenViewModel {
             self.melody = song.melody.value
         } else {
             self.songProperties = SongEditableProperties()
-            self.songId = SongId(UUID().uuidString)
+            self.songId = UUID()
             self.melody = Melody()
         }
     }
