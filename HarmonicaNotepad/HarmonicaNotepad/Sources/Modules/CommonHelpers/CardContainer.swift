@@ -11,21 +11,22 @@ public typealias Action = @MainActor () -> Void
 public typealias ContainerContent<Content> = () -> Content
 
 public struct CardContainer<Content: View>: View {
-    let fill: Bool
+    let cornerRadius: CGFloat
+    let borderWidth: CGFloat
     let backgroundColor: Color
     let borderColor: Color
     let content: Content
 
-    private let _cornerRadius: CGFloat = 16
-
     // MARK: - Init
     public init(
-        fill: Bool = false,
+        cornerRadius: CGFloat = 16,
+        borderWidth: CGFloat = 1,
         backgroundColor: Color = .clear,
         borderColor: Color = .gray,
         @ViewBuilder content: ContainerContent<Content>
     ) {
-        self.fill = fill
+        self.cornerRadius = cornerRadius
+        self.borderWidth = borderWidth
         self.backgroundColor = backgroundColor
         self.borderColor = borderColor
         self.content = content()
@@ -34,18 +35,16 @@ public struct CardContainer<Content: View>: View {
     // MARK: - Render
     public var body: some View {
         content
-            .padding(.all, _resolvedContentPadding)
-            .background(
-                RoundedRectangle(cornerRadius: _cornerRadius)
-                    .stroke(borderColor, lineWidth: 1)
-                    .background(backgroundColor)
+            .overlay(
+                RoundedRectangle(cornerRadius: cornerRadius)
+                    .strokeBorder(
+                        borderColor,
+                        lineWidth: borderWidth
+                    )
             )
+            .background(backgroundColor)
             .clipShape(
-                RoundedRectangle(cornerRadius: _cornerRadius)
+                RoundedRectangle(cornerRadius: cornerRadius)
             )
-    }
-
-    private var _resolvedContentPadding: CGFloat {
-        fill ? .zero : 16
     }
 }

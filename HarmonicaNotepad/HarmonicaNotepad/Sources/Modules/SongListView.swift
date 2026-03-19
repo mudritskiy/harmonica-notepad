@@ -46,17 +46,31 @@ struct SongListView: View {
     }
 
     var body: some View {
-        List {
-            ForEach(_viewModel.songs) { song in
-                Button {
-                    _router.navigate(to: SongListViewModel.Route.showSong(song))
-                } label: {
-                    Text(song.title)
+        ScrollView {
+            VStack(alignment: .leading, spacing: 8) {
+                ForEach(_viewModel.songs) { song in
+                    Button {
+                        _router.navigate(to: SongListViewModel.Route.showSong(song))
+                    } label: {
+                        CardContainer(
+                            backgroundColor: Theme.colors.background.highlight.color,
+                            borderColor: Theme.colors.background.highlight.color
+                        ) {
+                            HStack(alignment: .center, spacing: .zero) {
+                                Text(song.title)
+                                    .font(FontToken.body1.value)
+                                    .foregroundStyle(Theme.colors.text.highlight.color)
+                                Spacer()
+                            }
+                            .padding(.all, 16)
+                        }
+                    }
                 }
+                //            .onDelete { offsets in
+                //                _viewModel.delete(at: offsets)
+                //            }
             }
-            .onDelete { offsets in
-                _viewModel.delete(at: offsets)
-            }
+            .padding(.horizontal, 16)
         }
         .onAppear {
             _viewModel.modelContext = _context

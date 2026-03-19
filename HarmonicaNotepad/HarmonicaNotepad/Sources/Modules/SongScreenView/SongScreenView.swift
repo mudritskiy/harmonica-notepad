@@ -38,6 +38,7 @@ struct SongScreenView: View {
     // Local state for modal presentation
     @State private var _modalRoute: ModalRoute?
     @State private var _hasUnsavedChanges = false
+    @State private var _isListSelectionPresented: Bool = false
 
     private var _viewModel: SongScreenViewModel
     private var isFavorited: Bool { !favoriteEntries.isEmpty }
@@ -71,6 +72,16 @@ struct SongScreenView: View {
                 .presentationDragIndicator(.visible)
                 .presentationBackground(.thinMaterial)
                 .interactiveDismissDisabled(_hasUnsavedChanges)
+            }
+            .autoSizingBottomSheet(
+                isPresented: $_isListSelectionPresented,
+                props: _viewModel.listSelectionProps
+            ) {
+                ListSelectionView(
+                    service: _viewModel._listsService,
+                    songId: _viewModel.song.id
+                )
+                .padding(.all, 16)
             }
     }
 
@@ -139,7 +150,8 @@ struct SongScreenView: View {
             Spacer()
             Group {
                 Button {
-                    _viewModel.onFavoriteTap(isFavorited)
+//                    _viewModel.onFavoriteTap(isFavorited)
+                    _isListSelectionPresented = true
                 } label: {
                     Image(systemName: isFavorited ? "heart.fill" : "heart")
                 }
@@ -321,21 +333,4 @@ struct SongScreenView: View {
             Spacer()
         }
     }
-}
-
-
-#Preview {
-    let preview = Preview()
-    let appNavigation = AppNavigationModel()
-    let song = preview.sampleSong(
-        hasArtist: true,
-        hasComments: true,
-        hasTags: true,
-        hasNotes: true
-    )
-    SongScreenView(
-        viewModel: SongScreenViewModel(song: song, context: preview.container.mainContext)
-    )
-    .modelContainer(preview.container)
-    .environment(appNavigation.mainRouter)
 }

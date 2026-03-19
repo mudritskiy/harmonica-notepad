@@ -23,7 +23,7 @@ struct NotesPresentationNumbersStyleView: View {
     @Bindable var viewModel: NotesPresentationNumbersStyleViewModel
 
     var body: some View {
-        LazyHStack(alignment: .top, spacing: 0) {
+        LazyVStack(alignment: .leading, spacing: 0) {
             ForEach(Array(viewModel.notesRows.enumerated()), id: \.offset) { rowIndex, notes in
                 LazyVGrid(
                     columns: Array(repeating: GridItem(.fixed(30)), count: 9),

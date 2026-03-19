@@ -8,6 +8,7 @@
 import SwiftUI
 
 typealias MainRouter = AppRouter<AppNavigationModel.Scope.Main>
+typealias SongsListsRouter = AppRouter<AppNavigationModel.Scope.SongsLists>
 typealias FavoritesRouter = AppRouter<AppNavigationModel.Scope.Favorites>
 
 // MARK: - AppNavigationModel
@@ -15,13 +16,15 @@ typealias FavoritesRouter = AppRouter<AppNavigationModel.Scope.Favorites>
 class AppNavigationModel {
     enum Scope {
         enum Main {}
+        enum SongsLists {}
         enum Favorites {}
     }
 
     var mainRouter = MainRouter()
+    var songsLists = SongsListsRouter()
     var favoriteRouter = FavoritesRouter()
 
-    var selectedTab: ContentTab = .main
+    var selectedTab: ContentTab = .songs
 }
 
 // MARK: - AppRouter
@@ -48,7 +51,7 @@ final class AppRouter<Scope> {
 
 // MARK: - EnvironmentKey
 struct CurrentTabKey: EnvironmentKey {
-    static var defaultValue: Binding<ContentTab> = .constant(.main)
+    static var defaultValue: Binding<ContentTab> = .constant(.songs)
 }
 
 extension EnvironmentValues {
