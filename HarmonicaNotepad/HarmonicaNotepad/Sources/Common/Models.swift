@@ -12,9 +12,15 @@ import MusicTheory
 
 extension String {
     static let empty = ""
+    static let space = " "
+    static let htmlNonBreakingSpace = "&nbsp;"
+    static let nonBreakingSpace = "\u{00a0}"
+    static let doubleSpace = "  "
     static let degree = "\u{00B0}" // Same as "°"
     static let apostrophe = "\u{0027}" // Same as "'"
     static let minus = "-"
+    static let newLine = "\n"
+    static let star = "*"
 }
 
 enum BreathDirection: Int, Codable, CaseIterable {

@@ -26,6 +26,7 @@ final class MelodyEditScreenViewModel {
     // MARK: Depenencies
     private let _playerService: PlayerService
     private let _melodyService: MelodyService
+    private let _pasteboard: UIPasteboard
 
     // MARK: - Published properties
     var showAlert = false
@@ -59,10 +60,12 @@ final class MelodyEditScreenViewModel {
     init(
         melody: Melody,
         playerService: PlayerService,
-        melodyService: MelodyService
+        melodyService: MelodyService,
+        pasteboard: UIPasteboard = .general
     ) {
         _playerService = playerService
         _melodyService = melodyService
+        _pasteboard = pasteboard
 
         let melodyKey = melody.key
         let layout = HarmonicaLayout(key: melodyKey)
@@ -109,7 +112,7 @@ final class MelodyEditScreenViewModel {
     }
 
     private func _indexInMelody(rowIndex: Int, indexInRow: Int) -> Int {
-        guard rowIndex > 0 else { return indexInRow }
+        guard rowIndex > 0, melodyRows.count - 1 > rowIndex else { return indexInRow }
         let notesCount = melodyRows.prefix(upTo: rowIndex).flatMap { $0 }.count
         return notesCount + indexInRow
     }
@@ -183,6 +186,45 @@ final class MelodyEditScreenViewModel {
     }
 
     // MARK: - Toolbar actions
+    func onPasteTap() {
+        defer {
+            showAlert = true
+        }
+
+        guard let text = _pasteboard.string else {
+            alertInfo = AlertInfo(
+                title: "Nothing to paste",
+                message: "Empty pasteboard",
+                buttons: []
+            )
+            return
+        }
+
+        let notes = _melodyService.parseNotes(from: text, baseNotes: _layout.notes)
+        guard !notes.isEmpty else {
+            alertInfo = AlertInfo(
+                title: "Invalid text",
+                message: "Copied text cannot be parsed as a melody",
+                buttons: []
+            )
+            return
+        }
+
+        alertInfo = AlertInfo(
+            title: "Paste melody?",
+            message: "This will discard your current changes",
+            buttons: [
+                AlertButton("Apply", role: .confirm) { [weak self] in
+                    self?.notes = notes
+                    self?._updateMelodyRows()
+                },
+                AlertButton("Cancel", role: .cancel) { [weak self] in
+                    self?.showAlert = false
+                }
+            ]
+        )
+    }
+
     func onApplyTap() {
         alertInfo = AlertInfo(
             title: "Apply changes?",
@@ -200,13 +242,17 @@ final class MelodyEditScreenViewModel {
     }
 
     private func _applyMelody() {
+        _updateMelody()
+        dismiss?()
+    }
+
+    private func _updateMelody() {
         let melody = Melody(
             key: key,
             tempo: tempo,
             notes: notes
         )
         melodyPublisher.send(melody)
-        dismiss?()
     }
 
     func onCancelTap() {

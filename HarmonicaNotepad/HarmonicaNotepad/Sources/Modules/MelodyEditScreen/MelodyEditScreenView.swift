@@ -128,6 +128,13 @@ struct MelodyEditScreenView: View {
         }
         ToolbarItem(placement: .topBarTrailing) {
             Button {
+                viewModel.onPasteTap()
+            } label: {
+                Image(systemName: "rectangle.portrait.badge.plus")
+            }
+        }
+        ToolbarItem(placement: .topBarTrailing) {
+            Button {
                 viewModel.onApplyTap()
             } label: {
                 Text("Apply")
