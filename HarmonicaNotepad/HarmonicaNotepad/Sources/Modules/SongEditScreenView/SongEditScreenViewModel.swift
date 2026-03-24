@@ -56,7 +56,10 @@ final class SongEditScreenViewModel {
             case .artist:
                 Binding(
                     get: { self.songProperties.artist },
-                    set: { self.songProperties.artist = $0 }
+                    set: {
+                        guard self.songProperties.artist != $0 else { return }
+                        self.songProperties.artist = $0
+                    }
                 )
             case .comments:
                 Binding(

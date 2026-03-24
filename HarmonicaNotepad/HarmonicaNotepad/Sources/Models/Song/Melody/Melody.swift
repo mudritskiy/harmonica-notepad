@@ -5,6 +5,7 @@
 //  Created by Volodymyr Mudrik on 01.07.2025.
 //
 
+import Foundation
 import MusicTheory
 
 struct Melody {
@@ -20,5 +21,13 @@ struct Melody {
         self.key = key
         self.tempo = tempo
         self.notes = notes
+    }
+
+    func duration() -> TimeInterval {
+        notes.reduce(0) { $0 + tempo.duration(of: $1.value) }
+    }
+
+    var count: Int {
+        notes.filter { !$0.isServiceNote }.count
     }
 }

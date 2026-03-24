@@ -40,6 +40,7 @@ struct SongEditScreenView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     _viewModel.saveProperties()
+                    _hasUnsavedChanges = true
                     dismiss()
                 } label: {
                     Image(systemName: "checkmark")
@@ -48,18 +49,14 @@ struct SongEditScreenView: View {
         }
         .onFirstAppear {
             _viewModel.modelContext = _context
-            _hasUnsavedChanges = false
+//            _hasUnsavedChanges = false
         }
+        .background(Theme.colors.background.primary.color)
     }
 
     private func _contentView() -> some View {
         VStack(alignment: .center, spacing: .zero) {
             _fieldsContent()
-            NotesPresentationView(
-                notes: _viewModel.isMelodyAvailable() ? _viewModel.melody.notes : [],
-                style: .numbers
-            )
-            .padding(.top, 16)
             Spacer()
         }
 
@@ -72,7 +69,7 @@ struct SongEditScreenView: View {
                     title: _viewModel.songProperties.placeholder(for: property),
                     placeholder: _viewModel.songProperties.placeholder(for: property),
                     text: _viewModel.binding(for: property),
-                    limit: 30
+                    limit: 0
                 )
             }
         }

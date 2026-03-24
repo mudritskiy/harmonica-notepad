@@ -16,8 +16,10 @@ struct ListSelectionView: View {
 
     private let _selectedListsProps = WrappedTextListItemViewProps(
         font: .body1,
-        color: Theme.colors.text.highlight,
-        backgroundColor: Theme.colors.background.highlight,
+        color: Theme.colors.songList.textSelected,
+        backgroundColor: Theme.colors.songList.backgoundSelected,
+        borderColor: Theme.colors.songList.borderSelected,
+        cornerRadius: 20,
         insets: EdgeInsets(
             top: 8,
             leading: 12,
@@ -54,10 +56,9 @@ struct ListSelectionView: View {
 
     // MARK: - Render
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: 20) {
             if !listsWithSong.isEmpty {
                 _selectedLists()
-                Divider()
             }
             _availableLists()
 
@@ -94,7 +95,8 @@ struct ListSelectionView: View {
                             withAnimation(.spring(response: 0.38, dampingFraction: 0.82)) {
                                 service.add(songId, to: list.id, in: modelContext)
                             }
-                        }
+                        },
+                        cornerRadius: 20
                     )
                     Spacer()
                 }

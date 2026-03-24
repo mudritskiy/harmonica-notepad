@@ -11,7 +11,7 @@ import SwiftUI
 struct AutoSizingBottomSheetProps {
     let title: String
     let titleFont: FontToken = .title3
-    let titleColor: ColorToken = Theme.colors.text.primary
+    let titleColor: ColorToken = Theme.colors.text.secondary
     let backgroundColor: ColorToken
     let cornerRadius: CGFloat = 24
     let dragIndicatorVisibility: Visibility
@@ -48,7 +48,8 @@ private struct AutoSizingBottomSheetWrapper<Content: View>: View {
                 navigationBar
                     .padding(.vertical, 16)
                     .padding(.top, 4)
-                Divider()
+                CustomDivider
+                    .horizontal()
             }
             content()
         }

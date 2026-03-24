@@ -90,6 +90,7 @@ struct ContentCoordinatorView: View {
                 }
             }
         }
+        .fontDesign(.rounded)
         .environment(\.currentTab, $appNavigation.selectedTab)
         .modelContainer(_viewModel.container)
     }

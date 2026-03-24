@@ -28,10 +28,21 @@ protocol PlayerServiceState {
 final class PlayerService: PlayerServiceState {
     static let shared = PlayerService()
 
-    @Published var isPlayingMelody: Bool = false
+    @Published var isPlayingMelody: Bool = false {
+        didSet {
+            _isPlayingMelodyContinuation?.yield(isPlayingMelody)
+        }
+    }
 
     var isPlayingMelodyPublisher: AnyPublisher<Bool, Never> {
         $isPlayingMelody.eraseToAnyPublisher()
+    }
+
+    private var _isPlayingMelodyContinuation: AsyncStream<Bool>.Continuation?
+    var isPlayingMelodyStream: AsyncStream<Bool> {
+        AsyncStream { [weak self] continuation in
+            self?._isPlayingMelodyContinuation = continuation
+        }
     }
 
     private let player = MidiNotePlayer()

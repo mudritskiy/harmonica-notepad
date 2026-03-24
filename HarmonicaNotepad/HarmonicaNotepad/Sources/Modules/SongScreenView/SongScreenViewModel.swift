@@ -26,18 +26,39 @@ final class SongScreenViewModel {
     // MARK: - View Context
     let context: ModelContext
 
+    private(set) var isSongListVisible: Bool = false
+    private(set) var listsWithSong: [SongsList] = []
+    private(set) var listsWithSongWrappedItems: [WrappedTextListView.Item] = []
+    private(set) var listsWithSongProps: WrappedTextListItemViewProps = WrappedTextListItemViewProps(
+        color: Theme.colors.songList.textSelected,
+        backgroundColor: Theme.colors.songList.backgoundSelected,
+        borderColor: Theme.colors.songList.borderSelected,
+        cornerRadius: 8,
+        insets: EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8)
+    )
+
     // MARK: - Properties
     var song: HarmonicaSong
     var notes: [MelodyNote]
+    var songDuration: String {
+        let duration = song.melody.value.duration()
+        let result = _formattedDuration(from: duration)
+        return result
+    }
+    var songCount: Int {
+        song.melody.value.count
+    }
 
     @ObservationIgnored private(set) var hasUnsavedChanges: Bool = false
     @ObservationIgnored let melodyEditScreenViewModel: MelodyEditScreenViewModel
     @ObservationIgnored let songEditScreenViewModel: SongEditScreenViewModel
 
     private var _cancellables = Set<AnyCancellable>()
+    private var _playingTask: Task<Void, Never>?
+    var isPlayingMelody: Bool = false
 
     let listSelectionProps: AutoSizingBottomSheetProps = AutoSizingBottomSheetProps(
-        title: "Оберіть список",
+        title: "Select lists",
         backgroundColor: Theme.colors.background.primary,
         dragIndicatorVisibility: .visible
     )
@@ -59,10 +80,48 @@ final class SongScreenViewModel {
         self.song = song
         self.notes = song.melody.notes
 
+//        let containsPredicate = #Predicate<SongsList> { list in
+//            list.songsData.contains { $0.songId == song.id }
+//        }
+//        _listsWithSong = Query(filter: containsPredicate, sort: \SongsList.name)
+
         melodyEditScreenViewModel = MelodyEditScreenAssembly.makeViewModel(with: song.melody.value)
         songEditScreenViewModel = SongEditScreenViewModel(song: song)
 
+        _playingTask = Task {
+            for await isPlaying in _playerService.isPlayingMelodyStream {
+//                guard isPlayingMelody != isPlaying else { return }
+                isPlayingMelody = isPlaying
+            }
+        }
+
         _bindStates()
+    }
+
+    deinit {
+        _playingTask?.cancel()
+        _playingTask = nil
+        _playerService.stopPlayingMelody()
+    }
+
+    func fetchLists() {
+        let songId = song.id
+        let predicate = #Predicate<SongsListData> { data in
+            data.songId == songId
+        }
+
+        let descriptor = FetchDescriptor<SongsListData>(
+            predicate: predicate,
+            sortBy: [SortDescriptor(\.addedDate)]
+        )
+
+        let result = (try? context.fetch(descriptor)) ?? []
+
+        listsWithSong = result.compactMap { $0.songsList }
+        listsWithSongWrappedItems = listsWithSong.map {
+            WrappedTextListView.Item(text: $0.name) { }
+        }
+        isSongListVisible = !listsWithSong.isEmpty
     }
 
     private func _bindStates() {
@@ -100,6 +159,7 @@ final class SongScreenViewModel {
 
     func onPlayTap() {
         guard !notes.isEmpty else { return }
+
         if _playerService.isPlayingMelody {
             _playerService.stopPlayingMelody()
         } else {
@@ -117,70 +177,28 @@ final class SongScreenViewModel {
             }
         }
     }
-}
 
-import SwiftData
-import SwiftUI
+    private func _formattedDuration(from time: TimeInterval) -> String {
+        let totalSeconds = Int(time.rounded())
 
-struct SongsListSelectionView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query(sort: \SongsList.name) private var songsLists: [SongsList]
+        let hours = totalSeconds / 3600
+        let minutes = (totalSeconds % 3600) / 60
+        let seconds = totalSeconds % 60
 
-    @State private var sortOption: SongsListsSortOption = .name
+        var parts: [String] = []
 
-    var sortedLists: [SongsList] {
-        switch sortOption {
-            case .name:
-                return songsLists.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
-            case .count:
-                return songsLists.sorted { $0.songsData.count > $1.songsData.count }
-            case .lastAdded:
-                return songsLists.sorted {
-                    let date1 = $0.songsData.max(by: { $0.addedDate < $1.addedDate })?.addedDate ?? $0.createdDate
-                    let date2 = $1.songsData.max(by: { $0.addedDate < $1.addedDate })?.addedDate ?? $1.createdDate
-                    return date1 > date2
-                }
+        if hours > 0 {
+            parts.append("\(hours) hour" + (hours == 1 ? "" : "s"))
         }
-    }
 
-    var body: some View {
-        NavigationStack {
-            List {
-                ForEach(sortedLists) { list in
-                    NavigationLink(
-                        destination: SongListDetailedView(songsListId: list.id)
-                    ) {
-                        SongsListRowView(songsList: list)
-                    }
-                    .listRowBackground(list.isDefault ? Color.blue.opacity(0.1) : Color.clear)
-                }
-            }
-            .navigationTitle("My Harmonica Lists")
-            .toolbar {
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    Menu {
-                        ForEach(SongsListsSortOption.allCases) { option in
-                            Button {
-                                withAnimation {
-                                    sortOption = option
-                                }
-                            } label: {
-                                Label(option.rawValue, systemImage: sortIcon(for: option))
-                            }
-                        }
-                    } label: {
-                        Label("Sort", systemImage: "arrow.up.arrow.down")
-                    }
-                }
-            }
-
+        if minutes > 0 {
+            parts.append("\(minutes) m")
         }
+
+        if seconds > 0 {
+            parts.append("\(seconds) " + (minutes > 0 ? "s" : "sec"))
+        }
+
+        return parts.isEmpty ? "0 sec" : parts.joined(separator: " ")
     }
-
-    private func sortIcon(for option: SongsListsSortOption) -> String {
-        sortOption == option ? "checkmark" : ""
-    }
-
-
 }
-

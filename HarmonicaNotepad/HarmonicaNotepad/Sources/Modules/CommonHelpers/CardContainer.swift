@@ -34,17 +34,26 @@ public struct CardContainer<Content: View>: View {
 
     // MARK: - Render
     public var body: some View {
-        content
-            .overlay(
-                RoundedRectangle(cornerRadius: cornerRadius)
-                    .strokeBorder(
-                        borderColor,
-                        lineWidth: borderWidth
-                    )
-            )
+        _contentView()
             .background(backgroundColor)
             .clipShape(
                 RoundedRectangle(cornerRadius: cornerRadius)
             )
+    }
+
+    @ViewBuilder
+    private func _contentView() -> some View {
+        if borderWidth > 0 {
+            content
+                .overlay(
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                        .strokeBorder(
+                            borderColor,
+                            lineWidth: borderWidth
+                        )
+                )
+        } else {
+            content
+        }
     }
 }

@@ -44,6 +44,7 @@ public struct ChipsView: View {
 
     private let _cornerRadius: CGFloat
     private let _backgroundColor: ColorToken
+    private let _borderColor: ColorToken
 
     // MARK: - Init
     public init(
@@ -54,7 +55,8 @@ public struct ChipsView: View {
         _cornerRadius = cornerRadius
         _backgroundColor = _props.isActive ?
         Theme.colors.background.accent :
-        Theme.colors.background.secondary
+        Theme.colors.songList.backgound
+        _borderColor = Theme.colors.songList.borderSelected
     }
 
     // MARK: - Render
@@ -67,6 +69,13 @@ public struct ChipsView: View {
                 .clipShape(
                     RoundedRectangle(cornerRadius: _cornerRadius)
                 )
+                .overlay {
+                    RoundedRectangle(cornerRadius: _cornerRadius)
+                        .strokeBorder(
+                            _borderColor.color,
+                            lineWidth: 1
+                        )
+                }
         }
     }
 
@@ -77,11 +86,11 @@ public struct ChipsView: View {
         ) {
             Text(_props.title)
                 .font(FontToken.body1.value)
-                .foregroundStyle(Theme.colors.text.primary.color)
+                .foregroundStyle(Theme.colors.text.secondary.color)
             if let count = _props.count {
                 Text(String(count))
                     .font(FontToken.body1.value)
-                    .foregroundStyle(Theme.colors.text.accent.color)
+                    .foregroundStyle(Theme.colors.text.secondary.color)
             }
             if _props.isAccessoryVisisble {
                 Image(systemName: "xmark.circle.fill")
