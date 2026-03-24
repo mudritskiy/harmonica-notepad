@@ -13,6 +13,7 @@ struct MelodyEditScreenView: View {
 
     var body: some View {
         _contentView()
+            .background(Theme.colors.background.primary.color)
             .toolbarVisibility(.hidden, for: .tabBar)
             .toolbar {
                 _toolbarContentView()
@@ -28,6 +29,12 @@ struct MelodyEditScreenView: View {
                 _keySetupView()
             }
             .alertInfo(isPresented: $viewModel.showAlert, viewModel.alertInfo)
+            .onAppear {
+                ScreenOrientation.lock(.portrait)
+            }
+            .onDisappear {
+                ScreenOrientation.unlock()
+            }
     }
 
     private func _contentView() -> some View  {
@@ -38,6 +45,8 @@ struct MelodyEditScreenView: View {
                 .stretching(.vertical)
             _melodyActionPanelView()
             HarmonicaLayoutView(viewModel: viewModel.layoutViewModel)
+                .padding(.horizontal, 8)
+                .padding(.top, 8)
         }
     }
 

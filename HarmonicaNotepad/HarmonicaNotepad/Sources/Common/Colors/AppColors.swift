@@ -13,9 +13,12 @@ struct AppColors {
 
     struct Background {
         let primary: ColorToken
+        let primaryTinted: ColorToken
         let secondary: ColorToken
         let accent: ColorToken
         let highlight: ColorToken
+        let draw: ColorToken
+        let blow: ColorToken
         let shadow: ColorToken
     }
 
@@ -48,9 +51,12 @@ extension AppColors {
     static let `default` = AppColors(
         background: Background(
             primary: .from(light: \.neutral10, dark: \.neutral10),
+            primaryTinted: .from(light: \.neutral20, dark: \.neutral20),
             secondary: .from(light: \.sand30, dark: \.sand30), //sand20
             accent: .from(light: \.clay40, dark: \.clay40), //sand60
             highlight: .from(light: \.slate50, dark: \.slate50),
+            draw: .from(light: \.draw, dark: \.draw),
+            blow: .from(light: \.blow, dark: \.blow),
             shadow: .from(light: \.shadow, dark: \.shadow)
         ),
 

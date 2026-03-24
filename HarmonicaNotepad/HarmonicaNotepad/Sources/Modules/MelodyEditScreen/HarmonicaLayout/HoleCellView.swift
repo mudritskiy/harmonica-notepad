@@ -12,22 +12,33 @@ struct HoleCell: View {
     let color: Color
     let onTap: () -> Void
 
-    init(note: HarmonicaNote, onTap: @escaping () -> Void) {
+    let font: FontToken
+    let keySize: CGSize
+
+    init(
+        note: HarmonicaNote,
+        font: FontToken,
+        keySize: CGSize,
+        onTap: @escaping () -> Void
+    ) {
         self.note = note
         self.onTap = onTap
         color = switch note.technique {
             case .natural:
                 switch note.direction {
-                    case .blow: .red.opacity(0.7)
-                    case .draw: .blue.opacity(0.7)
+                    case .blow: Theme.colors.background.blow.color
+                    case .draw: Theme.colors.background.draw.color
                 }
             case .bend:
                 switch note.direction {
-                    case .blow: .red.opacity(0.5)
-                    case .draw: .blue.opacity(0.5)
+                    case .blow: Theme.colors.background.blow.color.opacity(0.7)
+                    case .draw: Theme.colors.background.draw.color.opacity(0.7)
                 }
-            case .overblow, .overdraw: .red
+            case .overblow, .overdraw: Theme.colors.text.tertiary.color
         }
+
+        self.font = font
+        self.keySize = keySize
     }
 
     var body: some View {
@@ -41,16 +52,14 @@ struct HoleCell: View {
     private func _cellContent() -> some View {
         let border = note.technique == .overblow || note.technique == .overdraw
         return Text(note.basePitch.key.description)
-            .font(.caption)
-            .foregroundColor(border ? color : .white)
-            .frame(minWidth: 30, maxWidth: .infinity, maxHeight: .infinity)
-            .aspectRatio(1, contentMode: .fill)
-            .background(border ? Color.clear : color)
+            .font(font.value)
+            .foregroundColor(border ? color : Theme.colors.text.contrastSecondary.color)
+            .frame(width: keySize.width, height: keySize.height)
+            .background(border ? Theme.colors.background.primaryTinted.color : color)
             .overlay(
-                RoundedRectangle(cornerRadius: 6)
-                    .stroke(border ? color : Color.clear, lineWidth: 1)
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(color, lineWidth: 1)
             )
-            .cornerRadius(6)
-            .padding(.all, 2)
+            .cornerRadius(8)
     }
 }

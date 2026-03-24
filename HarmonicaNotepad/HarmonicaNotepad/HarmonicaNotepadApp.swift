@@ -12,6 +12,9 @@ struct HarmonicaNotepadApp: App {
     let persistenceController = PersistenceController.shared
     @Bindable private var _appNavigation = AppNavigationModel()
 
+    @UIApplicationDelegateAdaptor(AppDelegate.self)
+    var appDelegate
+
     var body: some Scene {
         WindowGroup {
             ContentView()

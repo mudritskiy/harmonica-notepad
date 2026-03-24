@@ -43,6 +43,10 @@ struct SongScreenView: View {
     private var _viewModel: SongScreenViewModel
     private var isFavorited: Bool { !favoriteEntries.isEmpty }
 
+    private let _buttonEditTitlesSize: CGFloat = 20
+    private let _buttonEditTitlesInsets: CGFloat = 8
+    private var _titlesMinHeight: CGFloat { _buttonEditTitlesSize + _buttonEditTitlesSize }
+
     // MARK: - Init
     init(viewModel: SongScreenViewModel) {
         _viewModel = viewModel
@@ -262,10 +266,6 @@ struct SongScreenView: View {
         )
         .stretching()
     }
-
-    private let _buttonEditTitlesSize: CGFloat = 20
-    private let _buttonEditTitlesInsets: CGFloat = 8
-    private var _titlesMinHeight: CGFloat { _buttonEditTitlesSize + _buttonEditTitlesSize }
 
     private func _buttonEditTitles() -> some View {
         Button {

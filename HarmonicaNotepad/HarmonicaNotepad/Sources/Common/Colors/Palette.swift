@@ -37,8 +37,12 @@ struct Palette {
     let shadow: UIColor
 
     let neutral10: UIColor
+    let neutral20: UIColor
     let sand30: UIColor
     let clay40: UIColor
+
+    let draw: UIColor
+    let blow: UIColor
 }
 
 extension Palette {
@@ -68,8 +72,12 @@ extension Palette {
         shadow: UIColor(hex: "1A1A1A").withAlphaComponent(0.25),
 
         neutral10: UIColor(hex: "E3E3E3"),
+        neutral20: UIColor(hex: "d9d9d9"),
         sand30: UIColor(hex: "EBE7D1"),
-        clay40: UIColor(hex: "D19E90")
+        clay40: UIColor(hex: "D19E90"),
+
+        draw: UIColor(hex: "90a3d1"),
+        blow: UIColor(hex: "d59faa")
     )
 }
 
@@ -99,7 +107,11 @@ extension Palette {
         shadow: UIColor(hex: "5A5A5A").withAlphaComponent(0.25),
 
         neutral10: UIColor(hex: "1C1C1C"),
+        neutral20: UIColor(hex: "2C2C2C"),
         sand30: UIColor(hex: "7B6A53"), //2E2A14
-        clay40: UIColor(hex: "6F3D2F")
+        clay40: UIColor(hex: "6F3D2F"),
+
+        draw: UIColor(hex: "90a3d1"),
+        blow: UIColor(hex: "d59faa")
     )
 }

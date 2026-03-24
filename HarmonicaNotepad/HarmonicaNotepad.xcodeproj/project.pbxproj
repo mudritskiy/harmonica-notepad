@@ -77,6 +77,7 @@
 		FECD65D42DE791530025F788 /* harmonica_basic_soundfont.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = FECD65D32DE791530025F788 /* harmonica_basic_soundfont.sf2 */; };
 		FED1ABEA2ECFB1A300811358 /* SearchListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FED1ABE92ECFB19100811358 /* SearchListView.swift */; };
 		FED545C02EB91CFA00626655 /* SongEditScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FED545BF2EB91CF700626655 /* SongEditScreenViewModel.swift */; };
+		FED7469C2F72FB83004E6BE4 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = FED7469B2F72FB80004E6BE4 /* RoundedCorner.swift */; };
 		FEE7298C2F6AD66600F05C5E /* ChipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE7298B2F6AD66200F05C5E /* ChipsView.swift */; };
 		FEE7298E2F6B38E000F05C5E /* HorizontalGeometryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE7298D2F6B38DF00F05C5E /* HorizontalGeometryReader.swift */; };
 		FEE729902F6B391B00F05C5E /* WrappedTextListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE7298F2F6B391700F05C5E /* WrappedTextListView.swift */; };
@@ -91,6 +92,8 @@
 		FEE729A32F7114AF00F05C5E /* ThemeShadowModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE729A22F7114A700F05C5E /* ThemeShadowModifier.swift */; };
 		FEE729A52F711B3D00F05C5E /* ButtonBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE729A42F711B3C00F05C5E /* ButtonBackgroundView.swift */; };
 		FEE729A72F716F7200F05C5E /* SongToolbarContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE729A62F716F7200F05C5E /* SongToolbarContent.swift */; };
+		FEE729A92F72CED600F05C5E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE729A82F72CECE00F05C5E /* AppDelegate.swift */; };
+		FEE729AB2F72CF4B00F05C5E /* ScreenOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE729AA2F72CF4A00F05C5E /* ScreenOrientation.swift */; };
 		FEF53EFB2EDB14F5007307A7 /* FavoritesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF53EFA2EDB14F4007307A7 /* FavoritesService.swift */; };
 		FEF53EFD2EDB1600007307A7 /* FavoriteSong.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF53EFC2EDB15FE007307A7 /* FavoriteSong.swift */; };
 		FEF53EFF2EDCAE6B007307A7 /* SongsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF53EFE2EDCAE6A007307A7 /* SongsList.swift */; };
@@ -193,6 +196,7 @@
 		FECD65D32DE791530025F788 /* harmonica_basic_soundfont.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = harmonica_basic_soundfont.sf2; sourceTree = "<group>"; };
 		FED1ABE92ECFB19100811358 /* SearchListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListView.swift; sourceTree = "<group>"; };
 		FED545BF2EB91CF700626655 /* SongEditScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongEditScreenViewModel.swift; sourceTree = "<group>"; };
+		FED7469B2F72FB80004E6BE4 /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
 		FEE7298B2F6AD66200F05C5E /* ChipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipsView.swift; sourceTree = "<group>"; };
 		FEE7298D2F6B38DF00F05C5E /* HorizontalGeometryReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalGeometryReader.swift; sourceTree = "<group>"; };
 		FEE7298F2F6B391700F05C5E /* WrappedTextListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedTextListView.swift; sourceTree = "<group>"; };
@@ -207,6 +211,8 @@
 		FEE729A22F7114A700F05C5E /* ThemeShadowModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeShadowModifier.swift; sourceTree = "<group>"; };
 		FEE729A42F711B3C00F05C5E /* ButtonBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonBackgroundView.swift; sourceTree = "<group>"; };
 		FEE729A62F716F7200F05C5E /* SongToolbarContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongToolbarContent.swift; sourceTree = "<group>"; };
+		FEE729A82F72CECE00F05C5E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		FEE729AA2F72CF4A00F05C5E /* ScreenOrientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenOrientation.swift; sourceTree = "<group>"; };
 		FEF53EFA2EDB14F4007307A7 /* FavoritesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesService.swift; sourceTree = "<group>"; };
 		FEF53EFC2EDB15FE007307A7 /* FavoriteSong.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteSong.swift; sourceTree = "<group>"; };
 		FEF53EFE2EDCAE6A007307A7 /* SongsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsList.swift; sourceTree = "<group>"; };
@@ -379,6 +385,7 @@
 				FEE729992F6D393C00F05C5E /* Debouncer.swift */,
 				FEE729A02F6DA6C600F05C5E /* CustomDivider.swift */,
 				FECD65C82DE745D80025F788 /* MidiNotePlayer.swift */,
+				FED7469B2F72FB80004E6BE4 /* RoundedCorner.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -463,6 +470,7 @@
 				FEF53EFC2EDB15FE007307A7 /* FavoriteSong.swift */,
 				FEF53EFE2EDCAE6A007307A7 /* SongsList.swift */,
 				FEF53F002EDCAEA8007307A7 /* SongsListData.swift */,
+				FEE729AA2F72CF4A00F05C5E /* ScreenOrientation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -504,6 +512,7 @@
 				FECD65CA2DE74E5E0025F788 /* Resources */,
 				FEAF082F2C4055840014DA01 /* HarmonicaNotepadApp.swift */,
 				FEAF08312C4055840014DA01 /* ContentView.swift */,
+				FEE729A82F72CECE00F05C5E /* AppDelegate.swift */,
 				FE5732C72DE308AF000F2B8E /* Sources */,
 				FEAF08332C4055850014DA01 /* Assets.xcassets */,
 				FEAF08382C4055850014DA01 /* Persistence.swift */,
@@ -737,6 +746,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FEE729A92F72CED600F05C5E /* AppDelegate.swift in Sources */,
 				FE0B6DD52DEC1C1300BA8793 /* SwiftUI+View.swift in Sources */,
 				FE83CCBF2EAE23FA002B9F0D /* HarmonicaTextEditFieldRounded.swift in Sources */,
 				FEF53F012EDCAEA9007307A7 /* SongsListData.swift in Sources */,
@@ -748,6 +758,7 @@
 				FE0B6DCE2DEB30D600BA8793 /* TempoStyle.swift in Sources */,
 				FEAF08392C4055850014DA01 /* Persistence.swift in Sources */,
 				FED1ABEA2ECFB1A300811358 /* SearchListView.swift in Sources */,
+				FED7469C2F72FB83004E6BE4 /* RoundedCorner.swift in Sources */,
 				FEAF08322C4055840014DA01 /* ContentView.swift in Sources */,
 				FE65DC282E05DA40002A3381 /* HoleCellView.swift in Sources */,
 				FEAF083C2C4055850014DA01 /* HarmonicaNotepad.xcdatamodeld in Sources */,
@@ -817,6 +828,7 @@
 				FEF53F032EDCB12D007307A7 /* Color+Init.swift in Sources */,
 				FED545C02EB91CFA00626655 /* SongEditScreenViewModel.swift in Sources */,
 				FE5732CF2DE30B37000F2B8E /* NoteView.swift in Sources */,
+				FEE729AB2F72CF4B00F05C5E /* ScreenOrientation.swift in Sources */,
 				FE4F96242EA3ACDA00B4146D /* NoteValueTypeWrapper.swift in Sources */,
 				FEAB3C2B2DF8A8250015B5A6 /* MelodyActionButton.swift in Sources */,
 				FEE729902F6B391B00F05C5E /* WrappedTextListView.swift in Sources */,
@@ -1004,7 +1016,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.vmudrytskiy.HarmonicaNotepad;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vmudrytskiy.HarmonicaNotepad.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1037,7 +1049,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.vmudrytskiy.HarmonicaNotepad;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vmudrytskiy.HarmonicaNotepad.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
