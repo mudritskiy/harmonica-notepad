@@ -40,6 +40,7 @@ struct ContentCoordinatorView: View {
     // MARK: - Properties
     @Bindable private var _viewModel: ContentCoordinatorViewModel
     @Environment(AppNavigationModel.self) private var _appNavigation
+    @Environment(\.modelContext) private var _context
 
     private let _allTabs: [ContentTab] = [.songs, .lists, .favorites, .search]
 
@@ -66,6 +67,12 @@ struct ContentCoordinatorView: View {
                             @Bindable var router = appNavigation.mainRouter
                             NavigationStack(path: $router.path) {
                                 SongListView(viewModel: _viewModel.songListViewModel)
+                                    .navigationDestination(for: SongListRoute.self) { route in
+                                        switch route {
+                                            case .showSong(let song):
+                                                SongScreenView(song: song)
+                                        }
+                                    }
                             }
                             .environment(router)
                         case .lists:

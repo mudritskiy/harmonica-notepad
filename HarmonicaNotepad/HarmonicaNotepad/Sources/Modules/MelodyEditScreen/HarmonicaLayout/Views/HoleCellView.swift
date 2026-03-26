@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct HoleCell: View {
+    // MARK: - Properties
     let note: HarmonicaNote
     let color: Color
-    let onTap: () -> Void
-
     let font: FontToken
     let keySize: CGSize
 
+    let onTap: Action
+
+    // MARK: - Init
     init(
         note: HarmonicaNote,
         font: FontToken,
@@ -22,29 +24,15 @@ struct HoleCell: View {
         onTap: @escaping () -> Void
     ) {
         self.note = note
-        self.onTap = onTap
-        color = switch note.technique {
-            case .natural:
-                switch note.direction {
-                    case .blow: Theme.colors.background.blow.color
-                    case .draw: Theme.colors.background.draw.color
-                }
-            case .bend:
-                switch note.direction {
-                    case .blow: Theme.colors.background.blow.color.opacity(0.7)
-                    case .draw: Theme.colors.background.draw.color.opacity(0.7)
-                }
-            case .overblow, .overdraw: Theme.colors.text.tertiary.color
-        }
-
+        self.color = note.layoutColor
         self.font = font
         self.keySize = keySize
+        self.onTap = onTap
     }
 
+    // MARK: - Render
     var body: some View {
-        SwiftUI.Button(role: .none) {
-            onTap()
-        } label: {
+        Button(action: onTap) {
             _cellContent()
         }
     }
@@ -61,5 +49,24 @@ struct HoleCell: View {
                     .stroke(color, lineWidth: 1)
             )
             .cornerRadius(8)
+    }
+}
+
+// MARK: - HarmonicaNote Color
+private extension HarmonicaNote {
+    var layoutColor: Color {
+        switch self.technique {
+            case .natural:
+                switch self.direction {
+                    case .blow: Theme.colors.background.blow.color
+                    case .draw: Theme.colors.background.draw.color
+                }
+            case .bend:
+                switch self.direction {
+                    case .blow: Theme.colors.background.blow.color.opacity(0.7)
+                    case .draw: Theme.colors.background.draw.color.opacity(0.7)
+                }
+            case .overblow, .overdraw: Theme.colors.text.tertiary.color
+        }
     }
 }

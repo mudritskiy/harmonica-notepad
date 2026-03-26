@@ -111,7 +111,7 @@ extension Palette {
         sand30: UIColor(hex: "7B6A53"), //2E2A14
         clay40: UIColor(hex: "6F3D2F"),
 
-        draw: UIColor(hex: "90a3d1"),
-        blow: UIColor(hex: "d59faa")
+        draw: UIColor(hex: "2e416f"),
+        blow: UIColor(hex: "6d303c")
     )
 }

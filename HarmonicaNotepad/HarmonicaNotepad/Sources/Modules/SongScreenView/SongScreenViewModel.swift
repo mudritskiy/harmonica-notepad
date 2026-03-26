@@ -24,7 +24,7 @@ final class SongScreenViewModel {
     let _listsService: SongsListsService
 
     // MARK: - View Context
-    let context: ModelContext
+    var context: ModelContext?
 
     private(set) var isSongListVisible: Bool = false
     private(set) var listsWithSong: [SongsList] = []
@@ -66,7 +66,6 @@ final class SongScreenViewModel {
     // MARK: - Init
     init(
         song: HarmonicaSong? = nil,
-        context: ModelContext,
         playerService: PlayerService = .shared,
         favoritesService: FavoritesService = FavoritesServiceImpl.shared,
         listsService: SongsListsService = SongsListsServiceImpl.shared
@@ -74,16 +73,10 @@ final class SongScreenViewModel {
         _playerService = playerService
         _favoritesService = favoritesService
         _listsService = listsService
-        self.context = context
 
         let song = song ?? .new()
         self.song = song
         self.notes = song.melody.notes
-
-//        let containsPredicate = #Predicate<SongsList> { list in
-//            list.songsData.contains { $0.songId == song.id }
-//        }
-//        _listsWithSong = Query(filter: containsPredicate, sort: \SongsList.name)
 
         melodyEditScreenViewModel = MelodyEditScreenAssembly.makeViewModel(with: song.melody.value)
         songEditScreenViewModel = SongEditScreenViewModel(song: song)
@@ -115,7 +108,7 @@ final class SongScreenViewModel {
             sortBy: [SortDescriptor(\.addedDate)]
         )
 
-        let result = (try? context.fetch(descriptor)) ?? []
+        let result = (try? context?.fetch(descriptor)) ?? []
 
         listsWithSong = result.compactMap { $0.songsList }
         listsWithSongWrappedItems = listsWithSong.map {
@@ -169,6 +162,7 @@ final class SongScreenViewModel {
     }
 
     func save(completion: @escaping () -> Void) {
+        guard let context else { return }
         Task {
             context.insert(song)
             try? context.save()

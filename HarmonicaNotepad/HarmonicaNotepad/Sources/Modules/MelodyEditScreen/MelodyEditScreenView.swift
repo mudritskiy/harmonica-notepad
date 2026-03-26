@@ -9,7 +9,17 @@ import SwiftUI
 
 struct MelodyEditScreenView: View {
     @Bindable var viewModel: MelodyEditScreenViewModel
+    @Environment(HarmonicaLayoutConfiguration.self) private var config: HarmonicaLayoutConfiguration
     @Environment(\.dismiss) var dismiss
+
+    private var configSnapshot: HarmonicaLayoutConfiguration.ConfigSnapshot {
+        HarmonicaLayoutConfiguration.ConfigSnapshot(
+            bendsLevel: config.bendsLevel,
+            isOverbandsOn: config.isOverbandsOn,
+            isDrawBendsOn: config.isDrawBendsOn,
+            isBlowBendsOn: config.isBlowBendsOn
+        )
+    }
 
     var body: some View {
         _contentView()
@@ -28,12 +38,23 @@ struct MelodyEditScreenView: View {
             .sheet(isPresented: $viewModel.isPresentedKeySetup) {
                 _keySetupView()
             }
+            .sheet(isPresented: $viewModel.isPresentedLayoutConfiguration) {
+                _layoutConfigurationView()
+            }
             .alertInfo(isPresented: $viewModel.showAlert, viewModel.alertInfo)
             .onAppear {
                 ScreenOrientation.lock(.portrait)
             }
             .onDisappear {
                 ScreenOrientation.unlock()
+            }
+            .task {
+                for await event in viewModel.serviceKeyboardEvents.stream {
+                    viewModel.onServiceKeyTap(event)
+                }
+            }
+            .onChange(of: configSnapshot) { _, _ in
+                viewModel.applyConfiguration(with: config)
             }
     }
 
@@ -44,10 +65,13 @@ struct MelodyEditScreenView: View {
             _melodyContentView()
                 .stretching(.vertical)
             _melodyActionPanelView()
-            HarmonicaLayoutView(viewModel: viewModel.layoutViewModel)
-                .padding(.horizontal, 8)
-                .padding(.top, 8)
+            if let layoutViewProps = viewModel.layoutViewProps {
+                HarmonicaLayoutView(props: layoutViewProps)
+                    .padding(.horizontal, 8)
+                    .padding(.top, 8)
+            }
         }
+        .animation(.snappy, value: viewModel.layoutViewProps)
     }
 
     private func _melodyActionPanelView() -> some View {
@@ -55,18 +79,18 @@ struct MelodyEditScreenView: View {
             MelodyPlayButton(isActive: viewModel.isPlayingMelody) {
                 viewModel.onPlayTap()
             }
-            Spacer()
-            MelodyActionButton(iconName: "space") {
-                viewModel.onServiceKeyTap(.silence)
-            }
-            MelodyActionButton(iconName: "return") {
-                viewModel.onServiceKeyTap(.newLine)
-            }
-            .padding(.leading, 8)
-            MelodyActionButton(iconName: "delete.backward.fill") {
-                viewModel.onRemoveKeyTap()
-            }
-            .padding(.leading, 8)
+//            Spacer()
+//            MelodyActionButton(iconName: "space") {
+//                viewModel.onServiceKeyTap(.silence)
+//            }
+//            MelodyActionButton(iconName: "return") {
+//                viewModel.onServiceKeyTap(ServiceKeyboardEvent.addNewLine)
+//            }
+//            .padding(.leading, 8)
+//            MelodyActionButton(iconName: "delete.backward.fill") {
+//                viewModel.onRemoveKeyTap()
+//            }
+//            .padding(.leading, 8)
             Spacer()
             MelodyClearButton() {
                 viewModel.onClearTap()
@@ -172,5 +196,14 @@ struct MelodyEditScreenView: View {
         .interactiveDismissDisabled(false)
         .presentationBackgroundInteraction(.disabled)
         .presentationContentInteraction(.resizes)
+    }
+
+    private func _layoutConfigurationView() -> some View {
+        HarmonicaLayoutConfigurationView()
+            .presentationDetents([.fraction(0.6)])
+            .presentationDragIndicator(.visible)
+            .interactiveDismissDisabled(false)
+            .presentationBackgroundInteraction(.disabled)
+            .presentationContentInteraction(.resizes)
     }
 }

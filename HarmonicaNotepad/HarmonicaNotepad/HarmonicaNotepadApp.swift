@@ -11,6 +11,7 @@ import SwiftUI
 struct HarmonicaNotepadApp: App {
     let persistenceController = PersistenceController.shared
     @Bindable private var _appNavigation = AppNavigationModel()
+    @State private var _layoutConfig = HarmonicaLayoutConfiguration()
 
     @UIApplicationDelegateAdaptor(AppDelegate.self)
     var appDelegate
@@ -20,6 +21,7 @@ struct HarmonicaNotepadApp: App {
             ContentView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 .environment(_appNavigation)
+                .environment(_layoutConfig)
         }
     }
 }

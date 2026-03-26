@@ -36,6 +36,9 @@ final class MelodyEditScreenViewModel {
     var isPresentedTempoSetup: Bool = false {
         didSet { _stopPlayingMelody(isPresentedTempoSetup) }
     }
+    var isPresentedLayoutConfiguration: Bool = false {
+        didSet { _stopPlayingMelody(isPresentedLayoutConfiguration) }
+    }
 
     // MARK: - Properties
     @ObservationIgnored var key: Key = .default
@@ -47,21 +50,26 @@ final class MelodyEditScreenViewModel {
     private(set) var alertInfo: AlertInfo = .empty()
     private(set) var melodyRows: [[MelodyNote]] = []
 
+    private var _configuration: HarmonicaLayoutConfiguration
     private var _layout: HarmonicaLayout
     private var _playingNoteIndex: Int?
+    private var notesGrid: HarmonicaLayoutNotesGrid
 
     private var _playbackTask: Task<Void, Never>?
     private var _cancellables = Set<AnyCancellable>()
+    private var _serviceKeyboardTask: Task<Void, Never>?
 
+    @ObservationIgnored let serviceKeyboardEvents = EventStream<ServiceKeyboardEvent>()
     @ObservationIgnored let melodyPublisher = PassthroughSubject<Melody, Never>()
-    @ObservationIgnored let layoutViewModel: HarmonicaLayoutViewModel
+    @ObservationIgnored var layoutViewProps: HarmonicaLayoutViewProps?
 
     // MARK: - Init
     init(
         melody: Melody,
         playerService: PlayerService,
         melodyService: MelodyService,
-        pasteboard: UIPasteboard = .general
+        pasteboard: UIPasteboard = .general,
+        configuration: HarmonicaLayoutConfiguration = HarmonicaLayoutConfiguration()
     ) {
         _playerService = playerService
         _melodyService = melodyService
@@ -70,15 +78,31 @@ final class MelodyEditScreenViewModel {
         let melodyKey = melody.key
         let layout = HarmonicaLayout(key: melodyKey)
 
+        _configuration = configuration
+        let notesGrid = layout.layoutGrid(with: configuration)
+        self.notesGrid = notesGrid
+
         _layout = layout
         key = melodyKey
         notes = melody.notes
         tempo = melody.tempo
 
-        layoutViewModel = HarmonicaLayoutViewModel(layout: layout)
-
+        _updateLayoutViewProps()
         _updateMelodyRows()
         _bindStates()
+    }
+
+    private func _updateLayoutViewProps() {
+        let layoutViewProps = HarmonicaLayoutViewProps(
+            congif: _configuration,
+            notesGrid: notesGrid,
+            font: .title3,
+            serviceKeyboardEvents: serviceKeyboardEvents
+        )  { [weak self] note in
+            let melodyNote = MelodyNote(note: note, value: NoteValue(type: .quarter))
+            self?._addAndPlayNote(melodyNote)
+        }
+        self.layoutViewProps = layoutViewProps
     }
 
     private func _bindStates() {
@@ -93,14 +117,6 @@ final class MelodyEditScreenViewModel {
                 withAnimation(.easeInOut(duration: 0.4)) {
                     self?.isPlayingMelody = isPlayingMelody
                 }
-            }
-            .store(in: &_cancellables)
-
-        layoutViewModel.notePublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] note in
-                let melodyNote = MelodyNote(note: note, value: NoteValue(type: .quarter))
-                self?._addAndPlayNote(melodyNote)
             }
             .store(in: &_cancellables)
     }
@@ -132,7 +148,7 @@ final class MelodyEditScreenViewModel {
 
     func onKeyChange(to key: Key) {
         _layout = HarmonicaLayout(key: key)
-        layoutViewModel.updateNoteGrid(with: _layout)
+        _updateLayoutViewProps()
         self.key = key
         isPresentedKeySetup = false
     }
@@ -168,12 +184,25 @@ final class MelodyEditScreenViewModel {
         }
     }
 
-    func onServiceKeyTap(_ note: MelodyNote) {
+    func onServiceKeyTap(_ key: ServiceKeyboardEvent) {
+        switch key {
+            case .addNewLine:
+                _addServiceNote(MelodyNote.newLine)
+            case .removeLast:
+                _removeLastNote()
+            case .showSettings:
+                isPresentedLayoutConfiguration = true
+            case .addSpace:
+                _addServiceNote(MelodyNote.silence)
+        }
+    }
+
+    private func _addServiceNote(_ note: MelodyNote) {
         notes.append(note)
         _updateMelodyRows()
     }
 
-    func onRemoveKeyTap() {
+    private func _removeLastNote() {
         guard !notes.isEmpty else { return }
         notes.removeLast()
         _updateMelodyRows()
@@ -273,5 +302,16 @@ final class MelodyEditScreenViewModel {
 
     private func _updateMelodyRows() {
         melodyRows = _melodyService.breakInRows(notes: notes)
+    }
+
+    // MARK: -
+    func applyConfiguration(with congif: HarmonicaLayoutConfiguration) {
+        _configuration = congif
+        updateNoteGrid(with: _layout)
+    }
+
+    func updateNoteGrid(with layout: HarmonicaLayout) {
+        notesGrid = layout.layoutGrid(with: _configuration)
+        _updateLayoutViewProps()
     }
 }

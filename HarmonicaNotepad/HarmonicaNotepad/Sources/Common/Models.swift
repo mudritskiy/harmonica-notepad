@@ -36,18 +36,11 @@ enum BreathDirection: Int, Codable, CaseIterable {
 }
 
 enum NoteTechnique: Equatable, Codable, Identifiable {
-    enum BendLevel: Int, Codable, Comparable, CaseIterable {
+    enum BendLevel: Int, Codable, Comparable, CaseIterable, Equatable {
         case none
         case level1
         case level2
         case level3
-
-        var presentation: String {
-            switch self {
-                case .none: ""
-                default: String(self.rawValue)
-            }
-        }
 
         static func < (lhs: Self, rhs: Self) -> Bool {
             lhs.rawValue < rhs.rawValue
@@ -70,7 +63,7 @@ enum NoteTechnique: Equatable, Codable, Identifiable {
 
     var presentation: String {
         switch self {
-            case.natural: .empty
+            case .natural: .empty
             case .bend(let level): String(repeating: .apostrophe, count: level.rawValue)
             case .overblow, .overdraw: .degree
         }

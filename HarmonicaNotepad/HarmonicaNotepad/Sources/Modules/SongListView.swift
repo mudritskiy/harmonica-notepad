@@ -8,12 +8,12 @@
 import SwiftData
 import SwiftUI
 
+enum SongListRoute: Hashable, Equatable {
+    case showSong(HarmonicaSong)
+}
+
 @Observable
 final class SongListViewModel {
-    enum Route: Hashable {
-        case showSong(HarmonicaSong)
-    }
-
     var modelContext: ModelContext? = nil
     var songs: [HarmonicaSong] = []
 
@@ -50,7 +50,7 @@ struct SongListView: View {
             VStack(alignment: .leading, spacing: 8) {
                 ForEach(_viewModel.songs) { song in
                     Button {
-                        _router.navigate(to: SongListViewModel.Route.showSong(song))
+                        _router.navigate(to: SongListRoute.showSong(song))
                     } label: {
                         CardContainer(
                             backgroundColor: Theme.colors.background.highlight.color,
@@ -76,20 +76,11 @@ struct SongListView: View {
             _viewModel.modelContext = _context
             _viewModel.fetchSongs()
         }
-        .navigationDestination(for: SongListViewModel.Route.self) { route in
-            switch route {
-                case .showSong(let song):
-                    SongScreenContentView(initialSong: song)
-//                    SongScreenView(
-//                        viewModel: SongScreenViewModel(song: song)
-//                    )
-            }
-        }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     let newSong: HarmonicaSong = .new()
-                    _router.navigate(to: SongListViewModel.Route.showSong(newSong))
+                    _router.navigate(to: SongListRoute.showSong(newSong))
                 } label: {
                     Text("Add")
                 }

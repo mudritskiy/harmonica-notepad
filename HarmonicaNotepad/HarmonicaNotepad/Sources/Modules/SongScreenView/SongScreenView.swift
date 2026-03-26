@@ -8,20 +8,6 @@
 import SwiftData
 import SwiftUI
 
-struct SongScreenContentView: View {
-    @Environment(\.modelContext) private var _context
-    let initialSong: HarmonicaSong?
-
-    var body: some View {
-        SongScreenView(
-            viewModel: SongScreenViewModel(
-                song: initialSong,
-                context: _context
-            )
-        )
-    }
-}
-
 struct SongScreenView: View {
     // Identifiable wrapper for routes
     struct ModalRoute: Identifiable {
@@ -40,7 +26,7 @@ struct SongScreenView: View {
     @State private var _hasUnsavedChanges = false
     @State private var _isListSelectionPresented: Bool = false
 
-    private var _viewModel: SongScreenViewModel
+    @State private var _viewModel: SongScreenViewModel
     private var isFavorited: Bool { !favoriteEntries.isEmpty }
 
     private let _buttonEditTitlesSize: CGFloat = 20
@@ -48,9 +34,9 @@ struct SongScreenView: View {
     private var _titlesMinHeight: CGFloat { _buttonEditTitlesSize + _buttonEditTitlesSize }
 
     // MARK: - Init
-    init(viewModel: SongScreenViewModel) {
-        _viewModel = viewModel
-        let songId = viewModel.song.id
+    init(song: HarmonicaSong? = nil) {
+        _viewModel = SongScreenViewModel(song: song)
+        let songId = _viewModel.song.id
         _favoriteEntries = Query(filter: #Predicate { $0.songId == songId })
     }
 
@@ -66,6 +52,7 @@ struct SongScreenView: View {
             .toolbar(.hidden, for: .tabBar)
             .navigationBarBackButtonHidden()
             .onFirstAppear {
+                _viewModel.context = _context
                 _hasUnsavedChanges = false
             }
             .sheet(item: $_modalRoute) { modalRoute in
