@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SongBottomToolbarButtonPlayView: View {
+struct ToolbarButtonPlayView: View {
     // MARK: - State
     @State private var isAnimating: Bool = false
 

@@ -60,11 +60,10 @@ struct MelodyEditScreenView: View {
 
     private func _contentView() -> some View  {
         VStack {
-            Text("Title")
-            _headerContentView()
             _melodyContentView()
                 .stretching(.vertical)
-            _melodyActionPanelView()
+            _melodyToolbarView()
+                .padding(.horizontal, 16)
             if let layoutViewProps = viewModel.layoutViewProps {
                 HarmonicaLayoutView(props: layoutViewProps)
                     .padding(.horizontal, 8)
@@ -74,28 +73,10 @@ struct MelodyEditScreenView: View {
         .animation(.snappy, value: viewModel.layoutViewProps)
     }
 
-    private func _melodyActionPanelView() -> some View {
-        HStack(alignment: .center, spacing: .zero) {
-            MelodyPlayButton(isActive: viewModel.isPlayingMelody) {
-                viewModel.onPlayTap()
-            }
-//            Spacer()
-//            MelodyActionButton(iconName: "space") {
-//                viewModel.onServiceKeyTap(.silence)
-//            }
-//            MelodyActionButton(iconName: "return") {
-//                viewModel.onServiceKeyTap(ServiceKeyboardEvent.addNewLine)
-//            }
-//            .padding(.leading, 8)
-//            MelodyActionButton(iconName: "delete.backward.fill") {
-//                viewModel.onRemoveKeyTap()
-//            }
-//            .padding(.leading, 8)
-            Spacer()
-            MelodyClearButton() {
-                viewModel.onClearTap()
-            }
-        }
+    private func _melodyToolbarView() -> some View {
+        MelodyToolbarView(
+            props: viewModel.melodyToolbarViewProps()
+        )
     }
 
     private func _melodyContentView() -> some View {
@@ -133,22 +114,6 @@ struct MelodyEditScreenView: View {
         }
     }
 
-    private func _headerContentView() -> some View {
-        HStack(alignment: .center, spacing: 12) {
-            SwiftUI.Button(role: .none) {
-                viewModel.onTempoTap()
-            } label: {
-                Text("Tempo: \(Int(viewModel.tempo.bpm)) bpm")
-            }
-            SwiftUI.Button(role: .none) {
-                viewModel.onKeyTap()
-            } label: {
-                Text("Key: \(viewModel.key.description)")
-            }
-            .padding(.leading, 12)
-        }
-    }
-
     // MARK: - Toolbar
     @ToolbarContentBuilder
     private func _toolbarContentView() -> some ToolbarContent {
@@ -180,7 +145,7 @@ struct MelodyEditScreenView: View {
         TempoSetupView(tempo: viewModel.tempo.bpm) { tempo in
             viewModel.onTempoChange(to: tempo)
         }
-        .presentationDetents([.fraction(0.4)])
+        .presentationDetents([.large])
         .presentationDragIndicator(.visible)
         .interactiveDismissDisabled(false)
         .presentationBackgroundInteraction(.disabled)
@@ -191,7 +156,7 @@ struct MelodyEditScreenView: View {
         KeySetupView(key: viewModel.key) { key in
             viewModel.onKeyChange(to: key)
         }
-        .presentationDetents([.fraction(0.3)])
+        .presentationDetents([.medium])
         .presentationDragIndicator(.visible)
         .interactiveDismissDisabled(false)
         .presentationBackgroundInteraction(.disabled)

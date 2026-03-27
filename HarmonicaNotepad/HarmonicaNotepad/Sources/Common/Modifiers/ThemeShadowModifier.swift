@@ -7,7 +7,34 @@
 
 import SwiftUI
 
+enum ThemeShadowStyle {
+    case primary
+    case secondary
+
+    fileprivate var props: ThemeShadowModifier.Props {
+        switch self {
+            case .primary:
+                ThemeShadowModifier.Props(
+                    radius: 1,
+                    offset: CGPoint(x: 1, y: 1)
+                )
+            case .secondary:
+                ThemeShadowModifier.Props(
+                    radius: 2,
+                    offset: CGPoint(x: 2, y: 2)
+                )
+        }
+    }
+}
+
+
 private struct ThemeShadowModifier: ViewModifier {
+    struct Props {
+        let radius: CGFloat
+        let offset: CGPoint
+    }
+
+    let props: Props
     let radius: CGFloat = 2
     let offset: CGPoint = CGPoint(x: 2, y: 2)
     
@@ -27,7 +54,9 @@ private struct ThemeShadowModifier: ViewModifier {
 }
 
 extension View {
-    func themeShadow() -> some View {
-        modifier(ThemeShadowModifier())
+    func themeShadow(_ style: ThemeShadowStyle = .primary) -> some View {
+        modifier(
+            ThemeShadowModifier(props: style.props)
+        )
     }
 }

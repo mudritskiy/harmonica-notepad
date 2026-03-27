@@ -21,12 +21,13 @@ struct SongBottomToolbarView: View {
                 alignment: .center,
                 spacing: .zero
             ) {
-                SongBottomToolbarButtonPlayView(
+                ToolbarButtonPlayView(
                     isPlaying: isPlaying,
                     onTap: onPlayTap
                 )
                 Spacer()
-                SongBottomToolbarButtonEditMelodyView(
+                ToolbarButtonView(
+                    icon: Image(systemName: "music.quarternote.3"),
                     onTap: onEditTap
                 )
             }

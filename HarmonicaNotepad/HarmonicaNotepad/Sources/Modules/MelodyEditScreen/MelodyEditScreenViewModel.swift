@@ -147,9 +147,9 @@ final class MelodyEditScreenViewModel {
     }
 
     func onKeyChange(to key: Key) {
-        _layout = HarmonicaLayout(key: key)
-        _updateLayoutViewProps()
         self.key = key
+        _layout = HarmonicaLayout(key: key)
+        updateNoteGrid(with: _layout)
         isPresentedKeySetup = false
     }
 
@@ -302,6 +302,18 @@ final class MelodyEditScreenViewModel {
 
     private func _updateMelodyRows() {
         melodyRows = _melodyService.breakInRows(notes: notes)
+    }
+
+    func melodyToolbarViewProps() -> MelodyToolbarViewProps {
+        MelodyToolbarViewProps(
+            isPlaying: isPlayingMelody,
+            tempoTitle: "\(Int(tempo.bpm))",// bpm",
+            keyTitle: key.description,
+            onPlayTap: onPlayTap,
+            onClearTap: onClearTap,
+            onTempoTap: onTempoTap,
+            onKeyTap: onKeyTap
+        )
     }
 
     // MARK: -
