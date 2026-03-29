@@ -71,7 +71,7 @@ struct ServiceKeyboardView: View {
 
     private func _removeKey() -> some View {
         Button {
-            props.events.send(.removeLast)
+            props.events.send(ServiceKeyboardEvent.removeLast)
         } label: {
             Image(systemName: "delete.left.fill")
                 .frame(
@@ -84,7 +84,7 @@ struct ServiceKeyboardView: View {
 
     private func _settingsKey() -> some View {
         Button {
-            props.events.send(.showSettings)
+            props.events.send(ServiceKeyboardEvent.showSettings)
         } label: {
             Image(systemName: "gearshape.fill")
                 .frame(
@@ -97,7 +97,7 @@ struct ServiceKeyboardView: View {
 
     private func _spaceKey() -> some View {
         Button {
-            props.events.send(.addSpace)
+            props.events.send(ServiceKeyboardEvent.addSpace)
         } label: {
             Text("space")
                 .frame(
@@ -110,7 +110,7 @@ struct ServiceKeyboardView: View {
 
     private func _newLineKey() -> some View {
         Button {
-            props.events.send(.addNewLine)
+            props.events.send(ServiceKeyboardEvent.addNewLine)
         } label: {
             Image(systemName: "return")
                 .frame(

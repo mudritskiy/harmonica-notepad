@@ -23,6 +23,14 @@ enum MelodyEditScreenAssembly {
 
 @Observable
 final class MelodyEditScreenViewModel {
+    enum ActiveSheet: Identifiable {
+        case tempo
+        case key
+        case layout
+
+        var id: Int { hashValue }
+    }
+
     // MARK: Depenencies
     private let _playerService: PlayerService
     private let _melodyService: MelodyService
@@ -30,14 +38,10 @@ final class MelodyEditScreenViewModel {
 
     // MARK: - Published properties
     var showAlert = false
-    var isPresentedKeySetup: Bool = false {
-        didSet { _stopPlayingMelody(isPresentedKeySetup) }
-    }
-    var isPresentedTempoSetup: Bool = false {
-        didSet { _stopPlayingMelody(isPresentedTempoSetup) }
-    }
-    var isPresentedLayoutConfiguration: Bool = false {
-        didSet { _stopPlayingMelody(isPresentedLayoutConfiguration) }
+    var activeSheet: ActiveSheet? {
+        didSet {
+            _stopPlayingMelody(activeSheet != nil)
+        }
     }
 
     // MARK: - Properties
@@ -46,14 +50,12 @@ final class MelodyEditScreenViewModel {
     @ObservationIgnored var tempo: Tempo
     @ObservationIgnored var dismiss: (() -> Void)?
 
-    var isPlayingMelody: Bool = false
     private(set) var alertInfo: AlertInfo = .empty()
-    private(set) var melodyRows: [[MelodyNote]] = []
+    private(set) var melodyRows: [MelodyRow] = []
 
     private var _configuration: HarmonicaLayoutConfiguration
     private var _layout: HarmonicaLayout
-    private var _playingNoteIndex: Int?
-    private var notesGrid: HarmonicaLayoutNotesGrid
+    private var _notesGrid: HarmonicaLayoutNotesGrid
 
     private var _playbackTask: Task<Void, Never>?
     private var _cancellables = Set<AnyCancellable>()
@@ -80,7 +82,7 @@ final class MelodyEditScreenViewModel {
 
         _configuration = configuration
         let notesGrid = layout.layoutGrid(with: configuration)
-        self.notesGrid = notesGrid
+        self._notesGrid = notesGrid
 
         _layout = layout
         key = melodyKey
@@ -89,89 +91,48 @@ final class MelodyEditScreenViewModel {
 
         _updateLayoutViewProps()
         _updateMelodyRows()
-        _bindStates()
-    }
-
-    private func _updateLayoutViewProps() {
-        let layoutViewProps = HarmonicaLayoutViewProps(
-            congif: _configuration,
-            notesGrid: notesGrid,
-            font: .title3,
-            serviceKeyboardEvents: serviceKeyboardEvents
-        )  { [weak self] note in
-            let melodyNote = MelodyNote(note: note, value: NoteValue(type: .quarter))
-            self?._addAndPlayNote(melodyNote)
-        }
-        self.layoutViewProps = layoutViewProps
-    }
-
-    private func _bindStates() {
-        _playerService.playingNoteIndexPublisher
-            .sink { [weak self] index in
-                self?._playingNoteIndex = index
-            }
-            .store(in: &_cancellables)
-
-        _playerService.isPlayingMelodyPublisher
-            .sink { [weak self] isPlayingMelody in
-                withAnimation(.easeInOut(duration: 0.4)) {
-                    self?.isPlayingMelody = isPlayingMelody
-                }
-            }
-            .store(in: &_cancellables)
     }
 
     // MARK: - View Methods
-    func isPlayingNote(rowIndex: Int, at indexInRow: Int) -> Bool {
-        let indexInMelody = _indexInMelody(rowIndex: rowIndex, indexInRow: indexInRow)
-        return indexInMelody == _playingNoteIndex
+    func playerEventStream() -> AsyncStream<PlayerEvent> {
+        _playerService.playerEvents.stream()
     }
 
-    private func _indexInMelody(rowIndex: Int, indexInRow: Int) -> Int {
-        guard rowIndex > 0, melodyRows.count - 1 > rowIndex else { return indexInRow }
-        let notesCount = melodyRows.prefix(upTo: rowIndex).flatMap { $0 }.count
-        return notesCount + indexInRow
+    func melodyToolbarViewProps() -> MelodyToolbarViewProps {
+        MelodyToolbarViewProps(
+            playerEventStream: _playerService.playerEvents.stream(),
+            tempoTitle: "\(Int(tempo.bpm))",
+            keyTitle: key.description,
+            onPlayTap: onPlayTap,
+            onClearTap: onClearTap,
+            onTempoTap: onTempoTap,
+            onKeyTap: onKeyTap
+        )
     }
 
     func onTempoTap() {
-        isPresentedTempoSetup = true
+        activeSheet = .tempo
     }
 
     func onTempoChange(to tempo: Tempo) {
         self.tempo = tempo
-        isPresentedTempoSetup = false
+        activeSheet = nil
     }
 
     func onKeyTap() {
-        isPresentedKeySetup = true
+        activeSheet = .key
     }
 
     func onKeyChange(to key: Key) {
         self.key = key
         _layout = HarmonicaLayout(key: key)
         updateNoteGrid(with: _layout)
-        isPresentedKeySetup = false
+        activeSheet = nil
     }
 
     private func _stopPlayingMelody(_ shouldStop: Bool) {
         guard shouldStop else { return }
         _playerService.stopPlayingMelody()
-    }
-
-    // MARK: - Layout Actions
-    private func _addAndPlayNote(_ note: MelodyNote) {
-        _playbackTask?.cancel()
-        _playbackTask = Task {
-            await _addNote(note)
-            await _playerService.playNote(note, with: tempo)
-        }
-    }
-
-    @MainActor
-    private func _addNote(_ note: MelodyNote) {
-        notes.append(note)
-        _updateMelodyRows()
-        _playingNoteIndex = notes.count - 1
     }
 
     // MARK: - Action Panel
@@ -188,12 +149,12 @@ final class MelodyEditScreenViewModel {
         switch key {
             case .addNewLine:
                 _addServiceNote(MelodyNote.newLine)
+            case .addSpace:
+                _addServiceNote(MelodyNote.silence)
             case .removeLast:
                 _removeLastNote()
             case .showSettings:
-                isPresentedLayoutConfiguration = true
-            case .addSpace:
-                _addServiceNote(MelodyNote.silence)
+                activeSheet = .layout
         }
     }
 
@@ -304,26 +265,42 @@ final class MelodyEditScreenViewModel {
         melodyRows = _melodyService.breakInRows(notes: notes)
     }
 
-    func melodyToolbarViewProps() -> MelodyToolbarViewProps {
-        MelodyToolbarViewProps(
-            isPlaying: isPlayingMelody,
-            tempoTitle: "\(Int(tempo.bpm))",// bpm",
-            keyTitle: key.description,
-            onPlayTap: onPlayTap,
-            onClearTap: onClearTap,
-            onTempoTap: onTempoTap,
-            onKeyTap: onKeyTap
-        )
-    }
-
     // MARK: -
     func applyConfiguration(with congif: HarmonicaLayoutConfiguration) {
         _configuration = congif
         updateNoteGrid(with: _layout)
     }
 
+    // MARK: - Layout Actions
     func updateNoteGrid(with layout: HarmonicaLayout) {
-        notesGrid = layout.layoutGrid(with: _configuration)
+        _notesGrid = layout.layoutGrid(with: _configuration)
         _updateLayoutViewProps()
+    }
+
+    private func _updateLayoutViewProps() {
+        let layoutViewProps = HarmonicaLayoutViewProps(
+            congif: _configuration,
+            notesGrid: _notesGrid,
+            font: .title3,
+            serviceKeyboardEvents: serviceKeyboardEvents
+        )  { [weak self] note in
+            let melodyNote = MelodyNote(note: note, value: NoteValue(type: .quarter))
+            self?._addAndPlayNote(melodyNote)
+        }
+        self.layoutViewProps = layoutViewProps
+    }
+
+    private func _addAndPlayNote(_ note: MelodyNote) {
+        _playbackTask?.cancel()
+        _playbackTask = Task {
+            await _addNote(note)
+            await _playerService.playNote(note, with: tempo)
+        }
+    }
+
+    @MainActor
+    private func _addNote(_ note: MelodyNote) {
+        notes.append(note)
+        _updateMelodyRows()
     }
 }

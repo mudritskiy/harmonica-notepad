@@ -26,6 +26,7 @@ struct MelodyNoteSimpleCellView: View {
 
 struct MelodyNoteSimpleCellViewBackground: View {
     let isActive: Bool
+    
     var body: some View {
         if isActive {
             RoundedRectangle(cornerRadius: 4)

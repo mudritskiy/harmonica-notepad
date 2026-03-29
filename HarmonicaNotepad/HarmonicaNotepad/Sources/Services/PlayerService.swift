@@ -9,6 +9,11 @@ import Combine
 import MusicTheory
 import SwiftUI
 
+enum PlayerEvent {
+    case play(Int?)
+    case stop
+}
+
 private struct PlayerServiceKey: EnvironmentKey {
     static let defaultValue = PlayerService.shared
 }
@@ -21,23 +26,25 @@ extension EnvironmentValues {
 }
 
 protocol PlayerServiceState {
+    var playerEvents: EventEmitter<PlayerEvent> { get }
     var isPlayingMelody: Bool { get }
-    var isPlayingMelodyPublisher: AnyPublisher<Bool, Never> { get }
 }
 
 final class PlayerService: PlayerServiceState {
     static let shared = PlayerService()
 
+    let playerEvents: EventEmitter<PlayerEvent>
+
+    private let _player: MidiNotePlayer
+    private var _playbackTask: Task<Void, Never>?
+    private var _currentlyPlayingNote: MelodyNote?
+
+    #warning("Should be removed all that staff ")
     @Published var isPlayingMelody: Bool = false {
         didSet {
             _isPlayingMelodyContinuation?.yield(isPlayingMelody)
         }
     }
-
-    var isPlayingMelodyPublisher: AnyPublisher<Bool, Never> {
-        $isPlayingMelody.eraseToAnyPublisher()
-    }
-
     private var _isPlayingMelodyContinuation: AsyncStream<Bool>.Continuation?
     var isPlayingMelodyStream: AsyncStream<Bool> {
         AsyncStream { [weak self] continuation in
@@ -45,62 +52,57 @@ final class PlayerService: PlayerServiceState {
         }
     }
 
-    private let player = MidiNotePlayer()
+    // MARK: - Init
+    init() {
+        playerEvents = EventEmitter<PlayerEvent>()
+        _player = MidiNotePlayer()
+    }
 
-    private var playbackTask: Task<Void, Never>?
-    private var currentlyPlayingNote: MelodyNote?
-
-    @Published private var playingNoteIndex: Int?
-    var playingNoteIndexPublisher: AnyPublisher<Int?, Never> {
-        $playingNoteIndex.eraseToAnyPublisher()
+    deinit {
+        playerEvents.finish()
     }
 
     func playNote(_ note: MelodyNote, with tempo: Tempo) async {
-        if let current = currentlyPlayingNote {
-            player.stop(note: current.note)
+        if let current = _currentlyPlayingNote {
+            _player.stop(note: current.note)
         }
 
-        currentlyPlayingNote = note
-        player.play(note: note.note)
+        _currentlyPlayingNote = note
+        _player.play(note: note.note)
 
         let duration = tempo.duration(of: note.value)
 
         do {
             try await Task.sleep(nanoseconds: UInt64(duration * 1_000_000_000))
         } catch {
-            player.stop(note: note.note)
+            _player.stop(note: note.note)
             return
         }
 
-        player.stop(note: note.note)
-
-        await MainActor.run {
-            playingNoteIndex = nil
-        }
-
-        currentlyPlayingNote = nil
+        _player.stop(note: note.note)
+        _currentlyPlayingNote = nil
     }
 
     func stopPlayingMelody() {
-        playbackTask?.cancel()
-        didFinishPlayMelody()
+        _playbackTask?.cancel()
+        _playbackTask = nil
+        Task {
+            await _didFinishPlayMelody()
+        }
     }
 
     func playMelody(_ notes: [MelodyNote], with tempo: Tempo) {
-        guard playbackTask == nil else {
+        guard _playbackTask == nil else {
             stopPlayingMelody()
             return
         }
 
         isPlayingMelody = true
 
-        playbackTask = Task {
-            var skippedServiceNotesCount: Int = 0
+        _playbackTask = Task {
             for (index, note) in notes.enumerated() {
-                skippedServiceNotesCount += note.type == .newLine ? 1 : 0
-                await MainActor.run { [skippedServiceNotesCount] in
-                    playingNoteIndex = note.isServiceNote ? nil : (index - skippedServiceNotesCount)
-                }
+                guard !Task.isCancelled else { return }
+                await _notifyPlayingNote(with: index)
 
                 switch note.type {
                     case .normal:
@@ -108,22 +110,23 @@ final class PlayerService: PlayerServiceState {
 
                     case .silence, .newLine:
                         let duration = tempo.duration(of: note.value)
-                        try? await Task.sleep(nanoseconds: UInt64(duration * 1_000_000_000))
-
-                        await MainActor.run {
-                            playingNoteIndex = nil
-                        }
+                        try? await Task.sleep(for: .seconds(duration))
                 }
             }
-            await MainActor.run {
-                didFinishPlayMelody()
-            }
+
+            guard !Task.isCancelled else { return }
+            await _didFinishPlayMelody()
         }
     }
 
-    private func didFinishPlayMelody() {
-        playbackTask = nil
-        playingNoteIndex = nil
+    @MainActor
+    private func _notifyPlayingNote(with index: Int?) {
+        playerEvents.send(PlayerEvent.play(index))
+    }
+
+    @MainActor
+    private func _didFinishPlayMelody() {
+        playerEvents.send(PlayerEvent.stop)
         isPlayingMelody = false
     }
 }
