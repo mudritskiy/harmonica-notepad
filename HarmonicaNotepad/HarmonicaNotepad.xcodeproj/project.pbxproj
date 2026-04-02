@@ -18,6 +18,8 @@
 		FE27819B2DE96C0D009C7FDF /* PlayerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE27819A2DE96C0A009C7FDF /* PlayerService.swift */; };
 		FE2E2EEF2EA507F000F82415 /* View+AlertInfoModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2E2EEE2EA507EA00F82415 /* View+AlertInfoModifier.swift */; };
 		FE37594C2E164D6400B7F3E5 /* NoteValueWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE37594B2E164D6100B7F3E5 /* NoteValueWrapper.swift */; };
+		FE3CC2EF2F7BD659002D3DF9 /* MelodyNotePresenetionStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3CC2EE2F7BD657002D3DF9 /* MelodyNotePresenetionStyle.swift */; };
+		FE3CC2F12F7BD6B1002D3DF9 /* MelodyNotePresenetionNumberPrimaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3CC2F02F7BD6AF002D3DF9 /* MelodyNotePresenetionNumberPrimaryView.swift */; };
 		FE3CDD172F0A877700593EEE /* ContentTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3CDD162F0A877600593EEE /* ContentTab.swift */; };
 		FE495E752F772DA7006F0678 /* EventEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE495E742F772DA4006F0678 /* EventEmitter.swift */; };
 		FE495E782F796357006F0678 /* MelodyNotesPresentationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE495E772F796356006F0678 /* MelodyNotesPresentationView.swift */; };
@@ -63,12 +65,10 @@
 		FEAF08462C4055850014DA01 /* HarmonicaNotepadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAF08452C4055850014DA01 /* HarmonicaNotepadTests.swift */; };
 		FEAF08502C4055850014DA01 /* HarmonicaNotepadUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAF084F2C4055850014DA01 /* HarmonicaNotepadUITests.swift */; };
 		FEAF08522C4055850014DA01 /* HarmonicaNotepadUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAF08512C4055850014DA01 /* HarmonicaNotepadUITestsLaunchTests.swift */; };
-		FEB5CDF72E19599500C5BDC9 /* NotesPresentationNumbersStyleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB5CDF62E19597500C5BDC9 /* NotesPresentationNumbersStyleView.swift */; };
-		FEB5CDF92E1959D600C5BDC9 /* NotesPresentationStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB5CDF82E1959D600C5BDC9 /* NotesPresentationStyle.swift */; };
 		FEB5CDFB2E195DBB00C5BDC9 /* View+OnFirstAppear.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB5CDFA2E195DBB00C5BDC9 /* View+OnFirstAppear.swift */; };
 		FEB5CDFD2E19A20000C5BDC9 /* SongListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB5CDFC2E19A1F900C5BDC9 /* SongListView.swift */; };
-		FEB5CDFF2E1A81BD00C5BDC9 /* MelodyNoteSimpleCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB5CDFE2E1A81BD00C5BDC9 /* MelodyNoteSimpleCellView.swift */; };
 		FEB7C77B2E1ADFA20064B630 /* SongScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB7C77A2E1ADF690064B630 /* SongScreenView.swift */; };
+		FEC5AD5C2F7E3EBE003C4DD5 /* TextCursorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC5AD5B2F7E3EBD003C4DD5 /* TextCursorView.swift */; };
 		FEC91A522E11182D00F48FEE /* SwiftDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC91A512E11182500F48FEE /* SwiftDataService.swift */; };
 		FEC91A542E1119E000F48FEE /* SongReviewSwiftDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC91A532E1119D000F48FEE /* SongReviewSwiftDataService.swift */; };
 		FEC91A562E111A7200F48FEE /* FileEncryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC91A552E111A7100F48FEE /* FileEncryptor.swift */; };
@@ -142,6 +142,8 @@
 		FE27819A2DE96C0A009C7FDF /* PlayerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerService.swift; sourceTree = "<group>"; };
 		FE2E2EEE2EA507EA00F82415 /* View+AlertInfoModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+AlertInfoModifier.swift"; sourceTree = "<group>"; };
 		FE37594B2E164D6100B7F3E5 /* NoteValueWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteValueWrapper.swift; sourceTree = "<group>"; };
+		FE3CC2EE2F7BD657002D3DF9 /* MelodyNotePresenetionStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MelodyNotePresenetionStyle.swift; sourceTree = "<group>"; };
+		FE3CC2F02F7BD6AF002D3DF9 /* MelodyNotePresenetionNumberPrimaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MelodyNotePresenetionNumberPrimaryView.swift; sourceTree = "<group>"; };
 		FE3CDD162F0A877600593EEE /* ContentTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTab.swift; sourceTree = "<group>"; };
 		FE495E742F772DA4006F0678 /* EventEmitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventEmitter.swift; sourceTree = "<group>"; };
 		FE495E772F796356006F0678 /* MelodyNotesPresentationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MelodyNotesPresentationView.swift; sourceTree = "<group>"; };
@@ -189,12 +191,10 @@
 		FEAF084B2C4055850014DA01 /* HarmonicaNotepadUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HarmonicaNotepadUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEAF084F2C4055850014DA01 /* HarmonicaNotepadUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HarmonicaNotepadUITests.swift; sourceTree = "<group>"; };
 		FEAF08512C4055850014DA01 /* HarmonicaNotepadUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HarmonicaNotepadUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		FEB5CDF62E19597500C5BDC9 /* NotesPresentationNumbersStyleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesPresentationNumbersStyleView.swift; sourceTree = "<group>"; };
-		FEB5CDF82E1959D600C5BDC9 /* NotesPresentationStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesPresentationStyle.swift; sourceTree = "<group>"; };
 		FEB5CDFA2E195DBB00C5BDC9 /* View+OnFirstAppear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+OnFirstAppear.swift"; sourceTree = "<group>"; };
 		FEB5CDFC2E19A1F900C5BDC9 /* SongListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListView.swift; sourceTree = "<group>"; };
-		FEB5CDFE2E1A81BD00C5BDC9 /* MelodyNoteSimpleCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MelodyNoteSimpleCellView.swift; sourceTree = "<group>"; };
 		FEB7C77A2E1ADF690064B630 /* SongScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongScreenView.swift; sourceTree = "<group>"; };
+		FEC5AD5B2F7E3EBD003C4DD5 /* TextCursorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCursorView.swift; sourceTree = "<group>"; };
 		FEC91A512E11182500F48FEE /* SwiftDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataService.swift; sourceTree = "<group>"; };
 		FEC91A532E1119D000F48FEE /* SongReviewSwiftDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongReviewSwiftDataService.swift; sourceTree = "<group>"; };
 		FEC91A552E111A7100F48FEE /* FileEncryptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileEncryptor.swift; sourceTree = "<group>"; };
@@ -285,7 +285,6 @@
 				FE2E2EED2EA4E1E700F82415 /* SetupViews */,
 				FED746A72F75C0F2004E6BE4 /* MelodyToolbar */,
 				FE65DC242E05D9D4002A3381 /* HarmonicaLayout */,
-				FE495E762F79634F006F0678 /* MelodyNotesPresentation */,
 				FE2781962DE965F9009C7FDF /* MelodyEditScreenViewModel.swift */,
 				FE2781982DE96635009C7FDF /* MelodyEditScreenView.swift */,
 			);
@@ -322,11 +321,21 @@
 			path = MusicTheoryWrapper;
 			sourceTree = "<group>";
 		};
+		FE3CC2F22F7BD705002D3DF9 /* NotePresenetion */ = {
+			isa = PBXGroup;
+			children = (
+				FE3CC2EE2F7BD657002D3DF9 /* MelodyNotePresenetionStyle.swift */,
+				FE3CC2F02F7BD6AF002D3DF9 /* MelodyNotePresenetionNumberPrimaryView.swift */,
+			);
+			path = NotePresenetion;
+			sourceTree = "<group>";
+		};
 		FE495E762F79634F006F0678 /* MelodyNotesPresentation */ = {
 			isa = PBXGroup;
 			children = (
+				FEC5AD5B2F7E3EBD003C4DD5 /* TextCursorView.swift */,
+				FE3CC2F22F7BD705002D3DF9 /* NotePresenetion */,
 				FE495E772F796356006F0678 /* MelodyNotesPresentationView.swift */,
-				FEB5CDFE2E1A81BD00C5BDC9 /* MelodyNoteSimpleCellView.swift */,
 			);
 			path = MelodyNotesPresentation;
 			sourceTree = "<group>";
@@ -385,8 +394,8 @@
 				FEF53F042EDCB1C1007307A7 /* SongsListsView */,
 				FE83CCBA2EAE228F002B9F0D /* CommonHelpers */,
 				FED1ABE82ECFAE7300811358 /* SongEditScreenView */,
-				FED1ABE72ECFAE5400811358 /* NotesPresentation */,
 				FE8C70822EA68A2000B65FC4 /* SongScreenView */,
+				FE495E762F79634F006F0678 /* MelodyNotesPresentation */,
 				FE2781952DE965EB009C7FDF /* MelodyEditScreen */,
 				FE5732CA2DE308E6000F2B8E /* Notes */,
 				FE65DC2F2E072F63002A3381 /* MainScreenView.swift */,
@@ -587,15 +596,6 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		FED1ABE72ECFAE5400811358 /* NotesPresentation */ = {
-			isa = PBXGroup;
-			children = (
-				FEB5CDF82E1959D600C5BDC9 /* NotesPresentationStyle.swift */,
-				FEB5CDF62E19597500C5BDC9 /* NotesPresentationNumbersStyleView.swift */,
-			);
-			path = NotesPresentation;
-			sourceTree = "<group>";
-		};
 		FED1ABE82ECFAE7300811358 /* SongEditScreenView */ = {
 			isa = PBXGroup;
 			children = (
@@ -786,6 +786,7 @@
 				FEE729A92F72CED600F05C5E /* AppDelegate.swift in Sources */,
 				FE0B6DD52DEC1C1300BA8793 /* SwiftUI+View.swift in Sources */,
 				FE83CCBF2EAE23FA002B9F0D /* HarmonicaTextEditFieldRounded.swift in Sources */,
+				FEC5AD5C2F7E3EBE003C4DD5 /* TextCursorView.swift in Sources */,
 				FEF53F012EDCAEA9007307A7 /* SongsListData.swift in Sources */,
 				FEAB3C2D2DF8A8680015B5A6 /* Constants.swift in Sources */,
 				FEE729A32F7114AF00F05C5E /* ThemeShadowModifier.swift in Sources */,
@@ -823,6 +824,7 @@
 				FEF53EFF2EDCAE6B007307A7 /* SongsList.swift in Sources */,
 				FEB7C77B2E1ADFA20064B630 /* SongScreenView.swift in Sources */,
 				FED746AF2F75C152004E6BE4 /* MelodyToolbarButtonBackgroundView.swift in Sources */,
+				FE3CC2EF2F7BD659002D3DF9 /* MelodyNotePresenetionStyle.swift in Sources */,
 				FEE7299A2F6D394400F05C5E /* Debouncer.swift in Sources */,
 				FEE729A72F716F7200F05C5E /* SongToolbarContent.swift in Sources */,
 				FE8C70852EA68A5500B65FC4 /* ButttonEditContentView.swift in Sources */,
@@ -842,7 +844,6 @@
 				FE7767512F6A7CBE00044A2E /* ColorToken.swift in Sources */,
 				FE7767572F6A8C2B00044A2E /* Palette.swift in Sources */,
 				FE0747F12E0837F000A9A797 /* SongEditScreenView.swift in Sources */,
-				FEB5CDFF2E1A81BD00C5BDC9 /* MelodyNoteSimpleCellView.swift in Sources */,
 				FEF53F062EDCB1D1007307A7 /* SongsListsView.swift in Sources */,
 				FEF61F592DE4E66B009A504F /* HarmonicaLayoutView.swift in Sources */,
 				FED7469E2F73D758004E6BE4 /* ServiceKeyboardView.swift in Sources */,
@@ -859,7 +860,6 @@
 				FE495E752F772DA7006F0678 /* EventEmitter.swift in Sources */,
 				FE65DC2C2E06E4A5002A3381 /* AppNavigation.swift in Sources */,
 				FE2781992DE96638009C7FDF /* MelodyEditScreenView.swift in Sources */,
-				FEB5CDF92E1959D600C5BDC9 /* NotesPresentationStyle.swift in Sources */,
 				FEE729962F6C9C6800F05C5E /* MedolyNotesParser.swift in Sources */,
 				FE96894F2ED313D10023F6CE /* SongEditableProperties.swift in Sources */,
 				FEB5CDFB2E195DBB00C5BDC9 /* View+OnFirstAppear.swift in Sources */,
@@ -877,9 +877,9 @@
 				FEE729902F6B391B00F05C5E /* WrappedTextListView.swift in Sources */,
 				FE8940DA2E1AF32100193557 /* Preview.swift in Sources */,
 				FE65DC232E05C697002A3381 /* SwiftUI+Debug.swift in Sources */,
-				FEB5CDF72E19599500C5BDC9 /* NotesPresentationNumbersStyleView.swift in Sources */,
 				FE495E782F796357006F0678 /* MelodyNotesPresentationView.swift in Sources */,
 				FE3CDD172F0A877700593EEE /* ContentTab.swift in Sources */,
+				FE3CC2F12F7BD6B1002D3DF9 /* MelodyNotePresenetionNumberPrimaryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

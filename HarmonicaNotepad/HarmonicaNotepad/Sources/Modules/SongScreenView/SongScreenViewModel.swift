@@ -40,6 +40,7 @@ final class SongScreenViewModel {
     // MARK: - Properties
     var song: HarmonicaSong
     var notes: [MelodyNote]
+    let melodyRows: [MelodyRow]
     var songDuration: String {
         let duration = song.melody.value.duration()
         let result = _formattedDuration(from: duration)
@@ -54,8 +55,12 @@ final class SongScreenViewModel {
     @ObservationIgnored let songEditScreenViewModel: SongEditScreenViewModel
 
     private var _cancellables = Set<AnyCancellable>()
-    private var _playingTask: Task<Void, Never>?
+    private var _playbackTask: Task<Void, Never>?
     var isPlayingMelody: Bool = false
+
+    func playerEventStream() -> AsyncStream<PlayerEvent> {
+        _playerService.playerEvents.stream()
+    }
 
     let listSelectionProps: AutoSizingBottomSheetProps = AutoSizingBottomSheetProps(
         title: "Select lists",
@@ -67,6 +72,7 @@ final class SongScreenViewModel {
     init(
         song: HarmonicaSong? = nil,
         playerService: PlayerService = .shared,
+        melodyService: MelodyService,
         favoritesService: FavoritesService = FavoritesServiceImpl.shared,
         listsService: SongsListsService = SongsListsServiceImpl.shared
     ) {
@@ -77,11 +83,13 @@ final class SongScreenViewModel {
         let song = song ?? .new()
         self.song = song
         self.notes = song.melody.notes
+        self.melodyRows = melodyService.breakInRows(notes: song.melody.notes)
+
 
         melodyEditScreenViewModel = MelodyEditScreenAssembly.makeViewModel(with: song.melody.value)
         songEditScreenViewModel = SongEditScreenViewModel(song: song)
 
-        _playingTask = Task {
+        _playbackTask = Task {
             for await isPlaying in _playerService.isPlayingMelodyStream {
 //                guard isPlayingMelody != isPlaying else { return }
                 isPlayingMelody = isPlaying
@@ -92,8 +100,8 @@ final class SongScreenViewModel {
     }
 
     deinit {
-        _playingTask?.cancel()
-        _playingTask = nil
+        _playbackTask?.cancel()
+        _playbackTask = nil
         _playerService.stopPlayingMelody()
     }
 

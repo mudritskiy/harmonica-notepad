@@ -28,7 +28,7 @@ struct HarmonicaLayoutViewProps: Equatable {
         serviceKeyboardEvents: EventStream<ServiceKeyboardEvent>,
         onNoteTap: @escaping (HarmonicaNote) -> Void
     ) {
-        let fontCharWidth = "W".size(withAttributes: [.font: font.uiFont]).width
+        let fontCharWidth = font.size(with: "W")
         let keyWidth = fontCharWidth * 1.5
         let keySize = CGSize(width: keyWidth, height: keyWidth * 1.35)
 

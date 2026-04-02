@@ -52,6 +52,7 @@ final class MelodyEditScreenViewModel {
 
     private(set) var alertInfo: AlertInfo = .empty()
     private(set) var melodyRows: [MelodyRow] = []
+    var cursorIndex: Int?
 
     private var _configuration: HarmonicaLayoutConfiguration
     private var _layout: HarmonicaLayout
@@ -88,9 +89,16 @@ final class MelodyEditScreenViewModel {
         key = melodyKey
         notes = melody.notes
         tempo = melody.tempo
+        cursorIndex = melody.notes.count - 1
 
         _updateLayoutViewProps()
         _updateMelodyRows()
+    }
+
+    deinit {
+        _playbackTask?.cancel()
+        _playbackTask = nil
+        _playerService.stopPlayingMelody()
     }
 
     // MARK: - View Methods
@@ -148,9 +156,9 @@ final class MelodyEditScreenViewModel {
     func onServiceKeyTap(_ key: ServiceKeyboardEvent) {
         switch key {
             case .addNewLine:
-                _addServiceNote(MelodyNote.newLine)
+                _addMelodyNote(MelodyNote.newLine)
             case .addSpace:
-                _addServiceNote(MelodyNote.silence)
+                _addMelodyNote(MelodyNote.silence)
             case .removeLast:
                 _removeLastNote()
             case .showSettings:
@@ -158,14 +166,20 @@ final class MelodyEditScreenViewModel {
         }
     }
 
-    private func _addServiceNote(_ note: MelodyNote) {
-        notes.append(note)
+    private func _addMelodyNote(_ note: MelodyNote) {
+        if let cursorIndex {
+            notes.insert(note, at: cursorIndex + 1)
+            self.cursorIndex = cursorIndex + 1
+        } else {
+            notes.append(note)
+        }
         _updateMelodyRows()
     }
 
     private func _removeLastNote() {
-        guard !notes.isEmpty else { return }
-        notes.removeLast()
+        guard !notes.isEmpty, let cursorIndex else { return }
+        notes.remove(at: cursorIndex)
+        self.cursorIndex = cursorIndex - 1
         _updateMelodyRows()
     }
 
@@ -300,7 +314,6 @@ final class MelodyEditScreenViewModel {
 
     @MainActor
     private func _addNote(_ note: MelodyNote) {
-        notes.append(note)
-        _updateMelodyRows()
+        _addMelodyNote(note)
     }
 }

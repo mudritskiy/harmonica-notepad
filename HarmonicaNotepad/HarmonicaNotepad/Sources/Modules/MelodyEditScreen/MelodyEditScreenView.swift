@@ -35,17 +35,19 @@ struct MelodyEditScreenView: View {
 
     private func _contentView() -> some View  {
         VStack {
-            MelodyNotesPresentationView(
-                props: MelodyNotesPresentationViewProps(
-                    melodyRows: viewModel.melodyRows,
-                    playerEventStream: viewModel.playerEventStream()
+            ZStack(alignment: .bottom) {
+                MelodyNotesPresentationView(
+                    props: MelodyNotesPresentationViewProps(
+                        melodyRows: viewModel.melodyRows,
+                        playerEventStream: viewModel.playerEventStream()
+                    ),
+                    cursorIndex: $viewModel.cursorIndex
                 )
-            )
-            .stretching(.vertical)
-            .padding(.horizontal, 16)
+                .stretching(.vertical)
 
-            _melodyToolbarView()
-                .padding(.horizontal, 16)
+                _melodyToolbarView()
+            }
+            .padding(.horizontal, 16)
 
             if let layoutViewProps = viewModel.layoutViewProps {
                 HarmonicaLayoutView(props: layoutViewProps)

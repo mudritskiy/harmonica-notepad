@@ -8,6 +8,20 @@
 import SwiftData
 import SwiftUI
 
+enum SongScreenAssembly {
+    static func makeViewModel(
+        with song: HarmonicaSong?
+    ) -> SongScreenViewModel {
+        SongScreenViewModel(
+            song: song,
+            playerService: .shared,
+            melodyService: MelodyServiceImpl(),
+            favoritesService: FavoritesServiceImpl.shared,
+            listsService: SongsListsServiceImpl.shared
+        )
+    }
+}
+
 struct SongScreenView: View {
     // Identifiable wrapper for routes
     struct ModalRoute: Identifiable {
@@ -35,7 +49,7 @@ struct SongScreenView: View {
 
     // MARK: - Init
     init(song: HarmonicaSong? = nil) {
-        _viewModel = SongScreenViewModel(song: song)
+        _viewModel = SongScreenAssembly.makeViewModel(with: song)
         let songId = _viewModel.song.id
         _favoriteEntries = Query(filter: #Predicate { $0.songId == songId })
     }
@@ -273,19 +287,12 @@ struct SongScreenView: View {
     }
 
     private func _melodyNotesView() -> some View {
-        ScrollView {
-            NotesPresentationView(
-                notes: _viewModel.notes,
-                style: .numbers
-            )
-            .background(Theme.colors.background.primary.color)
-        }
-        .scrollIndicators(.hidden)
+        MelodyNotesPresentationView(
+            props: MelodyNotesPresentationViewProps(
+                melodyRows: _viewModel.melodyRows,
+                playerEventStream: _viewModel.playerEventStream()
+            ),
+            cursorIndex: Binding.constant(nil)
+        )
     }
 }
-
-//    .overlay(
-//        RoundedRectangle(cornerRadius: 8)
-//            .stroke(style: StrokeStyle(lineWidth: 0.5, dash: [4]))
-//            .foregroundColor(.gray)
-//        )

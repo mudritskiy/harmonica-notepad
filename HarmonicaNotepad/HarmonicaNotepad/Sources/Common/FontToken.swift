@@ -34,6 +34,9 @@ public enum FontToken: Sendable {
 
 // MARK: - Internal Mapping
 private extension FontToken {
+    enum Weight {
+        case regular, medium, bold
+    }
 
     var fontInfo: FontInfo {
         switch self {
@@ -69,10 +72,6 @@ private extension FontToken {
         return UIFont.systemFont(ofSize: size, weight: uiWeight)
     }
 
-    enum Weight {
-        case regular, medium, bold
-    }
-
     // Dynamic Type scaling
     func scaledFont() -> UIFont {
         let metrics = UIFontMetrics(forTextStyle: fontInfo.textStyle)
@@ -91,5 +90,11 @@ public extension FontToken {
     /// SwiftUI Font
     var value: SwiftUI.Font {
         SwiftUI.Font(uiFont)
+    }
+
+    func size(with text: String) -> CGFloat {
+        text
+            .size(withAttributes: [.font: self.uiFont])
+            .width
     }
 }

@@ -8,6 +8,20 @@
 import MusicTheory
 import SwiftData
 
+#warning("should be used instead of raw Int")
+enum HarmonicaHole: Int, CaseIterable {
+    case one = 1
+    case two
+    case three
+    case four
+    case five
+    case six
+    case seven
+    case eight
+    case nine
+    case ten
+}
+
 struct HarmonicaNotePosition: Codable, Equatable {
     var hole: Int
     var direction: BreathDirection
@@ -47,10 +61,17 @@ struct HarmonicaNote: Equatable {
 }
 
 extension HarmonicaNote {
-    static let `default` = HarmonicaNote(
+    static let `default`: HarmonicaNote = HarmonicaNote(
         hole: 1,
         direction: .blow,
         technique: .natural,
+        basePitch: .default
+    )
+
+    static let maxPresentationSize: HarmonicaNote = HarmonicaNote(
+        hole: 10,
+        direction: .draw,
+        technique: .bend(.level2),
         basePitch: .default
     )
 }
