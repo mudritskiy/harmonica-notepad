@@ -8,48 +8,6 @@
 import SwiftData
 import SwiftUI
 
-protocol FavoritesService {
-    func isFavorited(songId: SongId, in context: ModelContext) -> Bool
-    func addFavorite(by songId: SongId, in context: ModelContext)
-    func removeFavorite(by songId: SongId, in context: ModelContext)
-}
-
-final class FavoritesServiceImpl: FavoritesService {
-    static let shared: FavoritesService = FavoritesServiceImpl()
-
-    func isFavorited(songId: SongId, in context: ModelContext) -> Bool {
-        let descriptor = FetchDescriptor<FavoriteSong>(predicate: #Predicate { $0.songId == songId })
-        let records = try? context.fetchCount(descriptor)
-        return records ?? 0 > 0
-    }
-
-    func addFavorite(by songId: SongId, in context: ModelContext) {
-        let favorite = FavoriteSong(with: songId)
-        context.insert(favorite)
-        do {
-            try context.save()
-        } catch {
-            assertionFailure("\(songId)")
-        }
-    }
-
-    func removeFavorite(by songId: SongId, in context: ModelContext) {
-        if let favorite = _fetchFavorite(by: songId, in: context) {
-            context.delete(favorite)
-            do {
-                try context.save()
-            } catch {
-                assertionFailure("\(songId)")
-            }
-        }
-    }
-
-    private func _fetchFavorite(by songId: SongId, in context: ModelContext) -> FavoriteSong? {
-        let descriptor = FetchDescriptor<FavoriteSong>(predicate: #Predicate { $0.songId == songId })
-        return try? context.fetch(descriptor).first
-    }
-}
-
 protocol SongsListsService {
     func isInList(songId: SongId, in context: ModelContext) -> Bool
     func add(_ songId: SongId, to songsListId: SongsListId, in context: ModelContext)
@@ -68,16 +26,6 @@ final class SongsListsServiceImpl: SongsListsService {
         let records = try? context.fetchCount(descriptor)
         return records ?? 0 > 0
     }
-
-//    func add1(_ songId: SongId, to songsListId: SongsListId, in context: ModelContext) {
-//        let data = SongsListData(songsListId: songsListId, songId: songId)
-//        context.insert(data)
-//        do {
-//            try context.save()
-//        } catch {
-//            assertionFailure("\(songId)")
-//        }
-//    }
 
     func add(_ songId: SongId, to songsListId: SongsListId, in context: ModelContext) {
         // 1. Fetch the SongsList first (very important!)
@@ -132,7 +80,6 @@ final class SongsListsServiceImpl: SongsListsService {
             if let join = try context.fetch(descriptor).first {
                 context.delete(join)
                 try context.save()
-                // No need to manually nil anything – inverse relationship cleans up
             }
         } catch {
             assertionFailure("Remove failed for \(songId) in list \(songsList.name): \(error)")

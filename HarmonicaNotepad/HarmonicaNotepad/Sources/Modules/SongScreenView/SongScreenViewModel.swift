@@ -14,13 +14,11 @@ import SwiftUI
 final class SongScreenViewModel {
     enum Route: Hashable {
         case editSong
-        case editMelody
     }
 
     // MARK: - Dependencies
     private let _playerService: PlayerService
     private var _songService: SongService?
-    private let _favoritesService: FavoritesService
     let _listsService: SongsListsService
 
     // MARK: - View Context
@@ -73,11 +71,9 @@ final class SongScreenViewModel {
         song: HarmonicaSong? = nil,
         playerService: PlayerService = .shared,
         melodyService: MelodyService,
-        favoritesService: FavoritesService = FavoritesServiceImpl.shared,
         listsService: SongsListsService = SongsListsServiceImpl.shared
     ) {
         _playerService = playerService
-        _favoritesService = favoritesService
         _listsService = listsService
 
         let song = song ?? .new()
@@ -91,7 +87,6 @@ final class SongScreenViewModel {
 
         _playbackTask = Task {
             for await isPlaying in _playerService.isPlayingMelodyStream {
-//                guard isPlayingMelody != isPlaying else { return }
                 isPlayingMelody = isPlaying
             }
         }
@@ -149,15 +144,6 @@ final class SongScreenViewModel {
     }
 
     // MARK: - View Methods
-    func onFavoriteTap(_ isFavorited: Bool) {
-//        isListSelectionPresented.toggle()
-//        if isFavorited {
-//            _favoritesService.removeFavorite(by: song.id, in: context)
-//        } else {
-//            _favoritesService.addFavorite(by: song.id, in: context)
-//        }
-    }
-
     func onPlayTap() {
         guard !notes.isEmpty else { return }
 

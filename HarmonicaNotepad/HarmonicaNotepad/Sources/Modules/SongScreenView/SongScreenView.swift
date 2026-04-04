@@ -16,7 +16,6 @@ enum SongScreenAssembly {
             song: song,
             playerService: .shared,
             melodyService: MelodyServiceImpl(),
-            favoritesService: FavoritesServiceImpl.shared,
             listsService: SongsListsServiceImpl.shared
         )
     }
@@ -29,11 +28,9 @@ struct SongScreenView: View {
         let route: SongScreenViewModel.Route
     }
 
-    @Environment(MainRouter.self) private var _router
+    @Environment(\.currentRouter) private var _router: (any AppRouter)?
     @Environment(\.modelContext) private var _context
     @Environment(\.dismiss) private var dismiss
-
-    @Query private var favoriteEntries: [FavoriteSong]
 
     // Local state for modal presentation
     @State private var _modalRoute: ModalRoute?
@@ -41,7 +38,6 @@ struct SongScreenView: View {
     @State private var _isListSelectionPresented: Bool = false
 
     @State private var _viewModel: SongScreenViewModel
-    private var isFavorited: Bool { !favoriteEntries.isEmpty }
 
     private let _buttonEditTitlesSize: CGFloat = 20
     private let _buttonEditTitlesInsets: CGFloat = 8
@@ -50,48 +46,43 @@ struct SongScreenView: View {
     // MARK: - Init
     init(song: HarmonicaSong? = nil) {
         _viewModel = SongScreenAssembly.makeViewModel(with: song)
-        let songId = _viewModel.song.id
-        _favoriteEntries = Query(filter: #Predicate { $0.songId == songId })
     }
 
     // MARK: - Render
     var body: some View {
-        _screenView()
-            .navigationDestination(for: SongScreenViewModel.Route.self) { route in
-                _modalView(for: route)
-            }
-            .toolbar {
-                _toolbarContent()
-            }
-            .toolbar(.hidden, for: .tabBar)
-            .navigationBarBackButtonHidden()
-            .onFirstAppear {
-                _viewModel.context = _context
-                _hasUnsavedChanges = false
-            }
-            .sheet(item: $_modalRoute) { modalRoute in
-                NavigationStack {
-                    _modalView(for: modalRoute.route)
+            _screenView()
+                .toolbar {
+                    _toolbarContent()
                 }
-                .presentationDetents([.large])
-                .presentationDragIndicator(.visible)
-                .presentationBackground(.thinMaterial)
-                .interactiveDismissDisabled(_hasUnsavedChanges)
-            }
-            .autoSizingBottomSheet(
-                isPresented: $_isListSelectionPresented,
-                props: _viewModel.listSelectionProps
-            ) {
-                ListSelectionView(
-                    service: _viewModel._listsService,
-                    songId: _viewModel.song.id
-                )
-                .padding(.all, 16)
-            }
-            .task(id: _isListSelectionPresented) {
-                guard !_isListSelectionPresented else { return }
-                _viewModel.fetchLists()
-            }
+                .toolbar(.hidden, for: .tabBar)
+                .navigationBarBackButtonHidden()
+                .onFirstAppear {
+                    _viewModel.context = _context
+                    _hasUnsavedChanges = false
+                }
+                .sheet(item: $_modalRoute) { modalRoute in
+                    NavigationStack {
+                        _modalView(for: modalRoute.route)
+                    }
+                    .presentationDetents([.large])
+                    .presentationDragIndicator(.visible)
+                    .presentationBackground(.thinMaterial)
+                    .interactiveDismissDisabled(_hasUnsavedChanges)
+                }
+                .autoSizingBottomSheet(
+                    isPresented: $_isListSelectionPresented,
+                    props: _viewModel.listSelectionProps
+                ) {
+                    ListSelectionView(
+                        service: _viewModel._listsService,
+                        songId: _viewModel.song.id
+                    )
+                    .padding(.all, 16)
+                }
+                .task(id: _isListSelectionPresented) {
+                    guard !_isListSelectionPresented else { return }
+                    _viewModel.fetchLists()
+                }
     }
 
     @ToolbarContentBuilder
@@ -120,10 +111,6 @@ struct SongScreenView: View {
                     viewModel: _viewModel.songEditScreenViewModel,
                     hasUnsavedChanges: $_hasUnsavedChanges
                 )
-            case .editMelody:
-                MelodyEditScreenView(
-                    viewModel: _viewModel.melodyEditScreenViewModel
-                )
         }
     }
 
@@ -144,7 +131,9 @@ struct SongScreenView: View {
                 _viewModel.onPlayTap()
             },
             onEditTap: {
-                _router.navigate(to: SongScreenViewModel.Route.editMelody)
+                _router?.navigate(to: SongScreenRoute.editMelody(
+                    _viewModel.melodyEditScreenViewModel
+                ))
             }
         )
     }
@@ -236,9 +225,6 @@ struct SongScreenView: View {
                 Text(
                     "\(String(format: "%d bpm", Int(_viewModel.song.melody.bpm)))"
                 )
-//                Text(
-//                    "\(TempoStyle.tempo(for: Int(_viewModel.song.melody.bpm)).presentation) (\(String(format: "%d bpm", Int(_viewModel.song.melody.bpm))))"
-//                )
             }
             .frame(maxWidth: .infinity)
             HStack(spacing: 4)  {
@@ -271,7 +257,6 @@ struct SongScreenView: View {
     private func _buttonEditTitles() -> some View {
         Button {
             _modalRoute = ModalRoute(route: SongScreenViewModel.Route.editSong)
-//                    _router.navigate(to: SongScreenViewModel.Route.editSong)
         } label: {
             Image(systemName: "square.and.pencil")
                 .resizable()

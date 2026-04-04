@@ -48,7 +48,6 @@ final class SwiftDataCoreServiceImpl: SwiftDataCoreService {
     private var _cachedConfiguration: ModelConfiguration?
     private let _models: [any PersistentModel.Type] = [
         HarmonicaSong.self,
-        FavoriteSong.self,
         SongsList.self,
         SongsListData.self
     ]

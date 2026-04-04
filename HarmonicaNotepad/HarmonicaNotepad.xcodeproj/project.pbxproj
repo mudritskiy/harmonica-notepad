@@ -68,6 +68,12 @@
 		FEB5CDFB2E195DBB00C5BDC9 /* View+OnFirstAppear.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB5CDFA2E195DBB00C5BDC9 /* View+OnFirstAppear.swift */; };
 		FEB5CDFD2E19A20000C5BDC9 /* SongListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB5CDFC2E19A1F900C5BDC9 /* SongListView.swift */; };
 		FEB7C77B2E1ADFA20064B630 /* SongScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB7C77A2E1ADF690064B630 /* SongScreenView.swift */; };
+		FEBA509B2F80CD43004E969C /* CurrentTabKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA509A2F80CD41004E969C /* CurrentTabKey.swift */; };
+		FEBA509D2F80CD5E004E969C /* CurrentRouterKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA509C2F80CD5D004E969C /* CurrentRouterKey.swift */; };
+		FEBA509F2F80CE02004E969C /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA509E2F80CDFF004E969C /* AppRouter.swift */; };
+		FEBA50A42F814FB0004E969C /* SearchTabDestinations.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA50A32F814FAE004E969C /* SearchTabDestinations.swift */; };
+		FEBA50A72F814FD6004E969C /* SearchListDestinations.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA50A62F814FD4004E969C /* SearchListDestinations.swift */; };
+		FEBA50A92F815030004E969C /* SongScreenDestinations.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA50A82F81502F004E969C /* SongScreenDestinations.swift */; };
 		FEC5AD5C2F7E3EBE003C4DD5 /* TextCursorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC5AD5B2F7E3EBD003C4DD5 /* TextCursorView.swift */; };
 		FEC91A522E11182D00F48FEE /* SwiftDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC91A512E11182500F48FEE /* SwiftDataService.swift */; };
 		FEC91A542E1119E000F48FEE /* SongReviewSwiftDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC91A532E1119D000F48FEE /* SongReviewSwiftDataService.swift */; };
@@ -101,8 +107,7 @@
 		FEE729A72F716F7200F05C5E /* SongToolbarContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE729A62F716F7200F05C5E /* SongToolbarContent.swift */; };
 		FEE729A92F72CED600F05C5E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE729A82F72CECE00F05C5E /* AppDelegate.swift */; };
 		FEE729AB2F72CF4B00F05C5E /* ScreenOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE729AA2F72CF4A00F05C5E /* ScreenOrientation.swift */; };
-		FEF53EFB2EDB14F5007307A7 /* FavoritesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF53EFA2EDB14F4007307A7 /* FavoritesService.swift */; };
-		FEF53EFD2EDB1600007307A7 /* FavoriteSong.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF53EFC2EDB15FE007307A7 /* FavoriteSong.swift */; };
+		FEF53EFB2EDB14F5007307A7 /* SongsListsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF53EFA2EDB14F4007307A7 /* SongsListsService.swift */; };
 		FEF53EFF2EDCAE6B007307A7 /* SongsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF53EFE2EDCAE6A007307A7 /* SongsList.swift */; };
 		FEF53F012EDCAEA9007307A7 /* SongsListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF53F002EDCAEA8007307A7 /* SongsListData.swift */; };
 		FEF53F032EDCB12D007307A7 /* Color+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF53F022EDCB126007307A7 /* Color+Init.swift */; };
@@ -194,6 +199,12 @@
 		FEB5CDFA2E195DBB00C5BDC9 /* View+OnFirstAppear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+OnFirstAppear.swift"; sourceTree = "<group>"; };
 		FEB5CDFC2E19A1F900C5BDC9 /* SongListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListView.swift; sourceTree = "<group>"; };
 		FEB7C77A2E1ADF690064B630 /* SongScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongScreenView.swift; sourceTree = "<group>"; };
+		FEBA509A2F80CD41004E969C /* CurrentTabKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentTabKey.swift; sourceTree = "<group>"; };
+		FEBA509C2F80CD5D004E969C /* CurrentRouterKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentRouterKey.swift; sourceTree = "<group>"; };
+		FEBA509E2F80CDFF004E969C /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
+		FEBA50A32F814FAE004E969C /* SearchTabDestinations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTabDestinations.swift; sourceTree = "<group>"; };
+		FEBA50A62F814FD4004E969C /* SearchListDestinations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListDestinations.swift; sourceTree = "<group>"; };
+		FEBA50A82F81502F004E969C /* SongScreenDestinations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongScreenDestinations.swift; sourceTree = "<group>"; };
 		FEC5AD5B2F7E3EBD003C4DD5 /* TextCursorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCursorView.swift; sourceTree = "<group>"; };
 		FEC91A512E11182500F48FEE /* SwiftDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataService.swift; sourceTree = "<group>"; };
 		FEC91A532E1119D000F48FEE /* SongReviewSwiftDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongReviewSwiftDataService.swift; sourceTree = "<group>"; };
@@ -227,8 +238,7 @@
 		FEE729A62F716F7200F05C5E /* SongToolbarContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongToolbarContent.swift; sourceTree = "<group>"; };
 		FEE729A82F72CECE00F05C5E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FEE729AA2F72CF4A00F05C5E /* ScreenOrientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenOrientation.swift; sourceTree = "<group>"; };
-		FEF53EFA2EDB14F4007307A7 /* FavoritesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesService.swift; sourceTree = "<group>"; };
-		FEF53EFC2EDB15FE007307A7 /* FavoriteSong.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteSong.swift; sourceTree = "<group>"; };
+		FEF53EFA2EDB14F4007307A7 /* SongsListsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsListsService.swift; sourceTree = "<group>"; };
 		FEF53EFE2EDCAE6A007307A7 /* SongsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsList.swift; sourceTree = "<group>"; };
 		FEF53F002EDCAEA8007307A7 /* SongsListData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsListData.swift; sourceTree = "<group>"; };
 		FEF53F022EDCB126007307A7 /* Color+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Init.swift"; sourceTree = "<group>"; };
@@ -355,6 +365,7 @@
 				FE9F72052E1466AB00ED83FE /* Identified.swift */,
 				FED7469F2F7432BD004E6BE4 /* EventStream.swift */,
 				FE495E742F772DA4006F0678 /* EventEmitter.swift */,
+				FEC91A552E111A7100F48FEE /* FileEncryptor.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -501,7 +512,6 @@
 				FE3759492E164C9500B7F3E5 /* Song */,
 				FE0B6DCD2DEB30D500BA8793 /* TempoStyle.swift */,
 				FE3CDD162F0A877600593EEE /* ContentTab.swift */,
-				FEF53EFC2EDB15FE007307A7 /* FavoriteSong.swift */,
 				FEF53EFE2EDCAE6A007307A7 /* SongsList.swift */,
 				FEF53F002EDCAEA8007307A7 /* SongsListData.swift */,
 				FEE729AA2F72CF4A00F05C5E /* ScreenOrientation.swift */,
@@ -575,10 +585,9 @@
 		FEB5CE002E1ADAAF00C5BDC9 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				FE65DC2B2E06E4A0002A3381 /* AppNavigation.swift */,
+				FEBA50992F80CD2A004E969C /* AppNavigation */,
 				FEC91A512E11182500F48FEE /* SwiftDataService.swift */,
-				FEF53EFA2EDB14F4007307A7 /* FavoritesService.swift */,
-				FEC91A552E111A7100F48FEE /* FileEncryptor.swift */,
+				FEF53EFA2EDB14F4007307A7 /* SongsListsService.swift */,
 				FEC91A532E1119D000F48FEE /* SongReviewSwiftDataService.swift */,
 				FE27819A2DE96C0A009C7FDF /* PlayerService.swift */,
 				FE96894A2ED2ECCC0023F6CE /* MelodyService.swift */,
@@ -586,6 +595,44 @@
 				FE9689502ED314210023F6CE /* SongService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		FEBA50992F80CD2A004E969C /* AppNavigation */ = {
+			isa = PBXGroup;
+			children = (
+				FEBA50A22F814F9E004E969C /* Destinations */,
+				FEBA50A02F80CEA9004E969C /* EnvironmentValues */,
+				FE65DC2B2E06E4A0002A3381 /* AppNavigation.swift */,
+				FEBA509E2F80CDFF004E969C /* AppRouter.swift */,
+			);
+			path = AppNavigation;
+			sourceTree = "<group>";
+		};
+		FEBA50A02F80CEA9004E969C /* EnvironmentValues */ = {
+			isa = PBXGroup;
+			children = (
+				FEBA509A2F80CD41004E969C /* CurrentTabKey.swift */,
+				FEBA509C2F80CD5D004E969C /* CurrentRouterKey.swift */,
+			);
+			path = EnvironmentValues;
+			sourceTree = "<group>";
+		};
+		FEBA50A22F814F9E004E969C /* Destinations */ = {
+			isa = PBXGroup;
+			children = (
+				FEBA50A52F814FBC004E969C /* Tabs */,
+				FEBA50A62F814FD4004E969C /* SearchListDestinations.swift */,
+				FEBA50A82F81502F004E969C /* SongScreenDestinations.swift */,
+			);
+			path = Destinations;
+			sourceTree = "<group>";
+		};
+		FEBA50A52F814FBC004E969C /* Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				FEBA50A32F814FAE004E969C /* SearchTabDestinations.swift */,
+			);
+			path = Tabs;
 			sourceTree = "<group>";
 		};
 		FECD65CA2DE74E5E0025F788 /* Resources */ = {
@@ -792,7 +839,6 @@
 				FEE729A32F7114AF00F05C5E /* ThemeShadowModifier.swift in Sources */,
 				FED746A22F750CB5004E6BE4 /* HarmonicaLayoutConfiguration.swift in Sources */,
 				FE96894B2ED2ECCF0023F6CE /* MelodyService.swift in Sources */,
-				FEF53EFD2EDB1600007307A7 /* FavoriteSong.swift in Sources */,
 				FE0B6DD02DEB463800BA8793 /* KeySetupView.swift in Sources */,
 				FE0B6DCE2DEB30D600BA8793 /* TempoStyle.swift in Sources */,
 				FEAF08392C4055850014DA01 /* Persistence.swift in Sources */,
@@ -826,8 +872,10 @@
 				FED746AF2F75C152004E6BE4 /* MelodyToolbarButtonBackgroundView.swift in Sources */,
 				FE3CC2EF2F7BD659002D3DF9 /* MelodyNotePresenetionStyle.swift in Sources */,
 				FEE7299A2F6D394400F05C5E /* Debouncer.swift in Sources */,
+				FEBA509B2F80CD43004E969C /* CurrentTabKey.swift in Sources */,
 				FEE729A72F716F7200F05C5E /* SongToolbarContent.swift in Sources */,
 				FE8C70852EA68A5500B65FC4 /* ButttonEditContentView.swift in Sources */,
+				FEBA509D2F80CD5E004E969C /* CurrentRouterKey.swift in Sources */,
 				FE7767592F6AA98C00044A2E /* FontToken.swift in Sources */,
 				FE7767532F6A7DE600044A2E /* Theme.swift in Sources */,
 				FE2781972DE965FB009C7FDF /* MelodyEditScreenViewModel.swift in Sources */,
@@ -847,8 +895,9 @@
 				FEF53F062EDCB1D1007307A7 /* SongsListsView.swift in Sources */,
 				FEF61F592DE4E66B009A504F /* HarmonicaLayoutView.swift in Sources */,
 				FED7469E2F73D758004E6BE4 /* ServiceKeyboardView.swift in Sources */,
-				FEF53EFB2EDB14F5007307A7 /* FavoritesService.swift in Sources */,
+				FEF53EFB2EDB14F5007307A7 /* SongsListsService.swift in Sources */,
 				FEE7298C2F6AD66600F05C5E /* ChipsView.swift in Sources */,
+				FEBA509F2F80CE02004E969C /* AppRouter.swift in Sources */,
 				FE540ACD2F69A9AC000F7C37 /* AutoSizingBottomSheetModifier.swift in Sources */,
 				FEC91A542E1119E000F48FEE /* SongReviewSwiftDataService.swift in Sources */,
 				FE9F720A2E14684700ED83FE /* HarmonicaSong.swift in Sources */,
@@ -870,15 +919,18 @@
 				FEF53F0C2EDCD3A7007307A7 /* SongsListDetailsView.swift in Sources */,
 				FE65DC2A2E05DA69002A3381 /* HarmonicaLayoutConfigurationView.swift in Sources */,
 				FEF53F032EDCB12D007307A7 /* Color+Init.swift in Sources */,
+				FEBA50A72F814FD6004E969C /* SearchListDestinations.swift in Sources */,
 				FED545C02EB91CFA00626655 /* SongEditScreenViewModel.swift in Sources */,
 				FE5732CF2DE30B37000F2B8E /* NoteView.swift in Sources */,
 				FEE729AB2F72CF4B00F05C5E /* ScreenOrientation.swift in Sources */,
 				FE4F96242EA3ACDA00B4146D /* NoteValueTypeWrapper.swift in Sources */,
 				FEE729902F6B391B00F05C5E /* WrappedTextListView.swift in Sources */,
+				FEBA50A42F814FB0004E969C /* SearchTabDestinations.swift in Sources */,
 				FE8940DA2E1AF32100193557 /* Preview.swift in Sources */,
 				FE65DC232E05C697002A3381 /* SwiftUI+Debug.swift in Sources */,
 				FE495E782F796357006F0678 /* MelodyNotesPresentationView.swift in Sources */,
 				FE3CDD172F0A877700593EEE /* ContentTab.swift in Sources */,
+				FEBA50A92F815030004E969C /* SongScreenDestinations.swift in Sources */,
 				FE3CC2F12F7BD6B1002D3DF9 /* MelodyNotePresenetionNumberPrimaryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

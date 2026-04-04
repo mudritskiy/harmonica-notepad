@@ -9,32 +9,28 @@ import SwiftData
 import SwiftUI
 
 struct SearchListView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Environment(MainRouter.self) private var _router
-
     @State private var searchText = ""
 
     var body: some View {
-        NavigationStack {
-            SearchListContentView(searchText: searchText)
-                .searchable(
-                    text: $searchText,
-                    placement: .navigationBarDrawer,
-                    prompt: "Search harmonica songs"
-                )
-        }
-        .navigationTitle("Search")
+        SearchListContentView(searchText: searchText)
+            .searchable(
+                text: $searchText,
+                placement: .navigationBarDrawer,
+                prompt: "Search harmonica songs"
+            )
     }
 }
 
 struct SearchListContentView: View {
     @Environment(\.modelContext) private var modelContext
-    @Environment(MainRouter.self) private var _router
+    @Environment(\.currentRouter) private var _router: (any AppRouter)?
+
     let searchText: String
 
     @Query
     var songs: [HarmonicaSong]
 
+    // MARK: - Init
     init(searchText: String) {
         self.searchText = searchText
 
@@ -47,19 +43,21 @@ struct SearchListContentView: View {
         _songs = Query(
             filter: predicate,
             sort: [SortDescriptor(\HarmonicaSong.title)],
-//            order: .forward
             animation: .default
         )
     }
 
     var body: some View {
-        List(songs) { song in
-            Button {
-                _router.navigate(to: SongListRoute.showSong(song))
-            } label: {
-                Text(song.title)
+        ScrollView {
+            VStack(alignment: .leading, spacing: 8) {
+                ForEach(songs) { song in
+                    Button {
+                        _router?.navigate(to: SearchListRoute.showSong(song))
+                    } label: {
+                        Text(song.title)
+                    }
+                }
             }
         }
-        .environment(_router)
     }
 }

@@ -88,11 +88,12 @@ struct ContentCoordinatorView: View {
                             }
                             .environment(router)
                         case .search:
-                            @Bindable var router = appNavigation.mainRouter
+                            @Bindable var router = appNavigation.searchList
                             NavigationStack(path: $router.path) {
                                 SearchListView()
+                                    .modifier(SearchTabDestinations())
                             }
-                            .environment(router)
+                            .environment(\.currentRouter, router)
                     }
                 }
             }
