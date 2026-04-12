@@ -39,12 +39,10 @@ final class HarmonicaSong: HarmonicaSongProperties {
     var title: String
     var artist: String
     var comments: String
-    var isFavorite: Bool = false
 
     var melody: MelodyWrapper
 
-    @Relationship(deleteRule: .nullify)
-    var tags: [SongTag]?
+    private var _additionalData: Data?
 
     init(
         id: SongId,
@@ -69,14 +67,32 @@ final class HarmonicaSong: HarmonicaSongProperties {
     }
 }
 
-@Model
-final class SongTag {
-    @Attribute(.unique) var value: String
+extension HarmonicaSong {
+    var extra: SongAdditionalData {
+        get {
+            guard let data = _additionalData,
+                  let decoded = try? JSONDecoder().decode(SongAdditionalData.self, from: data) else {
+                return SongAdditionalData()
+            }
+            return decoded
+        }
+        set {
+            _additionalData = try? JSONEncoder().encode(newValue)
+        }
+    }
 
-    @Relationship(deleteRule: .nullify)
-    var song: [HarmonicaSong]?
+    func setExtraValue<T: Encodable>(_ value: T?, for key: SongAdditionalKey) {
+        var data = extra
+        data.set(value, for: key)
+        extra = data
+    }
 
-    init(value: String) {
-        self.value = value
+    var isFavorite: Bool {
+        get { extra.get(for: .isFavorite) ?? false }
+        set {
+            var data = extra
+            data.set(newValue, for: .isFavorite)
+            extra = data
+        }
     }
 }
