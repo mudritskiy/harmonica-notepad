@@ -50,39 +50,40 @@ struct SongScreenView: View {
 
     // MARK: - Render
     var body: some View {
-            _screenView()
-                .toolbar {
-                    _toolbarContent()
+        _screenView()
+            .toolbar {
+                _toolbarContent()
+            }
+            .toolbar(.hidden, for: .tabBar)
+            .navigationBarBackButtonHidden()
+            .onFirstAppear {
+                _viewModel.context = _context
+                _hasUnsavedChanges = false
+            }
+            .alertInfo(isPresented: $_viewModel.showAlert, _viewModel.alertInfo)
+            .sheet(item: $_modalRoute) { modalRoute in
+                NavigationStack {
+                    _modalView(for: modalRoute.route)
                 }
-                .toolbar(.hidden, for: .tabBar)
-                .navigationBarBackButtonHidden()
-                .onFirstAppear {
-                    _viewModel.context = _context
-                    _hasUnsavedChanges = false
-                }
-                .sheet(item: $_modalRoute) { modalRoute in
-                    NavigationStack {
-                        _modalView(for: modalRoute.route)
-                    }
-                    .presentationDetents([.large])
-                    .presentationDragIndicator(.visible)
-                    .presentationBackground(.thinMaterial)
-                    .interactiveDismissDisabled(_hasUnsavedChanges)
-                }
-                .autoSizingBottomSheet(
-                    isPresented: $_isListSelectionPresented,
-                    props: _viewModel.listSelectionProps
-                ) {
-                    ListSelectionView(
-                        service: _viewModel._listsService,
-                        songId: _viewModel.song.id
-                    )
-                    .padding(.all, 16)
-                }
-                .task(id: _isListSelectionPresented) {
-                    guard !_isListSelectionPresented else { return }
-                    _viewModel.fetchLists()
-                }
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
+                .presentationBackground(.thinMaterial)
+                .interactiveDismissDisabled(_hasUnsavedChanges)
+            }
+            .autoSizingBottomSheet(
+                isPresented: $_isListSelectionPresented,
+                props: _viewModel.listSelectionProps
+            ) {
+                ListSelectionView(
+                    service: _viewModel._listsService,
+                    songId: _viewModel.song.id
+                )
+                .padding(.all, 16)
+            }
+            .task(id: _isListSelectionPresented) {
+                guard !_isListSelectionPresented else { return }
+                _viewModel.fetchLists()
+            }
     }
 
     @ToolbarContentBuilder
@@ -92,11 +93,16 @@ struct SongScreenView: View {
             onDismiss: {
                 dismiss()
             },
+            onDeleteTap: {
+                _viewModel.onDelete {
+                    dismiss()
+                }
+            },
             onListsTap: {
                 _isListSelectionPresented = true
             },
             onSaveTap: {
-                _viewModel.save() {
+                _viewModel.save {
                     dismiss()
                 }
             }

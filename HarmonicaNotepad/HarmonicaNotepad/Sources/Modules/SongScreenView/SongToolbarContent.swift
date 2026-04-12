@@ -11,6 +11,7 @@ struct SongToolbarContent: ToolbarContent {
     // MARK: - Properties
     let isApplyButtonVisible: Bool
     let onDismiss: () -> Void
+    let onDeleteTap: () -> Void
     let onListsTap: () -> Void
     let onSaveTap: () -> Void
 
@@ -24,6 +25,14 @@ struct SongToolbarContent: ToolbarContent {
                 Image(systemName: "xmark")
                     .font(FontToken.body2.value)
                     .foregroundStyle(Theme.colors.icon.secondary.color)
+            }
+        }
+
+        ToolbarItem(placement: .topBarTrailing) {
+            Button(action: onDeleteTap) {
+                Image(systemName: "trash")
+                    .font(FontToken.body2.value)
+                    .foregroundStyle(Theme.colors.icon.accent.color)
             }
         }
 

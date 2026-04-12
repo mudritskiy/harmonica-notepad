@@ -56,6 +56,9 @@ final class SongScreenViewModel {
     private var _playbackTask: Task<Void, Never>?
     var isPlayingMelody: Bool = false
 
+    var showAlert: Bool = false
+    private(set) var alertInfo: AlertInfo = .empty()
+
     func playerEventStream() -> AsyncStream<PlayerEvent> {
         _playerService.playerEvents.stream()
     }
@@ -155,7 +158,7 @@ final class SongScreenViewModel {
         }
     }
 
-    func save(completion: @escaping () -> Void) {
+    func save(completion: @escaping Action) {
         guard let context else { return }
         Task {
             context.insert(song)
@@ -164,6 +167,29 @@ final class SongScreenViewModel {
                 completion()
             }
         }
+    }
+
+    func onDelete(completion: @escaping Action) {
+        alertInfo = AlertInfo(
+            title: "Delete song?",
+            message: "Song will be lost.",
+            buttons: [
+                AlertButton("Confirm", role: .destructive) { [weak self] in
+                    guard let song = self?.song, let context = self?.context else { return }
+                    Task {
+                        context.delete(song)
+                        try? context.save()
+                        await MainActor.run {
+                            completion()
+                        }
+                    }
+                },
+                AlertButton("Cancel", role: .cancel) {
+                    self.showAlert = false
+                }
+            ]
+        )
+        showAlert = true
     }
 
     private func _formattedDuration(from time: TimeInterval) -> String {
