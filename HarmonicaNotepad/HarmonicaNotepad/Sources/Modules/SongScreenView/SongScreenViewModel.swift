@@ -1,0 +1,218 @@
+//
+//  SongScreenViewModel.swift
+//  HarmonicaNotepad
+//
+//  Created by Volodymyr Mudrik on 23.11.2025.
+//
+
+import Combine
+import MusicTheory
+import SwiftData
+import SwiftUI
+
+@Observable
+final class SongScreenViewModel {
+    enum Route: Hashable {
+        case editSong
+    }
+
+    // MARK: - Dependencies
+    private let _playerService: PlayerService
+    private var _songService: SongService?
+    let _listsService: SongsListsService
+
+    // MARK: - View Context
+    var context: ModelContext?
+
+    private(set) var isSongListVisible: Bool = false
+    private(set) var listsWithSong: [SongsList] = []
+    private(set) var listsWithSongWrappedItems: [WrappedTextListView.Item] = []
+    private(set) var listsWithSongProps: WrappedTextListItemViewProps = WrappedTextListItemViewProps(
+        color: Theme.colors.songList.textSelected,
+        backgroundColor: Theme.colors.songList.backgoundSelected,
+        borderColor: Theme.colors.songList.borderSelected,
+        cornerRadius: 8,
+        insets: EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8)
+    )
+
+    // MARK: - Properties
+    var song: HarmonicaSong
+    var notes: [MelodyNote]
+    let melodyRows: [MelodyRow]
+    var songDuration: String {
+        let duration = song.melody.value.duration()
+        let result = _formattedDuration(from: duration)
+        return result
+    }
+    var songCount: Int {
+        song.melody.value.count
+    }
+
+    @ObservationIgnored private(set) var hasUnsavedChanges: Bool = false
+    @ObservationIgnored let melodyEditScreenViewModel: MelodyEditScreenViewModel
+    @ObservationIgnored let songEditScreenViewModel: SongEditScreenViewModel
+
+    private var _cancellables = Set<AnyCancellable>()
+    private var _playbackTask: Task<Void, Never>?
+    var isPlayingMelody: Bool = false
+
+    var showAlert: Bool = false
+    private(set) var alertInfo: AlertInfo = .empty()
+
+    func playerEventStream() -> AsyncStream<PlayerEvent> {
+        _playerService.playerEvents.stream()
+    }
+
+    let listSelectionProps: AutoSizingBottomSheetProps = AutoSizingBottomSheetProps(
+        title: "Select lists",
+        backgroundColor: Theme.colors.background.primary,
+        dragIndicatorVisibility: .visible
+    )
+
+    // MARK: - Init
+    init(
+        song: HarmonicaSong? = nil,
+        playerService: PlayerService = .shared,
+        melodyService: MelodyService,
+        listsService: SongsListsService = SongsListsServiceImpl.shared
+    ) {
+        _playerService = playerService
+        _listsService = listsService
+
+        let song = song ?? .new()
+        self.song = song
+        self.notes = song.melody.notes
+        self.melodyRows = melodyService.breakInRows(notes: song.melody.notes)
+
+
+        melodyEditScreenViewModel = MelodyEditScreenAssembly.makeViewModel(with: song.melody.value)
+        songEditScreenViewModel = SongEditScreenViewModel(song: song)
+
+        _playbackTask = Task {
+            for await isPlaying in _playerService.isPlayingMelodyStream {
+                isPlayingMelody = isPlaying
+            }
+        }
+
+        _bindStates()
+    }
+
+    deinit {
+        _playbackTask?.cancel()
+        _playbackTask = nil
+        _playerService.stopPlayingMelody()
+    }
+
+    func fetchLists() {
+        let songId = song.id
+        let predicate = #Predicate<SongsListData> { data in
+            data.songId == songId
+        }
+
+        let descriptor = FetchDescriptor<SongsListData>(
+            predicate: predicate,
+            sortBy: [SortDescriptor(\.addedDate)]
+        )
+
+        let result = (try? context?.fetch(descriptor)) ?? []
+
+        listsWithSong = result.compactMap { $0.songsList }
+        listsWithSongWrappedItems = listsWithSong.map {
+            WrappedTextListView.Item(text: $0.name) { }
+        }
+        isSongListVisible = !listsWithSong.isEmpty
+    }
+
+    private func _bindStates() {
+        melodyEditScreenViewModel.melodyPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] melody in
+                self?.song.melody = MelodyWrapper(melody)
+            }
+            .store(in: &_cancellables)
+
+        songEditScreenViewModel.songProperiesPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] songProperties in
+                self?._updateSong(with: songProperties)
+            }
+            .store(in: &_cancellables)
+    }
+
+    private func _updateSong(with songProperties: HarmonicaSongProperties) {
+        song.artist = songProperties.artist
+        song.comments = songProperties.comments
+        song.title = songProperties.title
+        hasUnsavedChanges = true
+    }
+
+    // MARK: - View Methods
+    func onPlayTap() {
+        guard !notes.isEmpty else { return }
+
+        if _playerService.isPlayingMelody {
+            _playerService.stopPlayingMelody()
+        } else {
+            let tempo = Tempo(bpm: song.melody.bpm)
+            _playerService.playMelody(notes, with: tempo)
+        }
+    }
+
+    func save(completion: @escaping Action) {
+        guard let context else { return }
+        Task {
+            context.insert(song)
+            try? context.save()
+            await MainActor.run {
+                completion()
+            }
+        }
+    }
+
+    func onDelete(completion: @escaping Action) {
+        alertInfo = AlertInfo(
+            title: "Delete song?",
+            message: "Song will be lost.",
+            buttons: [
+                AlertButton("Confirm", role: .destructive) { [weak self] in
+                    guard let song = self?.song, let context = self?.context else { return }
+                    Task {
+                        context.delete(song)
+                        try? context.save()
+                        await MainActor.run {
+                            completion()
+                        }
+                    }
+                },
+                AlertButton("Cancel", role: .cancel) {
+                    self.showAlert = false
+                }
+            ]
+        )
+        showAlert = true
+    }
+
+    private func _formattedDuration(from time: TimeInterval) -> String {
+        let totalSeconds = Int(time.rounded())
+
+        let hours = totalSeconds / 3600
+        let minutes = (totalSeconds % 3600) / 60
+        let seconds = totalSeconds % 60
+
+        var parts: [String] = []
+
+        if hours > 0 {
+            parts.append("\(hours) hour" + (hours == 1 ? "" : "s"))
+        }
+
+        if minutes > 0 {
+            parts.append("\(minutes) m")
+        }
+
+        if seconds > 0 {
+            parts.append("\(seconds) " + (minutes > 0 ? "s" : "sec"))
+        }
+
+        return parts.isEmpty ? "0 sec" : parts.joined(separator: " ")
+    }
+}

@@ -13,23 +13,16 @@ struct HarmonicaTextEditFieldRounded: View {
     @Binding var text: String
     let limit: Int
 
-//    var titleWidth: CGFloat {
-//        let displayText = text.isEmpty ? placeholder : text
-//        let font = UIFont.systemFont(ofSize: 17)
-//        let attributes = [NSAttributedString.Key.font: font]
-//        let size = (displayText as NSString).size(withAttributes: attributes)
-//        return size.width
-//    }
-
     var body: some View {
-        CardContainer {
-            VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: 8) {
                 Text(title)
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
-                    .padding(.top, 4)
+                    .font(FontToken.body2.value)
+                    .foregroundColor(Theme.colors.text.tertiary.color)
+                    .padding(.leading, 8)
+            CardContainer {
                 TextField(placeholder, text: $text, axis: .vertical)
-                    .font(.title3.bold())
+                    .font(FontToken.headline.value)
+                    .foregroundColor(Theme.colors.text.primary.color)
                     .multilineTextAlignment(.leading)
                     .textFieldStyle(.plain)
                     .onChange(of: text) { oldValue, newValue in
@@ -37,6 +30,8 @@ struct HarmonicaTextEditFieldRounded: View {
                             text = String(newValue.prefix(limit))
                         }
                     }
+                    .padding(.vertical, 12)
+                    .padding(.horizontal, 16)
             }
         }
     }

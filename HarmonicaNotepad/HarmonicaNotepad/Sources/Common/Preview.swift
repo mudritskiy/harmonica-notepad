@@ -33,33 +33,13 @@ struct Preview {
     ) -> HarmonicaSong {
         let melody = sampleMelody(hasNotes: hasNotes)
         let song = HarmonicaSong(
-            id: "0197e0f3-a7a7-74b7-b8a4-28fb69e56300",
+            id: UUID(),
             title: "All You Need Is Love",
             artist: hasArtist ? "The Beatles" : "",
             comments: hasComments ? "Chord progression, Strong Lyrics, Solid song structure (chord and lyrics have to come together), Ability to evoke reaction and emotion, and having that Special hook with certain musical interlude that can embed itself in your listeners’ brains." : "",
-//            melody: melody
             melody: MelodyWrapper(melody)
         )
-        if hasTags {
-            song.tags = Array(sampleTags().prefix(3))
-        }
         return song
-    }
-
-    func sampleTags() -> [SongTag] {
-        [
-            SongTag(value: "pop"),
-            SongTag(value: "rock"),
-            SongTag(value: "classic"),
-            SongTag(value: "jazz"),
-            SongTag(value: "blues"),
-            SongTag(value: "country"),
-            SongTag(value: "metal"),
-            SongTag(value: "hip-hop"),
-            SongTag(value: "rap"),
-            SongTag(value: "electronic"),
-            SongTag(value: "world music"),
-        ]
     }
 
     func sampleMelody(hasNotes: Bool = true) -> Melody {

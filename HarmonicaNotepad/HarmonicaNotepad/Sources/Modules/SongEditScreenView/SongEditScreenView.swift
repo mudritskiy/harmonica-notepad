@@ -13,7 +13,6 @@ struct SongEditScreenView: View {
     @Bindable private var _viewModel: SongEditScreenViewModel
     @Binding private var _hasUnsavedChanges: Bool
 
-    @Environment(MainRouter.self) private var _router
     @Environment(\.modelContext) private var _context
     @Environment(\.dismiss) private var dismiss
 
@@ -41,6 +40,7 @@ struct SongEditScreenView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     _viewModel.saveProperties()
+                    _hasUnsavedChanges = true
                     dismiss()
                 } label: {
                     Image(systemName: "checkmark")
@@ -49,31 +49,14 @@ struct SongEditScreenView: View {
         }
         .onFirstAppear {
             _viewModel.modelContext = _context
-            _hasUnsavedChanges = false
+//            _hasUnsavedChanges = false
         }
-        .navigationDestination(for: SongEditScreenViewModel.Route.self) { route in
-            switch route {
-                case .editMelody:
-                    MelodyEditScreenView(
-                        viewModel: _viewModel.melodyEditViewModel
-                    )
-            }
-        }
-        .environment(_router)
+        .background(Theme.colors.background.primary.color)
     }
 
     private func _contentView() -> some View {
         VStack(alignment: .center, spacing: .zero) {
             _fieldsContent()
-            _buttonEdit()
-                .padding(.top, 16)
-            _buttonSave()
-                .padding(.top, 16)
-            NotesPresentationView(
-                notes: _viewModel.isMelodyAvailable() ? _viewModel.melody.notes : [],
-                style: .numbers
-            )
-            .padding(.top, 16)
             Spacer()
         }
 
@@ -86,25 +69,9 @@ struct SongEditScreenView: View {
                     title: _viewModel.songProperties.placeholder(for: property),
                     placeholder: _viewModel.songProperties.placeholder(for: property),
                     text: _viewModel.binding(for: property),
-                    limit: 30
+                    limit: 0
                 )
             }
-        }
-    }
-
-    private func _buttonEdit() -> some View {
-        Button {
-            _router.navigate(to: SongEditScreenViewModel.Route.editMelody)
-        } label: {
-            Text("Edit melody")
-        }
-    }
-
-    private func _buttonSave() -> some View {
-        Button {
-            _viewModel.save()
-        } label: {
-            Text("Save melody")
         }
     }
 }

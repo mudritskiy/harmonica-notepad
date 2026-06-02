@@ -9,12 +9,6 @@ import SwiftData
 import SwiftUI
 import MusicTheory
 
-enum ContentTab {
-    case main
-    case favorites
-    case search
-}
-
 struct ContentView: View {
     var body: some View {
         ContentCoordinatorView(viewModel: ContentCoordinatorViewModel())
@@ -46,6 +40,9 @@ struct ContentCoordinatorView: View {
     // MARK: - Properties
     @Bindable private var _viewModel: ContentCoordinatorViewModel
     @Environment(AppNavigationModel.self) private var _appNavigation
+    @Environment(\.modelContext) private var _context
+
+    private let _allTabs: [ContentTab] = [.songs, .lists, .favorites, .search]
 
     // MARK: - Init
     init(
@@ -59,37 +56,49 @@ struct ContentCoordinatorView: View {
         @Bindable var appNavigation = _appNavigation
 
         TabView(selection: $appNavigation.selectedTab) {
-
-            Tab("Songs", systemImage: appNavigation.selectedTab == .main ? "house.fill" : "house", value: ContentTab.main) {
-                NavigationStack(path: $appNavigation.mainRouter.path) {
-                    SongListView(viewModel: _viewModel.songListViewModel)
-                    //                MainScreenView(viewModel: _viewModel.mainScreenViewModel)
+            ForEach(_allTabs, id: \.self) { tab in
+                Tab(
+                    tab.title,
+                    systemImage: tab.imageName(selectedTab: appNavigation.selectedTab),
+                    value: tab
+                ) {
+                    switch tab {
+                        case .songs:
+                            @Bindable var router = appNavigation.mainRouter
+                            NavigationStack(path: $router.path) {
+                                SongListView(viewModel: _viewModel.songListViewModel)
+                                    .navigationDestination(for: SongListRoute.self) { route in
+                                        switch route {
+                                            case .showSong(let song):
+                                                SongScreenView(song: song)
+                                        }
+                                    }
+                            }
+                            .environment(router)
+                        case .lists:
+                            @Bindable var router = appNavigation.songsLists
+                            NavigationStack(path: $router.path) {
+                                SongsListsView()
+                            }
+                            .environment(router)
+                        case .favorites:
+                            @Bindable var router = appNavigation.favoriteRouter
+                            NavigationStack(path: $router.path) {
+                                NoteView()
+                            }
+                            .environment(router)
+                        case .search:
+                            @Bindable var router = appNavigation.searchList
+                            NavigationStack(path: $router.path) {
+                                SearchListView()
+                                    .modifier(SearchTabDestinations())
+                            }
+                            .environment(\.currentRouter, router)
+                    }
                 }
-//                .tag(ContentTab.main)
-//                .tabItem {
-//                    Image(systemName: appNavigation.selectedTab == .main ? "house.fill" : "house")
-//                }
-                .environment(appNavigation.mainRouter)
-            }
-
-            Tab("Favorites", systemImage: appNavigation.selectedTab == .favorites ? "bookmark.fill" : "bookmark", value: ContentTab.favorites) {
-                NavigationStack(path: $appNavigation.favoriteRouter.path) {
-                    NoteView()
-                }
-//                .tag(ContentTab.favorites)
-//                .tabItem {
-//                    Image(systemName: appNavigation.selectedTab == .favorites ? "bookmark.fill" : "bookmark")
-//                }
-                .environment(appNavigation.favoriteRouter)
-            }
-
-            Tab("Search", systemImage: "magnifyingglass", value: ContentTab.search, role: .search) {
-                NavigationStack(path: $appNavigation.mainRouter.path) {
-                    SearchListView()
-                }
-                .environment(appNavigation.mainRouter)
             }
         }
+        .fontDesign(.rounded)
         .environment(\.currentTab, $appNavigation.selectedTab)
         .modelContainer(_viewModel.container)
     }

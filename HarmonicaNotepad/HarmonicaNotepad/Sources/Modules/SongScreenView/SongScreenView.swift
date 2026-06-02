@@ -5,118 +5,64 @@
 //  Created by Volodymyr Mudrik on 06.07.2025.
 //
 
-import MusicTheory
 import SwiftData
 import SwiftUI
 
-@Observable
-final class SongScreenViewModel {
-    enum Route: Hashable {
-        case editSong
-        case editMelody
-    }
-
-    private let _playerService = PlayerService()
-
-    private(set) var hasUnsavedChanges: Bool = false
-    var modelContext: ModelContext? = nil
-    var song: HarmonicaSong
-    var notes: [MelodyNote]
-
-    init(song: HarmonicaSong) {
-        self.song = song
-        self.notes = song.melody.notes
-    }
-
-    func updateSong(with songProperties: HarmonicaSongProperties) {
-        song.artist = songProperties.artist
-        song.comments = songProperties.comments
-        song.title = songProperties.title
-        hasUnsavedChanges = true
-    }
-
-    func updateMelody(with melody: Melody) {
-        song.melody = MelodyWrapper(melody)
-    }
-
-    func onPlayTap() {
-        guard !notes.isEmpty else { return }
-        if _playerService.isPlayingMelody {
-            _playerService.stopPlayingMelody()
-        } else {
-            _playerService.playMelody(
-                notes,
-                with: Tempo(bpm: song.melody.bpm)
-            )
-        }
-    }
-
-    func save() {
-        guard let container = modelContext?.container else { return }
-        Task.detached(priority: .background) {
-//            let song = HarmonicaSong(
-//                id: self.songId,
-//                title: self.songProperties.title,
-//                artist: self.songProperties.artist,
-//                comments: self.songProperties.comments,
-//                melody: MelodyWrapper(self.melody)
-//            )
-            let actor = SongService(modelContainer: container)
-            await actor.save(self.song)
-        }
+enum SongScreenAssembly {
+    static func makeViewModel(
+        with song: HarmonicaSong?
+    ) -> SongScreenViewModel {
+        SongScreenViewModel(
+            song: song,
+            playerService: .shared,
+            melodyService: MelodyServiceImpl(),
+            listsService: SongsListsServiceImpl.shared
+        )
     }
 }
 
 struct SongScreenView: View {
-    private var _viewModel: SongScreenViewModel
-    @Environment(MainRouter.self) private var _router
-    @Environment(\.modelContext) private var _context
-    @Environment(\.dismiss) private var dismiss
-
-    // Local state for modal presentation
-    @State private var modalRoute: ModalRoute?
-    @State private var _hasUnsavedChanges = false
-
     // Identifiable wrapper for routes
     struct ModalRoute: Identifiable {
         let id = UUID()
         let route: SongScreenViewModel.Route
     }
 
-    init(viewModel: SongScreenViewModel) {
-        _viewModel = viewModel
+    @Environment(\.currentRouter) private var _router: (any AppRouter)?
+    @Environment(\.modelContext) private var _context
+    @Environment(\.dismiss) private var dismiss
+
+    // Local state for modal presentation
+    @State private var _modalRoute: ModalRoute?
+    @State private var _hasUnsavedChanges = false
+    @State private var _isListSelectionPresented: Bool = false
+
+    @State private var _viewModel: SongScreenViewModel
+
+    private let _buttonEditTitlesSize: CGFloat = 20
+    private let _buttonEditTitlesInsets: CGFloat = 8
+    private var _titlesMinHeight: CGFloat { _buttonEditTitlesSize + _buttonEditTitlesSize }
+
+    // MARK: - Init
+    init(song: HarmonicaSong? = nil) {
+        _viewModel = SongScreenAssembly.makeViewModel(with: song)
     }
 
+    // MARK: - Render
     var body: some View {
-        _contentView()
-            .padding(16)
-            .navigationDestination(for: SongScreenViewModel.Route.self) { route in
-                _modalView(for: route)
-
-            }
+        _screenView()
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "xmark")
-                    }
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        _viewModel.save()
-                        dismiss()
-                    } label: {
-                        Image(systemName: "checkmark")
-                    }
-                }
+                _toolbarContent()
             }
+            .toolbar(.hidden, for: .tabBar)
+            .navigationBarBackButtonHidden()
             .onFirstAppear {
-                _viewModel.modelContext = _context
+                _viewModel.context = _context
                 _hasUnsavedChanges = false
             }
-            .sheet(item: $modalRoute) { modalRoute in
-                NavigationStack { // to show toolbar
+            .alertInfo(isPresented: $_viewModel.showAlert, _viewModel.alertInfo)
+            .sheet(item: $_modalRoute) { modalRoute in
+                NavigationStack {
                     _modalView(for: modalRoute.route)
                 }
                 .presentationDetents([.large])
@@ -124,255 +70,220 @@ struct SongScreenView: View {
                 .presentationBackground(.thinMaterial)
                 .interactiveDismissDisabled(_hasUnsavedChanges)
             }
+            .autoSizingBottomSheet(
+                isPresented: $_isListSelectionPresented,
+                props: _viewModel.listSelectionProps
+            ) {
+                ListSelectionView(
+                    service: _viewModel._listsService,
+                    songId: _viewModel.song.id
+                )
+                .padding(.all, 16)
+            }
+            .task(id: _isListSelectionPresented) {
+                guard !_isListSelectionPresented else { return }
+                _viewModel.fetchLists()
+            }
+    }
+
+    @ToolbarContentBuilder
+    private func _toolbarContent() -> some ToolbarContent {
+        SongToolbarContent(
+            isApplyButtonVisible: _hasUnsavedChanges,
+            onDismiss: {
+                dismiss()
+            },
+            onDeleteTap: {
+                _viewModel.onDelete {
+                    dismiss()
+                }
+            },
+            onListsTap: {
+                _isListSelectionPresented = true
+            },
+            onSaveTap: {
+                _viewModel.save {
+                    dismiss()
+                }
+            }
+        )
     }
 
     @ViewBuilder
     private func _modalView(for route: SongScreenViewModel.Route) -> some View {
         switch route {
             case .editSong:
-                let viewModel = SongEditScreenViewModel(song: _viewModel.song) { songProperties in
-                    _viewModel.updateSong(with: songProperties)
-                }
                 SongEditScreenView(
-                    viewModel: viewModel,
+                    viewModel: _viewModel.songEditScreenViewModel,
                     hasUnsavedChanges: $_hasUnsavedChanges
                 )
-            case .editMelody:
-                let viewModel = MelodyEditScreenViewModel(
-                    melody: _viewModel.song.melody.value,
-                    onApplyTap: { },
-                    onApplyTap2: { melody in
-                        _viewModel.updateMelody(with: melody)
-                        dismiss()
-                })
-                MelodyEditScreenView(
-                    viewModel: viewModel
-                )
         }
+    }
+
+    private func _screenView() -> some View {
+        ZStack(alignment: .bottom) {
+            _contentView()
+                .padding(.bottom, 16)
+            _bottomToolbar()
+        }
+        .padding(.horizontal, 16)
+        .background(Theme.colors.background.primary.color)
+    }
+
+    private func _bottomToolbar() -> some View {
+        SongBottomToolbarView(
+            isPlaying: _viewModel.isPlayingMelody,
+            onPlayTap: {
+                _viewModel.onPlayTap()
+            },
+            onEditTap: {
+                _router?.navigate(to: SongScreenRoute.editMelody(
+                    _viewModel.melodyEditScreenViewModel
+                ))
+            }
+        )
     }
 
     private func _contentView() -> some View {
-        VStack(alignment: .leading, spacing: 0) {
-            _songHeaderView()
-            _songSummarySection()
-                .padding(.vertical, 16)
-            Text(_viewModel.song.comments)
-                .font(.caption)
-                .fontWeight(.light)
-            _songFooterView()
-                .padding(.vertical, 16)
-            _deviderView()
-            _melodyView()
-            Spacer()
+        VStack(alignment: .leading, spacing: 16) {
+            _songCardView()
+            if _viewModel.isSongListVisible {
+                _songListsView()
+            }
+            _melodyNotesView()
+                .stretching(.vertical)
         }
     }
 
-    private func _songHeaderView() -> some View {
-        HStack(alignment: .center, spacing: 0) {
-            VStack(alignment: .leading, spacing: 0) {
-                Text(_viewModel.song.title)
-                    .font(.title2)
-                    .fontWeight(.bold)
-                Text(_viewModel.song.artist)
-                    .font(.subheadline)
-                    .fontWeight(.thin)
-                    .padding(.top, 4)
+    private func _songCardView() -> some View {
+        CardContainer(
+            cornerRadius: 20,
+            borderWidth: 1,
+            backgroundColor: Theme.colors.background.secondary.color,
+            borderColor: Theme.colors.background.secondary.color
+        ) {
+            VStack(alignment: .leading, spacing: 8) {
+                _songHeaderCardView()
+                    .shadow(
+                        color: Theme.colors.background.shadow.color,
+                        radius: 2,
+                        x: 0,
+                        y: 1
+                    )
+                _songSummarySection()
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 8)
             }
-            Spacer()
-            Group {
-                Image(systemName: "heart")
-                Image(systemName: "square.and.arrow.up")
+        }
+        .themeShadow()
+    }
+
+    private func _songHeaderCardView() -> some View {
+        CardContainer(
+            cornerRadius: 20,
+            borderWidth: 0,
+            backgroundColor: Theme.colors.background.accent.color,
+            borderColor: Theme.colors.background.accent.color
+        ) {
+            VStack(alignment: .leading, spacing: 8) {
+                HStack(alignment: _viewModel.song.artist.isEmpty ? .center : .top, spacing: .zero) {
+                    VStack(alignment: .leading, spacing: 0) {
+                        Text(_viewModel.song.title)
+                            .font(FontToken.title2.value)
+                            .foregroundStyle(Theme.colors.text.contrastSecondary.color)
+                        if !_viewModel.song.artist.isEmpty {
+                            Text(_viewModel.song.artist)
+                                .font(FontToken.headline.value)
+                                .foregroundStyle(Theme.colors.text.contrastSecondary.color)
+                        }
+                    }
+                    Spacer()
+                    _buttonEditTitles()
+                }
+                .frame(minHeight: _titlesMinHeight)
+                if !_viewModel.song.comments.isEmpty {
+                    CustomDivider.horizontal(
+                        color: Theme.colors.background.secondary,
+                        lineWidth: 0.5
+                    )
+                    .padding(.trailing, 8)
+                    Text(_viewModel.song.comments)
+                        .font(FontToken.body2.value)
+                        .foregroundStyle(Theme.colors.text.secondary.color)
+                }
             }
-            .padding(.all, 16)
+            .stretching()
+            .padding(.leading, 16)
+            .padding(.trailing, 8)
+            .padding(.vertical, 8)
         }
     }
 
     private func _songSummarySection() -> some View {
-        HStack(spacing: 0) {
-            HStack(spacing: 0)  {
-                Image(systemName: "clock.arrow.trianglehead.counterclockwise.rotate.90")
-                Text("3 min")
-                    .padding(.leading, 4)
-            }
-            HStack(spacing: 0)  {
-                Image(systemName: "music.note.list")
-                Text("12 notes")
-                    .padding(.leading, 4)
-            }
-            .padding(.leading, 8)
-            HStack(spacing: 0)  {
-                Image(systemName: "chevron.up.2")
-                Text("easy")
-                    .padding(.leading, 4)
-            }
-            .padding(.leading, 8)
-            Spacer()
-        }
-        .font(.caption)
-        .fontWeight(.thin)
-    }
-
-    private func _songFooterView() -> some View {
-        HStack(alignment: .center, spacing: 8) {
-            if let tags = _viewModel.song.tags {
-                ForEach(tags) { tag in
-                    Text(tag.value)
-                        .padding(.horizontal, 8)
-                        .font(.caption2)
-                        .fontWeight(.light)
-                        .fontDesign(.rounded)
-                        .foregroundStyle(.black.opacity(0.7))
-                        .frame(height: 20)
-                        .background {
-                            RoundedRectangle(cornerRadius: 4)
-                                .fill(.gray.opacity(0.1))
-                        }
-                }
-            }
-            Spacer()
-            HStack(alignment: .firstTextBaseline, spacing: 4) {
-                Button {
-                    modalRoute = ModalRoute(route: SongScreenViewModel.Route.editSong)
-//                    _router.navigate(to: SongScreenViewModel.Route.editSong)
-                } label: {
-                    ButttonEditContentViewV2()
-                }
-                .padding(.trailing, 16)
-            }
-        }
-    }
-
-    private func _deviderView() -> some View {
-        Rectangle()
-            .frame(height: 0.5)
-            .foregroundColor(.gray.opacity(0.5))
-            .padding(.vertical, 16)
-    }
-
-    private func _melodyView() -> some View {
-        VStack(alignment: .leading, spacing: 0) {
-            _melodyHeaderView()
-            _melodySummaryView()
-                .padding(.top, 16)
-            _melodyNotesView()
-                .padding(.top, 16)
-            _expandButtonSectionView()
-        }
-    }
-
-    private func _melodyHeaderView() -> some View {
-        HStack(alignment: .center, spacing: 0) {
-            Text("Melody")
-                .font(.title2)
-                .fontWeight(.regular)
-                .stretching()
-            _playButton()
-            _showEditMelodyButton()
-                .padding(.trailing, 16)
-                .padding(.leading, 16)
-        }
-    }
-
-    private func _playButton() -> some View {
-        Button {
-//            _router.navigate(to: SongScreenViewModel.Route.editSong)
-            _viewModel.onPlayTap()
-        } label: {
-            _playButtonContentView()
-        }
-    }
-
-    private func _showEditMelodyButton() -> some View {
-        return Button {
-            _router.navigate(to: SongScreenViewModel.Route.editMelody)
-        } label: {
-            ButttonEditContentViewV2()
-        }
-    }
-
-    private func _playButtonContentView() -> some View {
-        HStack(spacing: 0) {
-            Image(systemName: "play")
-            Text("Play")
-                .padding(.leading, 4)
-        }
-        .padding(8)
-        .font(.caption)
-        .fontWeight(.light)
-        .foregroundStyle(.black)
-        .background {
-            RoundedRectangle(cornerRadius: 4)
-                .stroke(.gray.opacity(0.5), lineWidth: 0.5)
-        }
-    }
-
-    private func _melodySummaryView() -> some View {
-        HStack(spacing: 0) {
-            HStack(spacing: 0)  {
+        HStack(spacing: 8) {
+            HStack(spacing: 4)  {
                 Image(systemName: "key")
                 Text("Key \(_viewModel.song.melody.key.description)")
-                    .padding(.leading, 4)
             }
-            HStack(spacing: 0)  {
+            .frame(maxWidth: .infinity)
+            HStack(spacing: 4)  {
                 Image(systemName: "metronome")
                 Text(
-                    "\(TempoStyle.tempo(for: Int(_viewModel.song.melody.bpm)).presentation) (\(String(format: "%d bpm", Int(_viewModel.song.melody.bpm))))"
+                    "\(String(format: "%d bpm", Int(_viewModel.song.melody.bpm)))"
                 )
-                .padding(.leading, 4)
             }
-            .padding(.leading, 8)
-            Spacer()
+            .frame(maxWidth: .infinity)
+            HStack(spacing: 4)  {
+                Image(systemName: "clock.arrow.trianglehead.counterclockwise.rotate.90")
+                Text(_viewModel.songDuration)
+            }
+            .frame(maxWidth: .infinity)
+            HStack(spacing: 4)  {
+                Image(systemName: "music.note.list")
+                Text("\(String(_viewModel.songCount)) notes")
+            }
+            .frame(maxWidth: .infinity)
         }
-        .font(.caption)
-        .fontWeight(.thin)
+        .font(FontToken.caption.value)
+        .foregroundStyle(Theme.colors.text.contrast.color)
+    }
+
+    private func _songListsView() -> some View {
+        WrappedTextListView(
+            items: _viewModel.listsWithSongWrappedItems,
+            itemProps: _viewModel.listsWithSongProps,
+            rowsCount: 3,
+            minimumRowCount: 3,
+            rowSpacing: 4,
+            elementSpacing: 8
+        )
+        .stretching()
+    }
+
+    private func _buttonEditTitles() -> some View {
+        Button {
+            _modalRoute = ModalRoute(route: SongScreenViewModel.Route.editSong)
+        } label: {
+            Image(systemName: "square.and.pencil")
+                .resizable()
+                .foregroundStyle(Theme.colors.icon.secondary.color)
+                .font(FontToken.body2.value)
+                .frame(
+                    width: _buttonEditTitlesSize,
+                    height: _buttonEditTitlesSize,
+                    alignment: .center
+                )
+                .padding(_buttonEditTitlesInsets)
+        }
     }
 
     private func _melodyNotesView() -> some View {
-        ScrollView {
-            NotesPresentationView(
-                notes: _viewModel.notes,
-                style: .numbers
-            )
-        }
+        MelodyNotesPresentationView(
+            props: MelodyNotesPresentationViewProps(
+                melodyRows: _viewModel.melodyRows,
+                playerEventStream: _viewModel.playerEventStream()
+            ),
+            cursorIndex: Binding.constant(nil)
+        )
     }
-
-    private func _expandButtonSectionView() -> some View {
-        HStack(alignment: .center, spacing: 0) {
-            Spacer()
-            HStack(alignment: .center, spacing: 0) {
-                Image(systemName: "text.magnifyingglass")
-                    .resizable()
-                    .frame(width: 16, height: 16, alignment: .center)
-                Text("expand".uppercased())
-                    .padding(.leading, 8)
-            }
-            .foregroundStyle(.black)
-            .fontWeight(.light)
-            .font(.caption)
-            .padding(8)
-            .overlay(
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(style: StrokeStyle(lineWidth: 0.5, dash: [4]))
-                    .foregroundColor(.gray)
-            )
-            Spacer()
-        }
-    }
-}
-
-
-#Preview {
-    let preview = Preview()
-    let appNavigation = AppNavigationModel()
-    let song = preview.sampleSong(
-        hasArtist: true,
-        hasComments: true,
-        hasTags: true,
-        hasNotes: true
-    )
-    SongScreenView(
-        viewModel: SongScreenViewModel(song: song)
-    )
-    .modelContainer(preview.container)
-    .environment(appNavigation.mainRouter)
 }

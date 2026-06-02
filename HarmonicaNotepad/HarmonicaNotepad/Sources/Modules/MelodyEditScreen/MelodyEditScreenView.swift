@@ -8,128 +8,148 @@
 import SwiftUI
 
 struct MelodyEditScreenView: View {
-    @ObservedObject var viewModel: MelodyEditScreenViewModel
+    @Bindable var viewModel: MelodyEditScreenViewModel
+    @Environment(HarmonicaLayoutConfiguration.self) private var config: HarmonicaLayoutConfiguration
     @Environment(\.dismiss) var dismiss
+
+    private var configSnapshot: HarmonicaLayoutConfiguration.ConfigSnapshot {
+        HarmonicaLayoutConfiguration.ConfigSnapshot(
+            bendsLevel: config.bendsLevel,
+            isOverbandsOn: config.isOverbandsOn,
+            isDrawBendsOn: config.isDrawBendsOn,
+            isBlowBendsOn: config.isBlowBendsOn
+        )
+    }
 
     var body: some View {
         _contentView()
-            .toolbarVisibility(.hidden, for: .tabBar)
-            .toolbar {
-                _toolbarContentView()
-            }
-            .navigationBarBackButtonHidden()
-            .onFirstAppear {
-                viewModel.dismiss = { dismiss() }
-            }
-            .sheet(isPresented: $viewModel.isPresentedTempoSetup) {
-                _tempoSetupView()
-            }
-            .sheet(isPresented: $viewModel.isPresentedKeySetup) {
-                _keySetupView()
-            }
+            .screenBaseStyle()
+            .screenToolbars(viewModel: viewModel)
+            .screenLifecycle(viewModel: viewModel, dismiss: dismiss)
             .alertInfo(isPresented: $viewModel.showAlert, viewModel.alertInfo)
+            .sheet(item: $viewModel.activeSheet, content: _sheetView)
+            .onChange(of: configSnapshot) { _, _ in
+                viewModel.applyConfiguration(with: config)
+            }
     }
 
     private func _contentView() -> some View  {
         VStack {
-            Text("Title")
-            _headerContentView()
-            _melodyContentView()
-                .stretching(.vertical)
-            MelodyActionPanelView(viewModel: viewModel.melodyActionPanelViewModel)
-            HarmonicaLayoutView(viewModel: viewModel.layoutViewModel)
-        }
-    }
-
-    private func _melodyContentView() -> some View {
-        ScrollView(.vertical) {
-            ForEach(Array(viewModel.melodyRows.enumerated()), id: \.offset) { rowIndex, notes in
-                LazyVGrid(
-                    columns: Array(repeating: GridItem(.fixed(30)), count: 10),
-                    alignment: .leading,
-                    spacing: 2
-                ) {
-                    ForEach(Array(notes.enumerated()), id: \.offset) { index, note in
-                        _notesCellContentView(rowIndex: rowIndex, index: index, note: note)
-                    }
-                }
-                .padding(4)
-            }
-        }
-    }
-
-    @ViewBuilder
-    private func _notesCellContentView(rowIndex: Int, index: Int, note: MelodyNote) -> some View {
-        let isPlaying = viewModel.isPlayingNote(rowIndex: rowIndex, at: index)
-        if case .silence = note.type {
-            Spacer()
-                .frame(width: 25, height: 25, alignment: .center)
-                .background(
-                    MelodyNoteSimpleCellViewBackground(isActive: isPlaying)
+            ZStack(alignment: .bottom) {
+                MelodyNotesPresentationView(
+                    props: MelodyNotesPresentationViewProps(
+                        melodyRows: viewModel.melodyRows,
+                        playerEventStream: viewModel.playerEventStream()
+                    ),
+                    cursorIndex: $viewModel.cursorIndex
                 )
-                .padding(2)
-        } else {
-            MelodyNoteSimpleCellView(
-                note: note.note,
-                isPlaying: isPlaying
-            )
+                .stretching(.vertical)
+
+                _melodyToolbarView()
+            }
+            .padding(.horizontal, 16)
+
+            if let layoutViewProps = viewModel.layoutViewProps {
+                HarmonicaLayoutView(props: layoutViewProps)
+                    .padding(.horizontal, 8)
+                    .padding(.top, 8)
+            }
         }
+        .animation(.snappy, value: viewModel.layoutViewProps)
     }
 
-    private func _headerContentView() -> some View {
-        HStack(alignment: .center, spacing: 12) {
-            SwiftUI.Button(role: .none) {
-                viewModel.onTempoTap()
-            } label: {
-                Text("Tempo: \(Int(viewModel.tempo.bpm)) bpm")
-            }
-            SwiftUI.Button(role: .none) {
-                viewModel.onKeyTap()
-            } label: {
-                Text("Key: \(viewModel.key.description)")
-            }
-            .padding(.leading, 12)
-        }    }
-
-    // MARK: - Toolbar
-    @ToolbarContentBuilder
-    private func _toolbarContentView() -> some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) {
-            Button {
-                viewModel.onCancelTap()
-            } label: {
-                Text("Cancel")
-            }
-        }
-        ToolbarItem(placement: .topBarTrailing) {
-            Button {
-                viewModel.onApplyTap()
-            } label: {
-                Text("Apply")
-            }
-        }
+    private func _melodyToolbarView() -> some View {
+        MelodyToolbarView(
+            props: viewModel.melodyToolbarViewProps()
+        )
     }
 
-    // MARK: - Bottomsheets
-    private func _tempoSetupView() -> some View {
-        TempoSetupView(tempo: viewModel.tempo.bpm) { tempo in
-            viewModel.onTempoChange(to: tempo)
+    // MARK: - Sheets
+    @ViewBuilder
+    private func _sheetView(_ sheet: MelodyEditScreenViewModel.ActiveSheet) -> some View {
+        Group {
+            switch sheet {
+                case .tempo:
+                    TempoSetupView(tempo: viewModel.tempo.bpm) { tempo in
+                        viewModel.onTempoChange(to: tempo)
+                    }
+                    .presentationDetents([.large])
+                case .key:
+                    KeySetupView(key: viewModel.key) { key in
+                        viewModel.onKeyChange(to: key)
+                    }
+                    .presentationDetents([.medium])
+                case .layout:
+                    HarmonicaLayoutConfigurationView()
+                        .presentationDetents([.fraction(0.6)])
+            }
         }
-        .presentationDetents([.fraction(0.4)])
         .presentationDragIndicator(.visible)
         .interactiveDismissDisabled(false)
         .presentationBackgroundInteraction(.disabled)
         .presentationContentInteraction(.resizes)
-   }
+    }
+}
 
-    private func _keySetupView() -> some View {
-        KeySetupView(key: viewModel.key) { key in
-            viewModel.onKeyChange(to: key)
+// MARK: - Base screen style
+private extension View {
+    func screenBaseStyle() -> some View {
+        self
+            .background(Theme.colors.background.primary.color)
+            .toolbarVisibility(.hidden, for: .tabBar)
+            .navigationBarBackButtonHidden()
+    }
+}
+
+// MARK: - Toolbar
+private extension View {
+    func screenToolbars(viewModel: MelodyEditScreenViewModel) -> some View {
+        self.toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    viewModel.onCancelTap()
+                } label: {
+                    Text("Cancel")
+                }
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    viewModel.onPasteTap()
+                } label: {
+                    Image(systemName: "rectangle.portrait.badge.plus")
+                }
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    viewModel.onApplyTap()
+                } label: {
+                    Text("Apply")
+                }
+            }
         }
-        .presentationDetents([.fraction(0.3)])
-        .presentationDragIndicator(.visible)
-        .interactiveDismissDisabled(false)
-        .presentationBackgroundInteraction(.disabled)
-        .presentationContentInteraction(.resizes)
+    }
+}
+
+// MARK: - Lifecycle
+private extension View {
+    func screenLifecycle(
+        viewModel: MelodyEditScreenViewModel,
+        dismiss: DismissAction
+    ) -> some View {
+        self
+            .onFirstAppear {
+                viewModel.dismiss = { dismiss() }
+            }
+            .onAppear {
+                ScreenOrientation.lock(.portrait)
+            }
+            .onDisappear {
+                ScreenOrientation.unlock()
+            }
+            .task {
+                for await event in viewModel.serviceKeyboardEvents.stream {
+                    viewModel.onServiceKeyTap(event)
+                }
+            }
     }
 }

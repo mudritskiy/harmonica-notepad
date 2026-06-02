@@ -13,7 +13,7 @@ enum MelodyNoteType: Int, Codable {
     case newLine
 }
 
-struct MelodyNote {
+struct MelodyNote: Equatable {
     let type: MelodyNoteType
     let note: HarmonicaNote
     let value: NoteValue

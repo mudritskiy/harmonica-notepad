@@ -5,14 +5,14 @@
 //  Created by Volodymyr Mudrik on 01.06.2025.
 //
 
-struct LayoutNotesGrid {
+struct HarmonicaLayoutNotesGrid: Equatable {
     private let notes: [[HarmonicaNote?]]
     let holesRowIndex: Int
     var rowsCount: Int { notes.count}
     let holesRange: ClosedRange<Int> = 1...10
 }
 
-extension LayoutNotesGrid {
+extension HarmonicaLayoutNotesGrid {
     subscript(row: Int, hole: Int) -> HarmonicaNote? {
         guard row >= 0, row < rowsCount, hole >= 0 else { return nil }
         let column = notes[row]
@@ -60,7 +60,13 @@ extension LayoutNotesGrid {
 }
 
 extension HarmonicaLayout {
-    func notes(by configuration: HarmonicaLayoutConfiguration) -> [HarmonicaNote] {
+    func layoutGrid(with configuration: HarmonicaLayoutConfiguration) -> HarmonicaLayoutNotesGrid {
+        let notes = _notes(by: configuration)
+        let notesGrid = HarmonicaLayoutNotesGrid(with: notes)
+        return notesGrid
+    }
+
+    private func _notes(by configuration: HarmonicaLayoutConfiguration) -> [HarmonicaNote] {
         let notes = self.notes.filter { note in
             if note.technique == .overdraw || note.technique == .overblow {
                 return configuration.isOverbandsOn

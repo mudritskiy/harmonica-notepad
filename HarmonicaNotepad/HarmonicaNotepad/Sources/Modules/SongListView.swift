@@ -8,13 +8,12 @@
 import SwiftData
 import SwiftUI
 
+enum SongListRoute: Hashable, Equatable {
+    case showSong(HarmonicaSong)
+}
+
 @Observable
 final class SongListViewModel {
-    enum Route: Hashable {
-        case addSong
-        case editSong(HarmonicaSong)
-    }
-
     var modelContext: ModelContext? = nil
     var songs: [HarmonicaSong] = []
 
@@ -47,38 +46,41 @@ struct SongListView: View {
     }
 
     var body: some View {
-        List {
-            ForEach(_viewModel.songs) { song in
-                Button {
-                    _router.navigate(to: SongListViewModel.Route.editSong(song))
-                } label: {
-                    Text(song.title)
+        ScrollView {
+            VStack(alignment: .leading, spacing: 8) {
+                ForEach(_viewModel.songs) { song in
+                    Button {
+                        _router.navigate(to: SongListRoute.showSong(song))
+                    } label: {
+                        CardContainer(
+                            backgroundColor: Theme.colors.background.highlight.color,
+                            borderColor: Theme.colors.background.highlight.color
+                        ) {
+                            HStack(alignment: .center, spacing: .zero) {
+                                Text(song.title)
+                                    .font(FontToken.body1.value)
+                                    .foregroundStyle(Theme.colors.text.highlight.color)
+                                Spacer()
+                            }
+                            .padding(.all, 16)
+                        }
+                    }
                 }
+                //            .onDelete { offsets in
+                //                _viewModel.delete(at: offsets)
+                //            }
             }
-            .onDelete { offsets in
-                _viewModel.delete(at: offsets)
-            }
+            .padding(.horizontal, 16)
         }
         .onAppear {
             _viewModel.modelContext = _context
             _viewModel.fetchSongs()
         }
-        .navigationDestination(for: SongListViewModel.Route.self) { route in
-            switch route {
-                case .editSong(let song):
-                    SongScreenView(
-                        viewModel: SongScreenViewModel(song: song)
-                    )
-                case .addSong:
-                    SongEditScreenView(
-                        viewModel: SongEditScreenViewModel(song: nil) { _ in }
-                    )
-            }
-        }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    _router.navigate(to: SongListViewModel.Route.addSong)
+                    let newSong: HarmonicaSong = .new()
+                    _router.navigate(to: SongListRoute.showSong(newSong))
                 } label: {
                     Text("Add")
                 }
