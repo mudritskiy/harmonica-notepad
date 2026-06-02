@@ -26,6 +26,7 @@ public enum FontToken: Sendable {
     case title2
     case title3
     case headline
+    case body0
     case body1
     case body2
     case caption
@@ -40,24 +41,16 @@ private extension FontToken {
 
     var fontInfo: FontInfo {
         switch self {
-            case .largeTitle:
-                return .init(.largeTitle, font: font(.bold, 34))
-            case .title1:
-                return .init(.title1, font: font(.bold, 28))
-            case .title2:
-                return .init(.title2, font: font(.medium, 22))
-            case .title3:
-                return .init(.title3, font: font(.medium, 20))
-            case .headline:
-                return .init(.headline, font: font(.medium, 17))
-            case .body1:
-                return .init(.body, font: font(.regular, 16))
-            case .body2:
-                return .init(.body, font: font(.regular, 14))
-            case .caption:
-                return .init(.caption1, font: font(.regular, 12))
-            case .button:
-                return .init(.callout, font: font(.medium, 16))
+            case .largeTitle: FontInfo(.largeTitle, font: font(.bold, 34))
+            case .title1: FontInfo(.title1, font: font(.bold, 28))
+            case .title2: FontInfo(.title2, font: font(.medium, 22))
+            case .title3: FontInfo(.title3, font: font(.medium, 20))
+            case .headline: FontInfo(.headline, font: font(.medium, 18))
+            case .body0: FontInfo(.body, font: font(.regular, 18))
+            case .body1: FontInfo(.body, font: font(.regular, 16))
+            case .body2: FontInfo(.body, font: font(.regular, 14))
+            case .caption: FontInfo(.caption1, font: font(.regular, 12))
+            case .button: FontInfo(.callout, font: font(.medium, 16))
         }
     }
 
