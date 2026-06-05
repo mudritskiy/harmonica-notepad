@@ -23,7 +23,6 @@ Useful for learning play on harmonica.
   </tr>
 </table>
 
-[!](appstore-screenshot-1.png)
 ## 🛠 Tech Stack
 
 | Layer | Technology |
