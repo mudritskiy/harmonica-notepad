@@ -13,6 +13,8 @@ Useful for learning play on harmonica.
 -   **Persistent Storage**  — All songs and tabs saved locally via SwiftData
 -   **Tab Navigation**  — Isolated per-tab navigation stacks with scoped routers
 
+![Search](/images/screenshots/appstore-screenshot-1.png) ![Song Card](/images/screenshots/appstore-screenshot-2.png) ![Melody Editor](/images/screenshots/appstore-screenshot-3.png) ![Editor Setup](/images/screenshots/appstore-screenshot-4.png) ![Lists](/images/screenshots/appstore-screenshot-5.png)
+
 [!](appstore-screenshot-1.png)
 ## 🛠 Tech Stack
 
@@ -26,8 +28,7 @@ Useful for learning play on harmonica.
 | Language | Swift 6 |
 
 ## 🏗 Architecture
-<details>
-<summary>Show scheme</summary>
+
 ```
 HarmonicaNotepad/
 ├── App/
@@ -49,7 +50,6 @@ HarmonicaNotepad/
 └── Components/
     └── Shared reusable SwiftUI components
 ```
-</details>
 
 ## 📦 Dependencies
 
