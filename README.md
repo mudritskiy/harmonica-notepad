@@ -26,7 +26,8 @@ Useful for learning play on harmonica.
 | Language | Swift 6 |
 
 ## 🏗 Architecture
-
+<details>
+<summary>Show scheme</summary>
 ```
 HarmonicaNotepad/
 ├── App/
@@ -47,8 +48,8 @@ HarmonicaNotepad/
 │   └── HarmonicaLayoutView.swift
 └── Components/
     └── Shared reusable SwiftUI components
-
 ```
+</details>
 
 ## 📦 Dependencies
 
