@@ -13,7 +13,15 @@ Useful for learning play on harmonica.
 -   **Persistent Storage**  — All songs and tabs saved locally via SwiftData
 -   **Tab Navigation**  — Isolated per-tab navigation stacks with scoped routers
 
-![Search](/images/screenshots/appstore-screenshot-1.png) ![Song Card](/images/screenshots/appstore-screenshot-2.png) ![Melody Editor](/images/screenshots/appstore-screenshot-3.png) ![Editor Setup](/images/screenshots/appstore-screenshot-4.png) ![Lists](/images/screenshots/appstore-screenshot-5.png)
+<table>
+  <tr>
+    <td><img src="images/screenshots/appstore-screenshot-1.png" width="200" alt="Search"></td>
+    <td><img src="images/screenshots/appstore-screenshot-2.png" width="200" alt="Song Card"></td>
+    <td><img src="images/screenshots/appstore-screenshot-3.png" width="200" alt="Melody Editor"></td>
+    <td><img src="images/screenshots/appstore-screenshot-4.png" width="200" alt="Editor Setup"></td>
+    <td><img src="images/screenshots/appstore-screenshot-5.png" width="200" alt="Lists"></td>
+  </tr>
+</table>
 
 [!](appstore-screenshot-1.png)
 ## 🛠 Tech Stack
