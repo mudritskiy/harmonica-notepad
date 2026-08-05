@@ -73,8 +73,10 @@ struct ContentCoordinatorView: View {
                                                 SongScreenView(song: song)
                                         }
                                     }
+                                    .modifier(SongScreenDestinations())
                             }
                             .environment(router)
+                            .environment(\.currentRouter, router)
                         case .lists:
                             @Bindable var router = appNavigation.songsLists
                             NavigationStack(path: $router.path) {
