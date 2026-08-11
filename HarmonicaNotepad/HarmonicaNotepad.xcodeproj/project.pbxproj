@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		125DB179D9764610735D18F2 /* BackupPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5150DE8834E26716F72B2E16 /* BackupPayload.swift */; };
+		39BBF135D6674EE1FAD2412A /* BackupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3583EACE1DED3AC249EF729C /* BackupService.swift */; };
+		C9611FED8574CD24F131F22E /* BackupRestoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545176E61DF7FD223B6F6E05 /* BackupRestoreViewModel.swift */; };
+		D0C3206C0D1A7786C8355C81 /* BackupRestoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C216895B0C215FEC035C0C /* BackupRestoreView.swift */; };
+		ED366CE01C1CF0260E5373C5 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A8C76B7B1ABB826D256B50 /* SettingsView.swift */; };
+		F07106E30150C1099402C0CD /* BackupServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A452990B943EB01F1E26454 /* BackupServiceTests.swift */; };
 		FE0747F12E0837F000A9A797 /* SongEditScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0747F02E0837EF00A9A797 /* SongEditScreenView.swift */; };
 		FE0B6DCC2DEB30B800BA8793 /* TempoSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0B6DCB2DEB30B700BA8793 /* TempoSetupView.swift */; };
 		FE0B6DCE2DEB30D600BA8793 /* TempoStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0B6DCD2DEB30D500BA8793 /* TempoStyle.swift */; };
@@ -139,6 +145,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3583EACE1DED3AC249EF729C /* BackupService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BackupService.swift; sourceTree = "<group>"; };
+		5150DE8834E26716F72B2E16 /* BackupPayload.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BackupPayload.swift; sourceTree = "<group>"; };
+		545176E61DF7FD223B6F6E05 /* BackupRestoreViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BackupRestoreViewModel.swift; sourceTree = "<group>"; };
+		7A452990B943EB01F1E26454 /* BackupServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BackupServiceTests.swift; sourceTree = "<group>"; };
+		A0C216895B0C215FEC035C0C /* BackupRestoreView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BackupRestoreView.swift; sourceTree = "<group>"; };
+		E9A8C76B7B1ABB826D256B50 /* SettingsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		FE0747F02E0837EF00A9A797 /* SongEditScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongEditScreenView.swift; sourceTree = "<group>"; };
 		FE0B6DCB2DEB30B700BA8793 /* TempoSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoSetupView.swift; sourceTree = "<group>"; };
 		FE0B6DCD2DEB30D500BA8793 /* TempoStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoStyle.swift; sourceTree = "<group>"; };
@@ -281,6 +293,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04948BB1F7236CD422172D2B /* Backup */ = {
+			isa = PBXGroup;
+			children = (
+				5150DE8834E26716F72B2E16 /* BackupPayload.swift */,
+				3583EACE1DED3AC249EF729C /* BackupService.swift */,
+			);
+			name = Backup;
+			path = Backup;
+			sourceTree = "<group>";
+		};
+		A595B4BF5A7C5A8ACEC7040A /* SettingsScreen */ = {
+			isa = PBXGroup;
+			children = (
+				E9A8C76B7B1ABB826D256B50 /* SettingsView.swift */,
+				EC2F0E32EC9F6457234AA1EB /* BackupRestore */,
+			);
+			name = SettingsScreen;
+			path = SettingsScreen;
+			sourceTree = "<group>";
+		};
+		EC2F0E32EC9F6457234AA1EB /* BackupRestore */ = {
+			isa = PBXGroup;
+			children = (
+				A0C216895B0C215FEC035C0C /* BackupRestoreView.swift */,
+				545176E61DF7FD223B6F6E05 /* BackupRestoreViewModel.swift */,
+			);
+			name = BackupRestore;
+			path = BackupRestore;
+			sourceTree = "<group>";
+		};
 		FE0B6DD32DEC1BF400BA8793 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -421,6 +463,7 @@
 				FE65DC2F2E072F63002A3381 /* MainScreenView.swift */,
 				FEB5CDFC2E19A1F900C5BDC9 /* SongListView.swift */,
 				FED1ABE92ECFB19100811358 /* SearchListView.swift */,
+				A595B4BF5A7C5A8ACEC7040A /* SettingsScreen */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -578,6 +621,7 @@
 			isa = PBXGroup;
 			children = (
 				FEAF08452C4055850014DA01 /* HarmonicaNotepadTests.swift */,
+				7A452990B943EB01F1E26454 /* BackupServiceTests.swift */,
 			);
 			path = HarmonicaNotepadTests;
 			sourceTree = "<group>";
@@ -602,6 +646,7 @@
 				FE96894A2ED2ECCC0023F6CE /* MelodyService.swift */,
 				FEE729952F6C9C6700F05C5E /* MedolyNotesParser.swift */,
 				FE9689502ED314210023F6CE /* SongService.swift */,
+				04948BB1F7236CD422172D2B /* Backup */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -944,6 +989,11 @@
 				FE3CDD172F0A877700593EEE /* ContentTab.swift in Sources */,
 				FEBA50A92F815030004E969C /* SongScreenDestinations.swift in Sources */,
 				FE3CC2F12F7BD6B1002D3DF9 /* MelodyNotePresenetionNumberPrimaryView.swift in Sources */,
+				125DB179D9764610735D18F2 /* BackupPayload.swift in Sources */,
+				39BBF135D6674EE1FAD2412A /* BackupService.swift in Sources */,
+				ED366CE01C1CF0260E5373C5 /* SettingsView.swift in Sources */,
+				D0C3206C0D1A7786C8355C81 /* BackupRestoreView.swift in Sources */,
+				C9611FED8574CD24F131F22E /* BackupRestoreViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -952,6 +1002,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FEAF08462C4055850014DA01 /* HarmonicaNotepadTests.swift in Sources */,
+				F07106E30150C1099402C0CD /* BackupServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1175,7 +1226,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QY278ZL6U5;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sygic.OpenAISwift.HarmonicaNotepadTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1195,7 +1246,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QY278ZL6U5;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sygic.OpenAISwift.HarmonicaNotepadTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

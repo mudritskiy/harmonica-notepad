@@ -64,6 +64,11 @@ HarmonicaNotepad/
 
 All other functionality uses native Apple frameworks only.
 
+## 🗺 Roadmap
+
+-   **Backup/restore merge** — compare a backup file against the current on-device
+    state and merge (rather than fully replace) songs and lists on restore
+
 ## 📄 License
 
 MIT License — see  [LICENSE](LICENSE)  for details.

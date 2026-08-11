@@ -10,6 +10,7 @@ import SwiftUI
 
 enum SongListRoute: Hashable, Equatable {
     case showSong(HarmonicaSong)
+    case settings
 }
 
 @Observable
@@ -77,6 +78,14 @@ struct SongListView: View {
             _viewModel.fetchSongs()
         }
         .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    _router.navigate(to: SongListRoute.settings)
+                } label: {
+                    Image(systemName: "gearshape")
+                }
+                .accessibilityLabel("Settings")
+            }
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     let newSong: HarmonicaSong = .new()

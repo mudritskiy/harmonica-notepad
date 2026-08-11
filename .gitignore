@@ -98,3 +98,4 @@ project.pbxproj
 # Playgrounds
 timeline.xctimeline
 playground.xcworkspace
+.worktrees/

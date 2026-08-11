@@ -71,6 +71,8 @@ struct ContentCoordinatorView: View {
                                         switch route {
                                             case .showSong(let song):
                                                 SongScreenView(song: song)
+                                            case .settings:
+                                                SettingsView()
                                         }
                                     }
                                     .modifier(SongScreenDestinations())
